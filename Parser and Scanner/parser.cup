@@ -17,11 +17,14 @@ non terminal timeunit, array,value, expr, whilestmt, arrvalues, function_call, a
 non terminal negate, block, compound_stmt, expr_stmt, selection_stmt, iterative_stmt, jump_stmt, nestbool;
 non terminal case_stmt, default_stmt, case_expr, logop, brackets, op;
 
-precedence left GTHAN, LTHAN, EQUALS, NOTEQ, GTEQ, LTEQ;
+precedence left TIMESOP, DIVOP;
 precedence left PLUSOP, SUBOP;
-precedence left TIMESOP, DIVOP, COMMA;
+precedence left GTHAN, LTHAN, GTEQ, LTEQ;
+precedence left EQUALS, NOTEQ;
+precedence left AND;
+precedence left OR;
 precedence right ASSIGN;
-precedence nonassoc EQUALS, IDENTIFIER, IF, WHILE, DO, LOOP, PRINT, PRINTLINE, EPSILON, ELSE, AND, OR, RSQBRACK, LSQBRACK;
+precedence nonassoc IDENTIFIER, IF, WHILE, DO, LOOP, PRINT, PRINTLINE, EPSILON, ELSE, RSQBRACK, LSQBRACK;
 
 start with program;
 
@@ -44,16 +47,15 @@ obj ::= IDENTIFIER ASSIGN objid LPAREN NUMBER RPAREN SEMI;
 params ::= type IDENTIFIER
          | type IDENTIFIER COMMA params;
 
-array ::= type IDENTIFIER ASSIGN LCURLY arrvalues RCURLY; // brackets
+array ::= type IDENTIFIER ASSIGN LCURLY arrvalues RCURLY;
 
-arrvalues ::= value COMMA value
+arrvalues ::= value COMMA arrvalues
 	     | value;
 
 compound_stmt ::= RCURLY block LCURLY;
 
 block ::= dcl
         | stmts;
-    
 
 objfunc ::= objid DOT OBJFUNCID SEMI;
 

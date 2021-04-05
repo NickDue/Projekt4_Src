@@ -6,111 +6,127 @@
 /** CUP generated class containing symbol constants. */
 public class sym {
   /* terminals */
-  public static final int GTEQ = 42;
-  public static final int CHAR = 19;
-  public static final int LTEQ = 43;
-  public static final int EQUALS = 41;
-  public static final int COMMENT = 3;
-  public static final int MILSEC = 22;
-  public static final int PLUSOP = 35;
-  public static final int SEC = 23;
-  public static final int LPAREN = 4;
-  public static final int SEMI = 31;
-  public static final int RPAREN = 5;
-  public static final int EPSILON = 30;
-  public static final int AND = 28;
-  public static final int LTHAN = 40;
-  public static final int NUMTYPE = 48;
-  public static final int OR = 29;
-  public static final int COMMA = 2;
-  public static final int LSQBRACK = 27;
-  public static final int LOOP = 13;
-  public static final int MIN = 24;
-  public static final int ASSIGN = 8;
-  public static final int IF = 9;
-  public static final int STRTYPE = 49;
-  public static final int DOT = 33;
-  public static final int WAIT = 45;
+  public static final int DIVIDE = 49;
+  public static final int PLUSPLUS = 16;
+  public static final int WHEN = 29;
+  public static final int CHAR = 4;
+  public static final int EQUALS = 53;
+  public static final int MILSEC = 11;
+  public static final int SEC = 12;
+  public static final int TIME = 31;
+  public static final int GREATER = 56;
+  public static final int LPAREN = 37;
+  public static final int INT = 21;
+  public static final int PRINTLN = 22;
+  public static final int LESS = 55;
+  public static final int MINUS = 47;
+  public static final int WRITE = 44;
+  public static final int RPAREN = 38;
+  public static final int AND = 51;
+  public static final int NOT = 50;
+  public static final int SEMICOLON = 41;
+  public static final int OR = 52;
+  public static final int COMMA = 42;
+  public static final int BOOL = 5;
+  public static final int LSQBRACK = 39;
+  public static final int PLUS = 46;
+  public static final int LOOP = 28;
+  public static final int ASSIGN = 59;
+  public static final int LESSEQ = 57;
+  public static final int MIN = 13;
+  public static final int IF = 23;
+  public static final int DOT = 43;
+  public static final int ID = 32;
   public static final int EOF = 0;
-  public static final int BOOLEAN = 18;
-  public static final int PRINTLINE = 21;
+  public static final int MINUSMINUS = 17;
+  public static final int RETURN = 30;
+  public static final int TRUE = 2;
   public static final int error = 1;
-  public static final int NEGATION = 15;
-  public static final int LCURLY = 6;
-  public static final int NUMBER = 14;
-  public static final int OBJFUNCID = 34;
-  public static final int RCURLY = 7;
-  public static final int TIMES = 16;
-  public static final int BOOLTYPE = 51;
-  public static final int GTHAN = 39;
-  public static final int ELSE = 10;
-  public static final int WHILE = 11;
-  public static final int DIVOP = 36;
-  public static final int HOUR = 25;
-  public static final int RSQBRACK = 26;
-  public static final int STRING = 17;
-  public static final int CHARTYPE = 50;
-  public static final int TIMESOP = 38;
-  public static final int SUBOP = 37;
-  public static final int BUTTON = 46;
-  public static final int LED = 47;
-  public static final int PRINT = 20;
-  public static final int DO = 12;
-  public static final int NOTEQ = 44;
-  public static final int IDENTIFIER = 32;
+  public static final int NEGATION = 6;
+  public static final int LCURLY = 35;
+  public static final int NUMBER = 33;
+  public static final int CIN = 18;
+  public static final int VOID = 8;
+  public static final int RCURLY = 36;
+  public static final int INTLITERAL = 20;
+  public static final int TIMES = 48;
+  public static final int ELSE = 25;
+  public static final int COUT = 19;
+  public static final int READ = 45;
+  public static final int NOTEQUALS = 54;
+  public static final int WHILE = 27;
+  public static final int HOUR = 14;
+  public static final int RSQBRACK = 40;
+  public static final int GREATEREQ = 58;
+  public static final int STRINGLITERAL = 34;
+  public static final int FALSE = 3;
+  public static final int STRUCT = 7;
+  public static final int BUTTON = 9;
+  public static final int ELIF = 24;
+  public static final int LED = 10;
+  public static final int PRINT = 15;
+  public static final int DO = 26;
   public static final String[] terminalNames = new String[] {
   "EOF",
   "error",
-  "COMMA",
-  "COMMENT",
-  "LPAREN",
-  "RPAREN",
-  "LCURLY",
-  "RCURLY",
-  "ASSIGN",
-  "IF",
-  "ELSE",
-  "WHILE",
-  "DO",
-  "LOOP",
-  "NUMBER",
-  "NEGATION",
-  "TIMES",
-  "STRING",
-  "BOOLEAN",
+  "TRUE",
+  "FALSE",
   "CHAR",
-  "PRINT",
-  "PRINTLINE",
+  "BOOL",
+  "NEGATION",
+  "STRUCT",
+  "VOID",
+  "BUTTON",
+  "LED",
   "MILSEC",
   "SEC",
   "MIN",
   "HOUR",
-  "RSQBRACK",
+  "PRINT",
+  "PLUSPLUS",
+  "MINUSMINUS",
+  "CIN",
+  "COUT",
+  "INTLITERAL",
+  "INT",
+  "PRINTLN",
+  "IF",
+  "ELIF",
+  "ELSE",
+  "DO",
+  "WHILE",
+  "LOOP",
+  "WHEN",
+  "RETURN",
+  "TIME",
+  "ID",
+  "NUMBER",
+  "STRINGLITERAL",
+  "LCURLY",
+  "RCURLY",
+  "LPAREN",
+  "RPAREN",
   "LSQBRACK",
+  "RSQBRACK",
+  "SEMICOLON",
+  "COMMA",
+  "DOT",
+  "WRITE",
+  "READ",
+  "PLUS",
+  "MINUS",
+  "TIMES",
+  "DIVIDE",
+  "NOT",
   "AND",
   "OR",
-  "EPSILON",
-  "SEMI",
-  "IDENTIFIER",
-  "DOT",
-  "OBJFUNCID",
-  "PLUSOP",
-  "DIVOP",
-  "SUBOP",
-  "TIMESOP",
-  "GTHAN",
-  "LTHAN",
   "EQUALS",
-  "GTEQ",
-  "LTEQ",
-  "NOTEQ",
-  "WAIT",
-  "BUTTON",
-  "LED",
-  "NUMTYPE",
-  "STRTYPE",
-  "CHARTYPE",
-  "BOOLTYPE"
+  "NOTEQUALS",
+  "LESS",
+  "GREATER",
+  "LESSEQ",
+  "GREATEREQ",
+  "ASSIGN"
   };
 }
 
