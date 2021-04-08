@@ -17,7 +17,16 @@ public void syntax_error(Symbol currToken) {
     }
     System.exit(-1);
 }
-:};
+
+Lexer lexer;
+
+:};	
+
+scan with {:
+	return lexer.next_token();
+	:};
+
+
 
 
 /* Terminals (tokens returned by the scanner) */
@@ -25,34 +34,29 @@ public void syntax_error(Symbol currToken) {
 
 terminal TokenVal       TRUE;
 terminal TokenVal       FALSE;
-terminal		        CHAR;
+terminal		            CHAR;
+terminal		            STRING;
 terminal                BOOL;
 terminal                NEGATION;
-terminal                STRUCT;
 terminal                VOID;
-terminal		        BUTTON;
-terminal		        LED;
-terminal		        MILSEC;
-terminal		        SEC;
-terminal		        MIN;
-terminal		        HOUR;
+terminal		            BUTTON;
+terminal		            LED;
+terminal		            MILSEC;
+terminal		            SEC;
+terminal		            MIN;
+terminal		            HOUR;
 terminal                PRINT;
-terminal                PLUSPLUS;
-terminal                MINUSMINUS;
-terminal                CIN;
-terminal                COUT;
 terminal                INTLITERAL;
 terminal                INT;
-terminal		        PRINTLN;
+terminal		            PRINTLN;
 terminal                IF;
-terminal		        ELIF;
 terminal                ELSE;
-terminal		        DO;
+terminal		            DO;
 terminal                WHILE;
-terminal		        LOOP;
-terminal		        WHEN;
+terminal		            LOOP;
+terminal		            WHEN;
 terminal                RETURN;
-terminal		        TIME;
+terminal		            TIME;
 terminal IdTokenVal     ID;
 terminal NumberToken    NUMBER;
 terminal StrLitTokenVal STRINGLITERAL;
@@ -60,8 +64,8 @@ terminal                LCURLY;
 terminal                RCURLY;
 terminal                LPAREN;
 terminal                RPAREN;
-terminal		        LSQBRACK;
-terminal		        RSQBRACK;
+terminal		            LSQBRACK;
+terminal		            RSQBRACK;
 terminal                SEMICOLON;
 terminal                COMMA;
 terminal                DOT;
@@ -81,6 +85,11 @@ terminal                GREATER;
 terminal                LESSEQ;
 terminal                GREATEREQ;
 terminal                ASSIGN;
+terminal                BREAK;
+terminal                COLON;
+terminal                WAIT;
+terminal                CASE;
+terminal                DEFAULT;
 
 
 /* Nonterminals
@@ -93,27 +102,30 @@ non terminal LinkedList       declList;
 non terminal DeclNode         decl;
 non terminal LinkedList       varDeclList;
 non terminal VarDeclNode      varDecl;
-non terminal FnDeclNode       fnDecl;
-non terminal StructDeclNode   structDecl;
-non terminal LinkedList       structBody;
-non terminal LinkedList       formals;
-non terminal LinkedList       formalsList;
-non terminal FormalDeclNode   formalDecl;
-non terminal FnBodyNode       fnBody;
+non terminal FuncDeclNode     funcDecl;
+non terminal ObjDeclNode      objDecl;
+non terminal ObjFuncId        objFuncId;
+non terminal LinkedList       fParams;
+non terminal LinkedList       fParamsList;
+non terminal FParamsDeclNode  fParamsDecl;
+non terminal FuncBodyNode     funcBody;
 non terminal LinkedList       stmtList;
 non terminal StmtNode         stmt;
+non terminal CaseNode         case_stmt;
+non terminal DefaultNode      default_stmt;
 non terminal AssignNode       assignExp;
 non terminal ExpNode          exp;
 non terminal ExpNode          term;
-non terminal CallExpNode      fncall;
+non terminal CallExpNode      funccall;
 non terminal LinkedList       actualList;
+non terminal ArrayNode        array;
+non terminal LinkedList       arrayval;
 non terminal TypeNode         type;
 non terminal ExpNode          loc;
 non terminal IdNode           id;
  
  
 /* NOTE: Add precedence associativity declarations here */
-precedence left MINUSMINUS, PLUSPLUS;
 precedence right NEGATION;
 precedence left TIMES, DIVIDE;
 precedence left PLUS, MINUS;
@@ -148,11 +160,11 @@ declList        ::= declList:dl decl:d
 decl            ::= varDecl:v
                 {: RESULT = v;
                 :}
-                | fnDecl:f
+                | funcDecl:f
                 {: RESULT = f;
                 :}
-                | structDecl:s
-                {: RESULT = s;
+                | objDecl:o
+                {: RESULT = o;
                 :}
                 ;
 
@@ -168,61 +180,49 @@ varDeclList     ::= varDeclList:vdl varDecl:vd
 varDecl         ::= type:t id:i SEMICOLON
                 {: RESULT = new VarDeclNode(t, i, VarDeclNode.NOT_STRUCT);
                 :}
-                | STRUCT id:t id:i SEMICOLON
-                {: RESULT = new VarDeclNode(new StructNode(t), i, 0);
+                ;
+
+funcDecl        ::= type:t id:i fParams:f funcBody:fb
+                {: RESULT = new FuncDeclNode(t, i, new FParamsListNode(f), fb);
+                :}
+                ;
+                
+objDecl         ::= id:i ASSIGN objFuncId:oid LPAREN NUMBER RPAREN SEMICOLON
+                {: RESULT = new ObjDeclNode(i, oid, /* size */ );
                 :}
                 ;
 
-fnDecl          ::= type:t id:i formals:f fnBody:fb
-                {: RESULT = new FnDeclNode(t, i, new FormalsListNode(f), fb);
-                :}
+objFuncId       ::= BUTTON
+                |   LED
                 ;
 
-structDecl      ::= STRUCT id:i LCURLY structBody:sb RCURLY SEMICOLON
-                {: RESULT = new StructDeclNode(i, new DeclListNode(sb));
+fParams         ::= LPAREN RPAREN
+                {: RESULT = new LinkedList<FParamsDeclNode>();
                 :}
-                ;
-
-structBody      ::=  structBody:sb varDecl:vd 
-                {: sb.addLast(vd);
-                   RESULT = sb;
-                :}
-                | varDecl:vd
-                {: LinkedList<VarDeclNode> list = 
-                                           new LinkedList<VarDeclNode>();
-                   list.addLast(vd);
-                   RESULT = list;
-                :}
-                ;
-
-formals         ::= LPAREN RPAREN
-                {: RESULT = new LinkedList<FormalDeclNode>();
-                :}
-                | LPAREN formalsList:fl RPAREN
+                | LPAREN fParamsList:fl RPAREN
                 {: RESULT = fl;
                 :}
                 ;
 
-formalsList     ::= formalDecl:fd
-                {: LinkedList<FormalDeclNode> list = 
-                                              new LinkedList<FormalDeclNode>();
+fParamsList     ::= fParamsDecl:fd
+                {: LinkedList<FParamsDeclNode> list = 
+                                              new LinkedList<FParamsDeclNode>();
                    list.addLast(fd);
                    RESULT = list;
                 :}
-                | formalDecl:fd COMMA formalsList:fl
+                | fParamsDecl:fd COMMA fParamsList:fl
                 {: fl.addFirst(fd);
                    RESULT = fl;
                 :}
-
                 ;
 
-formalDecl      ::= type:t id:i
-                {: RESULT = new FormalDeclNode(t, i);
+fParamsDecl      ::= type:t id:i
+                {: RESULT = new FParamsDeclNode(t, i);
                 :}
                 ;
 
-fnBody          ::= LCURLY varDeclList:vdl stmtList:sl RCURLY
-                {: RESULT = new FnBodyNode(
+funcBody          ::= LCURLY varDeclList:vdl stmtList:sl RCURLY
+                {: RESULT = new FuncBodyNode(
                             new DeclListNode(vdl), new StmtListNode(sl));
                 :}
                 ;
@@ -236,33 +236,32 @@ stmtList        ::= stmtList:sl stmt:s
                 :}
                 ;
 
-stmt            ::= assignExp:ae SEMICOLON
+stmt            ::=  assignExp:ae SEMICOLON
                 {: RESULT = new AssignStmtNode(ae);
-                :}
-                | loc:lc PLUSPLUS SEMICOLON
-                {: RESULT = new PostIncStmtNode(lc);
-                :}
-                | loc:lc MINUSMINUS SEMICOLON
-                {: RESULT = new PostDecStmtNode(lc);
-                :}
-                | CIN READ loc:lc SEMICOLON
-                {: RESULT = new ReadStmtNode(lc);
-                :}                
-                | COUT WRITE exp:e SEMICOLON
+                :}             
+                | PRINT LPAREN exp:e RPAREN SEMICOLON
                 {: RESULT = new WriteStmtNode(e);
                 :}                
-                | IF LPAREN exp:e RPAREN LCURLY varDeclList:vdl stmtList:sl RCURLY
-                {: RESULT = new IfStmtNode(e, 
-                                new DeclListNode(vdl), new StmtListNode(sl));
+                | IF LPAREN exp:e RPAREN LCURLY  stmtList:sl RCURLY
+                {: RESULT = new IfStmtNode(e, new StmtListNode(sl));
                 :}                
-                | IF LPAREN exp:e RPAREN LCURLY varDeclList:vdlt stmtList:slt RCURLY ELSE LCURLY varDeclList:vdle stmtList:sle RCURLY
-                {: RESULT = new IfElseStmtNode(e, 
-                                new DeclListNode(vdlt), new StmtListNode(slt),
-                                new DeclListNode(vdle), new StmtListNode(sle));
+                | IF LPAREN exp:e RPAREN LCURLY stmtList:slt RCURLY ELSE LCURLY stmtList:sle RCURLY
+                {: RESULT = new IfElseStmtNode(e, new StmtListNode(slt), new StmtListNode(sle));
+                :}
+                | DO LCURLY stmtList:sl RCURLY WHILE LPAREN exp:e RPAREN 
+                {: RESULT = new DoWhileStmtNode(e, new StmtListNode(sl));
                 :}    
-                | WHILE LPAREN exp:e RPAREN LCURLY varDeclList:vdl stmtList:sl RCURLY
-                {: RESULT = new WhileStmtNode(e, 
-                                new DeclListNode(vdl), new StmtListNode(sl));
+                | WHILE LPAREN exp:e RPAREN LCURLY stmtList:sl RCURLY
+                {: RESULT = new WhileStmtNode(e, new StmtListNode(sl));
+                :}
+                | LOOP INTLITERAL:i TIMES LSQBRACK stmtList:sl RSQBRACK
+                {: RESULT = new ForLoopStmtNode(i.linenum, i.charnum, i.intVal, new StmtListNode(sl));
+                :}
+                | WHEN LPAREN exp:e RPAREN RCURLY case_stmt default_stmt LCURLY
+                {: RESULT = new WhenLoopStmtNode(e, new StmtListNode(sl));
+                :}
+                | WAIT LPAREN TIME RPAREN SEMICOLON
+                {: RESULT = new TimeNode(t);
                 :}                
                 | RETURN exp:e SEMICOLON
                 {: RESULT = new ReturnStmtNode(e);
@@ -270,13 +269,23 @@ stmt            ::= assignExp:ae SEMICOLON
                 | RETURN SEMICOLON
                 {: RESULT = new ReturnStmtNode(null);
                 :}
-                | fncall:f SEMICOLON
+                | funccall:f SEMICOLON
                 {: RESULT = new CallStmtNode(f);
                 :}
                 ;                
 
-assignExp       ::= loc:lc ASSIGN exp:e
-                {: RESULT = new AssignNode(lc, e);
+case_stmt       ::= CASE term:t COLON stmtList:st BREAK SEMICOLON
+                {: RESULT = new CaseNode(t,new StmtListNode(st))
+                :}
+                ;
+
+default_stmt    ::= DEFAULT COLON stmtList:st BREAK SEMICOLON
+                {: RESULT = new DefaultNode(new StmtListNode(st))
+                :}
+                ;
+
+assignExp       ::= id:i ASSIGN exp:e
+                {: RESULT = new AssignNode(i, e);
                 :}
                 ;
                 
@@ -330,8 +339,8 @@ exp             ::= assignExp:ae
                 :}
                 ;    
                 
-term            ::= loc:lc
-                {: RESULT = lc;
+term            ::= id:i
+                {: RESULT = i;
                 :}
                 | INTLITERAL:i
                 {: RESULT = new IntLitNode(i.linenum, i.charnum, i.intVal);
@@ -348,16 +357,16 @@ term            ::= loc:lc
                 | LPAREN exp:e RPAREN
                 {: RESULT = e;
                 :}
-                | fncall:f
+                | funccall:f
                 {: RESULT = f;
                 :}
                 ;    
 
-fncall          ::= id:i LPAREN RPAREN
+funccall          ::= id:i fParamsList SEMICOLON
                 {: RESULT = new CallExpNode(i, 
                                 new ExpListNode(new LinkedList<ExpNode>()));
                 :}
-                | id:i LPAREN actualList:al RPAREN
+                | id:i LPAREN actualList:al RPAREN SEMICOLON
                 {: RESULT = new CallExpNode(i, new ExpListNode(al));
                 :}
                 ;
@@ -373,7 +382,18 @@ actualList      ::= exp:e
                 :}
                 ;
 
-type            ::= INT
+array           ::= type ID:i ASSIGN LCURLY arrayval RCURLY
+                ;
+
+arrayval        ::= INTLITERAL
+                |   STRINGLITERAL
+                |   TRUE
+                |   FALSE
+                |   CHAR
+                |   ID
+                ;
+
+type            ::= NUMBER
                 {: RESULT = new IntNode();
                 :}
                 | BOOL
@@ -381,6 +401,12 @@ type            ::= INT
                 :}
                 | VOID
                 {: RESULT = new VoidNode();
+                :}
+                | STRING
+                {: RESULT = new StringNode();
+                :}
+                | CHAR
+                {: RESULT = new CharNode();
                 :}
                 ;
 

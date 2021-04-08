@@ -94,7 +94,17 @@ return new Symbol(sym.EOF);
             return S;
           }       
           
-"char"    { Symbol S = new Symbol(sym.CHAR, new TokenVal(yyline+1, CharNum.num));
+"char"    { Symbol S = new Symbol(sym.CHARTYPE, new TokenVal(yyline+1, CharNum.num));
+            CharNum.num += yytext().length();
+            return S;
+          }
+
+"string"  { Symbol S = new Symbol(sym.STRING, new TokenVal(yyline+1, CharNum.num));
+            CharNum.num += yytext().length();
+            return S;
+          }
+
+"int"     { Symbol S = new Symbol(sym.INT, new TokenVal(yyline+1, CharNum.num));
             CharNum.num += yytext().length();
             return S;
           }
@@ -150,7 +160,7 @@ return new Symbol(sym.EOF);
 "print"    { Symbol S = new Symbol(sym.PRINT, new TokenVal(yyline+1, CharNum.num));
             CharNum.num += yytext().length();
             return S;
-          }
+           }
 
 "println" { Symbol S = new Symbol(sym.PRINTLN, new TokenVal(yyline+1, CharNum.num));
             CharNum.num += yytext().length();
@@ -206,12 +216,22 @@ return new Symbol(sym.EOF);
             return S;
           }
 
+"break"   { Symbol S = new Symbol(sym.BREAK, new TokenVal(yyline+1, CharNum.num));
+            CharNum.num += yytext().length();
+            return S;
+          }
+
+"default" { Symbol S = new Symbol(sym.DEFAULT, new TokenVal(yyline+1, CharNum.num));
+            CharNum.num++;
+            return S;
+          }}
+
 
 /* Time */
 
-({DIGIT}{HOUR})*({DIGIT}{MIN})*({DIGIT}{SEC})*({DIGIT}{MILSEC})* {
-            Symbol S = new Symbol(sym.TIME, new IdTokenVal(yyline+1, CharNum.num, 
-            yytext()));
+(({DIGIT})+ HOUR)*(({DIGIT})+ MIN)*(({DIGIT})+(SEC))*(({DIGIT})+(MILSEC))* {
+            Symbol S = new Symbol(sym.TIME, 
+                             new IdTokenVal(yyline+1, CharNum.num, yytext()));
             CharNum.num += yytext().length();
             return S;
           }
@@ -226,7 +246,7 @@ return new Symbol(sym.EOF);
           }
 
 /* Number */
-({DIGIT}+ | {DIGIT}+{DOT}{DIGIT}+)  { 
+({DIGIT}+ | {DIGIT}+(DOT){DIGIT}+)  { 
 
             String checkString = yytext();
             
@@ -242,6 +262,7 @@ return new Symbol(sym.EOF);
                     Symbol S = new Symbol(sym.NUMBER,
                              new NumberTokenFLOAT(yyline+1, CharNum.num, intVal));
                     CharNum.num += yytext().length();
+                }
 	    }
 	    
 	    else {
@@ -258,8 +279,8 @@ return new Symbol(sym.EOF);
            
             return S;
           }
-          
-
+}         
+            
 /* Newline, quote og escapes */
           
 \"({NOTNEWLINEORQUOTEORESCAPE}|\\{ESCAPEDCHAR})*\" {
@@ -330,6 +351,11 @@ return new Symbol(sym.EOF);
           }
 
 ";"       { Symbol S = new Symbol(sym.SEMICOLON, new TokenVal(yyline+1, CharNum.num));
+            CharNum.num++;
+            return S;
+          }
+
+":"       { Symbol S = new Symbol(sym.COLON, new TokenVal(yyline+1, CharNum.num));
             CharNum.num++;
             return S;
           }

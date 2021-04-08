@@ -1,0 +1,175 @@
+parser code {:
+	Lexer lexer;
+	:};
+
+scan with {:
+	return lexer.next_token();
+	:};
+
+
+terminal EPSILON, COMMA, COMMENT, LPAREN, RPAREN, LCURLY, RCURLY, ASSIGN, IF, ELSE, WHILE, DO, LOOP, NUMBER, NEGATION;
+terminal TIMES, STRING, BOOLEAN, CHAR, PRINT, PRINTLINE, MILSEC, SEC, MIN, HOUR, RSQBRACK, LSQBRACK, AND, OR;
+terminal SEMI, IDENTIFIER, DOT, OBJFUNCID, BUTTON, LED, PLUSOP, DIVOP, SUBOP, TIMESOP, NEWLINE, GTHAN, LTHAN, EQUALS, GTEQ, LTEQ, NOTEQ, WAIT;
+
+non terminal program, programs, prog, params, func, dcl, obj, objfunc, objid, stmts, stmt, ifstmt, elif, switch, when, term, factor;
+non terminal elsestmt, dowhile, forloop, loopfor, assignment, type, print, printtype, wait, time, jump, return, break;
+non terminal timeunit, array, arrstmts, chars, value, expr, whilestmt, arrvalues, exprs, function_call, actparams, bool;
+non terminal plus, minus, div, mult, negate, block, compound_stmt, expr_stmt, selection_stmt, iterative_stmt, jump_stmt, nestbool;
+non terminal case_stmt, default_stmt, case_expr, logop, brackets, nestop, logoperands;
+
+precedence left GTHAN, LTHAN, EQUALS, NOTEQ, GTEQ, LTEQ;
+precedence left PLUSOP, SUBOP;
+precedence left TIMESOP, DIVOP;
+precedence nonassoc EQUALS;
+
+
+program ::= programs;
+
+programs ::= prog programs
+        |   EPSILON;
+
+prog  ::= func 
+         | COMMENT
+         | dcl 
+         | obj;
+
+func ::= type IDENTIFIER LPAREN params RPAREN LCURLY stmts RCURLY;
+
+dcl  ::= type IDENTIFIER ASSIGN exprs SEMI;
+
+obj ::= IDENTIFIER ASSIGN objid LPAREN NUMBER RPAREN SEMI;   
+
+params ::= type IDENTIFIER
+         | type IDENTIFIER COMMA params;
+
+array ::= type IDENTIFIER ASSIGN LCURLY arrvalues RCURLY;
+
+arrvalues ::= value COMMA arrvalues
+	     | value;
+
+compound_stmt ::= RCURLY block LCURLY;
+
+block ::= dcl NEWLINE
+        | stmts NEWLINE
+        | NEWLINE block;
+
+objfunc ::= objid DOT OBJFUNCID SEMI;
+
+objid ::= BUTTON
+      |   LED;
+
+stmts ::= stmt stmts
+      |   EPSILON;
+
+stmt ::= expr_stmt
+       | selection_stmt
+       | iterative_stmt
+       | jump_stmt;
+
+expr_stmt ::= function_call
+            | assignment
+            | print;
+
+function_call ::= IDENTIFIER LPAREN actparams RPAREN;
+
+actparams ::= IDENTIFIER COMMA actparams
+        |  value COMMA actparams
+        | EPSILON;
+
+jump ::= return expr SEMI
+       | break SEMI;
+
+selection_stmt ::= ifstmt;
+
+iterative_stmt ::= whilestmt
+                 | dowhile
+                 | forloop;
+
+/*     | readpin  */
+/*     | writepin */
+
+ifstmt ::= IF LPAREN bool RPAREN block elif;
+
+elif   ::= ELSE ifstmt
+       |   elsestmt
+       |   EPSILON;
+
+elsestmt  ::= ELSE block;
+
+whilestmt ::= WHILE LPAREN BOOLEAN RPAREN block;
+
+dowhile ::= DO block WHILE RPAREN bool LPAREN SEMI;
+
+forloop ::= LOOP NUMBER TIMES block;
+
+switch ::= when RPAREN expr LPAREN RCURLY case_stmt default_stmt LCURLY;
+
+case_expr ::= expr
+            | expr COMMA case_expr;
+
+logop ::= GTHAN
+       |  LTHAN
+       |  EQUALS
+       |  NOTEQ
+       |  GTEQ
+       |  LTEQ;
+          
+assignment ::= IDENTIFIER ASSIGN expr SEMI;
+
+type ::= NUMBER brackets
+     |   STRING brackets
+     |   BOOLEAN brackets
+     |   CHAR brackets;
+
+brackets ::= RSQBRACK NUMBER LSQBRACK
+          |  EPSILON;     
+
+print ::= printtype LPAREN value RPAREN;
+
+printtype ::= PRINT
+          |   PRINTLINE;
+
+wait::= WAIT LPAREN time RPAREN;
+
+time ::= NUMBER timeunit time
+     |   EPSILON;
+     
+timeunit ::= MILSEC
+         |   SEC
+         |   MIN
+         |   HOUR;
+
+value ::= NUMBER
+        | STRING
+        | BOOLEAN
+        | CHAR
+        | IDENTIFIER; 
+
+exprs ::= expr exprs
+        | LPAREN expr RPAREN exprs
+        | EPSILON;
+
+expr ::= expr PLUSOP term
+       | expr SUBOP term
+       | term;
+
+term ::= term TIMESOP factor
+       | term DIVOP factor
+       | factor;
+
+factor ::= expr
+        |  NUMBER
+        |  IDENTIFIER;
+
+bool ::= value logop value nestbool
+       | negate BOOLEAN nestbool
+       | negate LPAREN value logop value RPAREN nestbool;
+
+nestbool ::= logoperands bool
+         |   EPSILON;
+
+logoperands ::= AND
+            |   OR;
+
+negate ::= NEGATION
+        |  EPSILON;
