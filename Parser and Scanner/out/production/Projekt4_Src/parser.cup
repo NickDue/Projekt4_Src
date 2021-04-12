@@ -1,0 +1,171 @@
+parser code {:
+	Lexer lexer;
+	:};
+
+scan with {:
+	return lexer.next_token();
+	:};
+
+
+terminal COMMA, COMMENT, LPAREN, RPAREN, LCURLY, RCURLY, ASSIGN, IF, ELSE, WHILE, DO, LOOP, NUMBER, NEGATION;
+terminal TIMES, STRING, BOOLEAN, CHAR, PRINT, PRINTLINE, MILSEC, SEC, MIN, HOUR, RSQBRACK, LSQBRACK, AND, OR, EPSILON;
+terminal SEMI, IDENTIFIER, DOT, OBJFUNCID, PLUSOP, DIVOP, SUBOP, TIMESOP, GTHAN, LTHAN, EQUALS, GTEQ, LTEQ, NOTEQ, WAIT, BUTTON, LED, NUMTYPE, STRTYPE, CHARTYPE, BOOLTYPE;
+
+non terminal program, programs, prog, params, func, dcl, obj, objfunc, objid, stmts, stmt, ifstmt, elif, switch, when;
+non terminal elsestmt, dowhile, forloop, assignment, type, print, printtype, wait, time, jump, return, break;
+non terminal timeunit, array,value, expr, whilestmt, arrvalues, function_call, actparams, bool;
+non terminal negate, block, compound_stmt, expr_stmt, selection_stmt, iterative_stmt, jump_stmt, nestbool;
+non terminal case_stmt, default_stmt, case_expr, logop, brackets, op;
+
+precedence left TIMESOP, DIVOP;
+precedence left PLUSOP, SUBOP;
+precedence left GTHAN, LTHAN, GTEQ, LTEQ;
+precedence left EQUALS, NOTEQ;
+precedence left AND;
+precedence left OR;
+precedence right ASSIGN;
+precedence nonassoc IDENTIFIER, IF, WHILE, DO, LOOP, PRINT, PRINTLINE, EPSILON, ELSE, RSQBRACK, LSQBRACK;
+
+start with program;
+
+program ::= programs;
+
+programs ::= prog programs
+        |   EPSILON;
+
+prog  ::= func 
+         | COMMENT
+         | dcl 
+         | obj;
+
+func ::= type IDENTIFIER LPAREN params RPAREN LCURLY stmts RCURLY;
+
+dcl  ::= type IDENTIFIER ASSIGN expr SEMI;
+
+obj ::= IDENTIFIER ASSIGN objid LPAREN NUMBER RPAREN SEMI;   
+
+params ::= type IDENTIFIER
+         | type IDENTIFIER COMMA params;
+
+array ::= type IDENTIFIER ASSIGN LCURLY arrvalues RCURLY;
+
+arrvalues ::= value COMMA arrvalues
+	     | value;
+
+compound_stmt ::= RCURLY block LCURLY;
+
+block ::= dcl
+        | stmts;
+
+objfunc ::= objid DOT OBJFUNCID SEMI;
+
+objid ::= BUTTON
+      |   LED;
+
+stmts ::= stmt stmts
+      |   EPSILON;
+
+stmt ::= expr_stmt
+       | selection_stmt
+       | iterative_stmt
+       | jump_stmt;
+
+expr_stmt ::= function_call
+            | assignment
+            | print;
+
+function_call ::= IDENTIFIER LPAREN actparams RPAREN;
+
+actparams ::= IDENTIFIER COMMA actparams
+           |  value COMMA actparams
+           |  EPSILON  ;
+
+jump ::= return expr SEMI
+       | break SEMI;
+
+selection_stmt ::= ifstmt;
+
+iterative_stmt ::= whilestmt
+                 | dowhile
+                 | forloop;
+
+ifstmt ::= IF LPAREN bool RPAREN LSQBRACK block RSQBRACK elif; 
+
+elif   ::= ELSE ifstmt
+       |   elsestmt
+       |   EPSILON;
+
+elsestmt  ::= ELSE LSQBRACK block RSQBRACK;
+
+whilestmt ::= WHILE LPAREN BOOLEAN RPAREN LSQBRACK block RSQBRACK;
+
+dowhile ::= DO LSQBRACK block RSQBRACK WHILE LPAREN bool RPAREN SEMI;
+
+forloop ::= LOOP NUMBER TIMES LSQBRACK block RSQBRACK;
+
+switch ::= when LPAREN bool RPAREN RCURLY case_stmt default_stmt LCURLY;
+
+case_expr ::= expr   /* should just be a character or number etc */
+            | expr COMMA case_expr;
+          
+assignment ::= IDENTIFIER ASSIGN expr SEMI;
+
+type ::= NUMTYPE brackets
+     |   STRTYPE brackets
+     |   BOOLTYPE brackets
+     |   CHARTYPE brackets;
+
+brackets ::= RSQBRACK NUMBER LSQBRACK
+          |  EPSILON ;     
+
+print ::= printtype LPAREN value RPAREN SEMI;
+
+printtype ::= PRINT
+          |   PRINTLINE;
+
+wait::= WAIT LPAREN time RPAREN SEMI;
+
+time ::= NUMBER timeunit time
+     |   EPSILON;
+     
+timeunit ::= MILSEC
+         |   SEC
+         |   MIN
+         |   HOUR;
+
+expr ::= value op expr
+       | value
+       | EPSILON;
+
+
+op ::= PLUSOP
+    | SUBOP
+    | TIMESOP
+    | DIVOP
+    | AND
+    | OR
+    | EPSILON;
+
+bool ::= expr logop expr nestbool
+      | EPSILON;
+
+logop ::= EQUALS
+       | NOTEQ
+       | GTHAN
+       | LTHAN
+       | GTEQ
+       | LTEQ;
+
+nestbool ::= AND bool
+          | OR bool
+          | EPSILON;
+
+negate ::= NEGATION
+        | EPSILON;
+
+value ::= NUMBER
+        | STRING
+        | BOOLEAN
+        | CHAR
+        | IDENTIFIER
+        | LPAREN expr RPAREN;
