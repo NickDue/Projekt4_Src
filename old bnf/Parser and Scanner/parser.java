@@ -9,6 +9,8 @@ import java_cup.runtime.XMLElement;
 import javax.xml.stream.XMLOutputFactory;
 import javax.xml.stream.XMLStreamWriter;
 import java.io.*;
+import java_cup.runtime.*;
+import java_cup.runtime.Symbol;
 import javax.xml.transform.*;
 import javax.xml.transform.stream.*;
 import java_cup.runtime.ComplexSymbolFactory.Location;
@@ -1251,7 +1253,7 @@ class CUP$Parser$actions {
 		Location SEMICOLON5xleft = ((java_cup.runtime.ComplexSymbolFactory.ComplexSymbol)CUP$Parser$stack.peek()).xleft;
 		Location SEMICOLON5xright = ((java_cup.runtime.ComplexSymbolFactory.ComplexSymbol)CUP$Parser$stack.peek()).xright;
 		Object SEMICOLON5 = (Object)((java_cup.runtime.Symbol) CUP$Parser$stack.peek()).value;
-		 RESULT = new CaseNode(t,new StmtListNode(st));
+		 RESULT = new CaseNode(t,new StmtListNode(st))
                 
                 RESULT = new XMLElement.NonTerminal("case_stmt",0,(XMLElement)t,(XMLElement)st);
               CUP$Parser$result = parser.getSymbolFactory().newSymbol("case_stmt",14, ((java_cup.runtime.Symbol)CUP$Parser$stack.elementAt(CUP$Parser$top-5)), ((java_cup.runtime.Symbol)CUP$Parser$stack.peek()), RESULT);
@@ -1277,7 +1279,7 @@ class CUP$Parser$actions {
 		Location SEMICOLON4xleft = ((java_cup.runtime.ComplexSymbolFactory.ComplexSymbol)CUP$Parser$stack.peek()).xleft;
 		Location SEMICOLON4xright = ((java_cup.runtime.ComplexSymbolFactory.ComplexSymbol)CUP$Parser$stack.peek()).xright;
 		Object SEMICOLON4 = (Object)((java_cup.runtime.Symbol) CUP$Parser$stack.peek()).value;
-		 RESULT = new DefaultNode(new StmtListNode(st));
+		 RESULT = new DefaultNode(new StmtListNode(st))
                 
                 RESULT = new XMLElement.NonTerminal("default_stmt",0,(XMLElement)st);
               CUP$Parser$result = parser.getSymbolFactory().newSymbol("default_stmt",15, ((java_cup.runtime.Symbol)CUP$Parser$stack.elementAt(CUP$Parser$top-4)), ((java_cup.runtime.Symbol)CUP$Parser$stack.peek()), RESULT);

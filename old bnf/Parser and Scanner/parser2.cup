@@ -4,6 +4,9 @@ import java_cup.runtime.XMLElement;
 import javax.xml.stream.XMLOutputFactory;
 import javax.xml.stream.XMLStreamWriter;
 import java.io.*;
+import java_cup.runtime.*;
+import java_cup.runtime.Symbol;
+
 
 import javax.xml.transform.*;
 import javax.xml.transform.stream.*;
