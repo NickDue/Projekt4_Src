@@ -8,11 +8,21 @@ decl : varDecl
      | funcDecl
      | objDecl;
 
-varDecl : type ID ('=' exp)? SEMICOLON;
+varDecl : type ID ('=' exp)? SEMICOLON
+        | array;
 
 funcDecl : type ID fParams funcBody;
 
 objDecl : ID '=' objFuncId '(' intLiteral ')' SEMICOLON;
+
+objFunccall : ID '.' objFunccallId;
+
+objFunccallId : 'On()'
+              | 'Off()'
+              | 'Read()'
+              | 'Write()'
+              | 'isOn()'
+              | 'isOff()';
 
 objFuncId : 'BUTTON'
           | 'LED';
@@ -25,7 +35,7 @@ funcBody : '{' varDecl* stmt* '}';
 
 stmt : assignExp SEMICOLON
      | 'print' '(' exp ')' SEMICOLON
-     | 'if' '(' exp ')' '{' stmt* '}' ('elif' '{' stmt* '}')* ('else' '{' stmt* '}')?
+     | 'if' '(' exp ')' '{' stmt* '}' ('elif' '(' stmt* ')' '{' stmt* '}')* ('else' '{' stmt* '}')?
      | 'do' '{' stmt* '}' 'while' '(' exp ')'
      | 'while' '(' exp ')' '{' stmt* '}'
      | 'loop' intLiteral 'TIMES' '{' stmt* '}'
@@ -33,13 +43,14 @@ stmt : assignExp SEMICOLON
      | 'wait' '(' time ')' SEMICOLON
      | 'return' exp? SEMICOLON
      | funccall SEMICOLON 
+     | objFunccall SEMICOLON
      | exp;
 
-time : (intLiteral 'h')? (intLiteral 'm')? (intLiteral 's')? (intLiteral 'ms')? ;
+time : (intLiteral 'h')? (intLiteral 'm' )? (intLiteral 's' )? (intLiteral 'ms' )? ;
 
-case_stmt : 'case' term ':' stmt* 'break' ';';
+case_stmt : term ':' stmt* ';';
 
-default_stmt : 'default' ':' stmt* 'break' ';';
+default_stmt : 'else' ':' stmt* ';';
 
 exp : assignExp
     | exp operand exp
@@ -64,18 +75,18 @@ operand : '+'
         ;    
 
 term : ID
-     | intLiteral
+     | number
      | '"' (ID)* '"' /* mangler flere tegn */
      | 'true' | 'false'
      | '(' exp ')'
      | funccall;    
 
-funccall : ID? '(' aParams ')' SEMICOLON;
+funccall : ID? '(' aParams ')';
 
 aParams : exp
           | exp ',' aParams;
 
-array : type ID '[' intLiteral ']' '=' '{' arrayval (',' arrayval)* '}';
+array : type ID '[' intLiteral ']' ('=' '{' arrayval (',' arrayval)* '}')? SEMICOLON;
 
 arrayval : ID
          | intLiteral
@@ -89,14 +100,11 @@ type : 'number'
      | 'string'
      | 'char';
 
-loc : ID
-    | ID '.' loc;
+ID : [A-Za-z] [A-Za-z0-9]* ;
 
-ID : [A-Za-z]+ ;
+intLiteral : NORMALDIGIT+;
 
-intLiteral : STARTDIGIT NORMALDIGIT*;
-
-floatLiteral : STARTDIGIT? NORMALDIGIT+ '.' NORMALDIGIT+;   
+floatLiteral : NORMALDIGIT+ '.' NORMALDIGIT+;   
 
 NORMALDIGIT : [0-9] ;
 
