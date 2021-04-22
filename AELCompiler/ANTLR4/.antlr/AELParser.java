@@ -1,4 +1,4 @@
-// Generated from c:\Users\meerq\OneDrive\Skrivebord\Projekt4_Src\AEL.g4 by ANTLR 4.8
+// Generated from c:\Users\meerq\OneDrive\Skrivebord\Projekt4_Src\AELCompiler\ANTLR4\AEL.g4 by ANTLR 4.8
 import org.antlr.v4.runtime.atn.*;
 import org.antlr.v4.runtime.dfa.DFA;
 import org.antlr.v4.runtime.*;
