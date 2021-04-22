@@ -1,0 +1,11 @@
+{
+    "java.project.referencedLibraries": [
+        "lib/**/*.jar",
+        "AELCompiler/lib/antlr-4.9.2-complete.jar"
+    ],
+    "java.project.sourcePaths": [
+        "AELCompiler/src/visitors",
+        "AELCompiler/src/ANTLR4",
+        "AELCompiler/src"
+    ]
+}
