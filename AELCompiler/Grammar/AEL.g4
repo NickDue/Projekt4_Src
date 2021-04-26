@@ -1,104 +1,104 @@
 grammar AEL;
 
-program : declList* EOF;
+program : declList* EOF #program; 
 
-declList: decl+;
+declList: decl+ #declarationList;
 
-decl : varDecl
-     | funcDecl
-     | objDecl;
+decl : varDecl #variableDeclaration
+     | funcDecl #functionDeclaration
+     | objDecl #objectDeclaration;
 
-varDecl : type ID ('=' exp)? SEMICOLON
-        | array;
+varDecl : type ID ('=' exp)? SEMICOLON #regularVarDecl
+        | array #arrayVarDecl;
 
-funcDecl : type ID fParams funcBody;
+funcDecl : type ID fParams funcBody #funcDecl;
 
-objDecl : ID '=' objFuncId '(' intLiteral ')' SEMICOLON;
+objDecl : ID '=' objFuncId '(' intLiteral ')' SEMICOLON #objDecl;
 
-objFunccall : ID '.' objFunccallId;
+objFunccall : ID '.' objFunccallId #objectFuncCall;
 
-objFunccallId : 'On()'
-              | 'Off()'
-              | 'Read()'
-              | 'Write()'
-              | 'isOn()'
-              | 'isOff()';
+objFunccallId : 'On()' #objOnId
+              | 'Off()' #objOffId
+              | 'Read()' #objReadId
+              | 'Write()' #objWriteId
+              | 'isOn()' #objIsOnId
+              | 'isOff()' #objIsOffId;
 
-objFuncId : 'BUTTON'
-          | 'LED';
+objFuncId : 'BUTTON' #buttonType
+          | 'LED' #ledType;
 
-fParams : '(' (fParamsDecl (',' fParamsDecl)*)? ')';
+fParams : '(' (fParamsDecl (',' fParamsDecl)*)? ')' #functionParameters;
 
-fParamsDecl : type ID;
+fParamsDecl : type ID #functionParameterDecl;
 
-funcBody : '{' varDecl* stmt* '}';
+funcBody : '{' varDecl* stmt* '}' #functionBody;
 
-stmt : assignExp SEMICOLON
-     | 'print' '(' exp ')' SEMICOLON
-     | 'if' '(' exp ')' '{' stmt* '}' ('elif' '(' stmt* ')' '{' stmt* '}')* ('else' '{' stmt* '}')?
-     | 'do' '{' stmt* '}' 'while' '(' exp ')'
-     | 'while' '(' exp ')' '{' stmt* '}'
-     | 'loop' intLiteral 'TIMES' '{' stmt* '}'
-     | 'when' '(' exp ')' '{' case_stmt* default_stmt? '}'
-     | 'wait' '(' time ')' SEMICOLON
-     | 'return' exp? SEMICOLON
-     | funccall SEMICOLON 
-     | objFunccall SEMICOLON
-     | exp;
+stmt : assignExp SEMICOLON #assignStatement
+     | 'print' '(' exp ')' SEMICOLON #printStatement
+     | 'if' '(' exp ')' '{' stmt* '}' ('elif' '(' stmt* ')' '{' stmt* '}')* ('else' '{' stmt* '}')? #ifStatement
+     | 'do' '{' stmt* '}' 'while' '(' exp ')' #doWhileStatement
+     | 'while' '(' exp ')' '{' stmt* '}' #whileStatement
+     | 'loop' intLiteral 'TIMES' '{' stmt* '}' #loopStatement
+     | 'when' '(' exp ')' '{' case_stmt* default_stmt? '}' #whenStatement
+     | 'wait' '(' time ')' SEMICOLON #waitStatement
+     | 'return' exp? SEMICOLON #returnStatement
+     | funccall SEMICOLON  #functionCallStatement
+     | objFunccall SEMICOLON #ObjectFuncCallStatement
+     | exp #expressionStatement;
 
-time : (intLiteral 'h')? (intLiteral 'm' )? (intLiteral 's' )? (intLiteral 'ms' )? ;
+time : (intLiteral 'h')? (intLiteral 'm' )? (intLiteral 's' )? (intLiteral 'ms' )? #timeFormat;
 
-case_stmt : term ':' stmt* ';';
+case_stmt : term ':' stmt* ';' #caseStatement;
 
-default_stmt : 'else' ':' stmt* ';';
+default_stmt : 'else' ':' stmt* ';' #defaultStatement;
 
-exp : assignExp
-    | exp operand exp
-    | 'NOT' exp
-    | '-' exp
-    | term;
+exp : assignExp #assignExpression
+    | exp operand exp #regularExpression
+    | 'NOT' exp #negatedExpression
+    | '-' exp #negativeExpression
+    | term #termExpression;
 
-assignExp : ID '=' exp;    
+assignExp : ID '=' exp #assignment;    
 
-operand : '+'
-        | '-'
-        | '*'
-        | '/'
-        | 'and'     
-        | 'or'
-        | 'equals'
-        | 'not equals'
-        | '<'
-        | '>'
-        | '<='
-        | '>='
+operand : '+' #plusOperand
+        | '-' #subOperand
+        | '*' #multOperand
+        | '/' #divOperand
+        | 'and' #andOperand     
+        | 'or' #orOperand
+        | 'equals' #equalsOperand
+        | 'not equals' #notEqualsOperand
+        | '<' #lessOperand
+        | '>' #greaterOperand
+        | '<=' #lessEqualOperand
+        | '>=' #greaterEqualOperand
         ;    
 
-term : ID
-     | number
-     | '"' (ID)* '"' /* mangler flere tegn */
-     | 'true' | 'false'
-     | '(' exp ')'
-     | funccall;    
+term : ID #termIdentifier
+     | number #termNumber
+     | '"' .* '"' #stringTerm
+     | 'true' #trueTerm| 'false' #falseTerm
+     | '(' exp ')' #paranExpressionTerm
+     | funccall #functionCallTerm;    
 
-funccall : ID? '(' aParams ')';
+funccall : ID? '(' aParams ')' #functionCall;
 
-aParams : exp
-          | exp ',' aParams;
+aParams : exp #arrayParamExp
+          | exp ',' aParams #arrayParamExpressions;
 
-array : type ID '[' intLiteral ']' ('=' '{' arrayval (',' arrayval)* '}')? SEMICOLON;
+array : type ID '[' intLiteral ']' ('=' '{' arrayval (',' arrayval)* '}')? SEMICOLON #arrayDeclaration;
 
-arrayval : ID
-         | intLiteral
-         | '"' (ID)* '"' /* mangler flere tegn */
-         | 'true' 
-         | 'false';
+arrayval : ID #idArrayValue
+         | intLiteral #intArrayValue
+         | '"' .* '"' #stringArrayValue
+         | 'true' #trueArrayValue
+         | 'false' #falseArrayValue;
 
-type : 'number'
-     | 'bool'
-     | 'void'
-     | 'string'
-     | 'char';
+type : 'number' #numberType
+     | 'bool' #booleanType
+     | 'void' #voidType
+     | 'string' #stringType
+     | 'char' #characterType;
 
 ID : [A-Za-z] [A-Za-z0-9]* ;
 
@@ -110,8 +110,8 @@ NORMALDIGIT : [0-9] ;
 
 STARTDIGIT : [1-9] ;
 
-number : intLiteral
-       | floatLiteral;
+number : intLiteral #intLiteralNumber
+       | floatLiteral #floatLiteralNumber;
 
 SEMICOLON : ';' ;       
 
