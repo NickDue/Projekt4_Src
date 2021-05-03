@@ -1,118 +1,159 @@
 grammar AEL;
 
-program : declList* EOF #program; 
+program : decl*; 
 
-declList: decl+ #declarationList;
+decl : varDecl 
+     | funcDecl 
+     | objDecl ;
 
-decl : varDecl #variableDeclaration
-     | funcDecl #functionDeclaration
-     | objDecl #objectDeclaration;
+varDecl : type ID (ASSIGN exp)? SEMICOLON 
+        | array ;
 
-varDecl : type ID ('=' exp)? SEMICOLON #regularVarDecl
-        | array #arrayVarDecl;
+funcDecl : type ID fParams funcBody ;
 
-funcDecl : type ID fParams funcBody #funcDecl;
+objDecl : ID ASSIGN objFuncId LPAREN intLiteral RPAREN SEMICOLON ;
 
-objDecl : ID '=' objFuncId '(' intLiteral ')' SEMICOLON #objDecl;
+objFunccall : ID '.' objFunccallId ;
 
-objFunccall : ID '.' objFunccallId #objectFuncCall;
+objFunccallId : ONFUNC
+              | OFFFUNC 
+              | READFUNC 
+              | WRITEFUNC 
+              | ISONFUNC
+              | ISOFFFUNC ;
 
-objFunccallId : 'On()' #objOnId
-              | 'Off()' #objOffId
-              | 'Read()' #objReadId
-              | 'Write()' #objWriteId
-              | 'isOn()' #objIsOnId
-              | 'isOff()' #objIsOffId;
+objFuncId : BUTTON 
+          | LED;
 
-objFuncId : 'BUTTON' #buttonType
-          | 'LED' #ledType;
+fParams : LPAREN (fParamsDecl (',' fParamsDecl)*)? RPAREN;
 
-fParams : '(' (fParamsDecl (',' fParamsDecl)*)? ')' #functionParameters;
+fParamsDecl : type ID ;
 
-fParamsDecl : type ID #functionParameterDecl;
+funcBody : LCURLY varDecl* stmt* RCURLY ;
 
-funcBody : '{' varDecl* stmt* '}' #functionBody;
+stmt : assignExp SEMICOLON 
+     | 'print' LPAREN exp RPAREN SEMICOLON 
+     | 'if' LPAREN exp RPAREN LCURLY stmt* RCURLY ('elif' LPAREN stmt* RPAREN LCURLY stmt* RCURLY)* ('else' LCURLY stmt* RCURLY)?
+     | 'do' LCURLY stmt* RCURLY 'while' LPAREN exp RPAREN 
+     | 'while' LPAREN exp RPAREN LCURLY stmt* RCURLY 
+     | 'loop' intLiteral 'TIMES' LCURLY stmt* RCURLY
+     | 'when' LPAREN exp RPAREN LCURLY case_stmt* default_stmt? RCURLY 
+     | 'wait' LPAREN time RPAREN SEMICOLON
+     | 'return' exp? SEMICOLON 
+     | funccall SEMICOLON  
+     | objFunccall SEMICOLON 
+     | exp ;
 
-stmt : assignExp SEMICOLON #assignStatement
-     | 'print' '(' exp ')' SEMICOLON #printStatement
-     | 'if' '(' exp ')' '{' stmt* '}' ('elif' '(' stmt* ')' '{' stmt* '}')* ('else' '{' stmt* '}')? #ifStatement
-     | 'do' '{' stmt* '}' 'while' '(' exp ')' #doWhileStatement
-     | 'while' '(' exp ')' '{' stmt* '}' #whileStatement
-     | 'loop' intLiteral 'TIMES' '{' stmt* '}' #loopStatement
-     | 'when' '(' exp ')' '{' case_stmt* default_stmt? '}' #whenStatement
-     | 'wait' '(' time ')' SEMICOLON #waitStatement
-     | 'return' exp? SEMICOLON #returnStatement
-     | funccall SEMICOLON  #functionCallStatement
-     | objFunccall SEMICOLON #ObjectFuncCallStatement
-     | exp #expressionStatement;
+time : (intLiteral 'h')? (intLiteral 'm' )? (intLiteral 's' )? (intLiteral 'ms' )?;
 
-time : (intLiteral 'h')? (intLiteral 'm' )? (intLiteral 's' )? (intLiteral 'ms' )? #timeFormat;
+case_stmt : term COLON stmt* ';';
 
-case_stmt : term ':' stmt* ';' #caseStatement;
+default_stmt : 'else' COLON stmt* ';';
 
-default_stmt : 'else' ':' stmt* ';' #defaultStatement;
+exp : assignExp
+    | exp operand exp
+    | 'NOT' exp 
+    | '-' exp 
+    | term ;
 
-exp : assignExp #assignExpression
-    | exp operand exp #regularExpression
-    | 'NOT' exp #negatedExpression
-    | '-' exp #negativeExpression
-    | term #termExpression;
+assignExp : ID '=' exp;    
 
-assignExp : ID '=' exp #assignment;    
-
-operand : '+' #plusOperand
-        | '-' #subOperand
-        | '*' #multOperand
-        | '/' #divOperand
-        | 'and' #andOperand     
-        | 'or' #orOperand
-        | 'equals' #equalsOperand
-        | 'not equals' #notEqualsOperand
-        | '<' #lessOperand
-        | '>' #greaterOperand
-        | '<=' #lessEqualOperand
-        | '>=' #greaterEqualOperand
+operand : PLUSOP
+        | SUBOP
+        | MULTOP
+        | DIVOP
+        | ANDOP   
+        | OROP
+        | EQUALOP   
+        | NOTEQUALOP
+        | LESSOP
+        | GREATEROP
+        | LESSSEQUALSOP
+        | GREATEREQUALSOP
         ;    
 
-term : ID #termIdentifier
-     | number #termNumber
-     | '"' .* '"' #stringTerm
-     | 'true' #trueTerm| 'false' #falseTerm
-     | '(' exp ')' #paranExpressionTerm
-     | funccall #functionCallTerm;    
+term : ID 
+     | number 
+     | '"' .*? '"'
+     | TRUETERM | FALSETERM
+     | LPAREN exp RPAREN 
+     | funccall ;    
 
-funccall : ID? '(' aParams ')' #functionCall;
+funccall : ID? LPAREN aParams RPAREN ;
 
-aParams : exp #arrayParamExp
-          | exp ',' aParams #arrayParamExpressions;
+aParams : exp 
+          | exp ',' aParams ;
 
-array : type ID '[' intLiteral ']' ('=' '{' arrayval (',' arrayval)* '}')? SEMICOLON #arrayDeclaration;
+array : type ID LSQ intLiteral RSQ ('=' LCURLY arrayval (',' arrayval)* RCURLY)? SEMICOLON;
 
-arrayval : ID #idArrayValue
-         | intLiteral #intArrayValue
-         | '"' .* '"' #stringArrayValue
-         | 'true' #trueArrayValue
-         | 'false' #falseArrayValue;
+arrayval : ID 
+         | intLiteral 
+         | '"' .*? '"'
+         | TRUETERM 
+         | FALSETERM;
 
-type : 'number' #numberType
-     | 'bool' #booleanType
-     | 'void' #voidType
-     | 'string' #stringType
-     | 'char' #characterType;
+type : NUMBERTYPE
+     | BOOLEANTYPE
+     | VOIDTYPE
+     | STRINGTYPE
+     | CHARACTERTYPE ;
 
 ID : [A-Za-z] [A-Za-z0-9]* ;
 
 intLiteral : NORMALDIGIT+;
 
-floatLiteral : NORMALDIGIT+ '.' NORMALDIGIT+;   
+floatLiteral : NORMALDIGIT+ '.' NORMALDIGIT+ ;   
 
 NORMALDIGIT : [0-9] ;
 
 STARTDIGIT : [1-9] ;
 
-number : intLiteral #intLiteralNumber
-       | floatLiteral #floatLiteralNumber;
+number : intLiteral 
+       | floatLiteral ;
 
 SEMICOLON : ';' ;       
 
 WS : [ \t\r\n]+ -> skip ;
+
+PLUSOP: '+';
+SUBOP: '-' ;
+MULTOP: '*';
+DIVOP: '/';
+ANDOP : 'and';
+OROP :'or';
+EQUALOP: 'equals';
+NOTEQUALOP: 'not equals';
+LESSOP :'<'; 
+GREATEROP: '>'; 
+LESSSEQUALSOP:'<='; 
+GREATEREQUALSOP: '>=';
+
+TRUETERM: 'true';
+FALSETERM: 'false';
+
+NUMBERTYPE: 'number';
+BOOLEANTYPE:'bool';
+VOIDTYPE:'void';
+STRINGTYPE:'string';
+CHARACTERTYPE :'char' ;
+
+ONFUNC: 'On()'; 
+OFFFUNC:'Off()'; 
+READFUNC:'Read()';
+WRITEFUNC:'Write()'; 
+ISONFUNC:'isOn()'; 
+ISOFFFUNC:'isOff()'; 
+
+ASSIGN: '=';
+COLON: ':';
+
+LPAREN: '(';
+RPAREN: ')';
+
+LCURLY: '{';
+RCURLY: '}';
+LSQ: '[';
+RSQ: ']';
+
+BUTTON: 'BUTTON';
+LED: 'LED';

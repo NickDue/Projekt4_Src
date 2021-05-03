@@ -15,7 +15,7 @@ public class AssignmentNode extends ASTNode implements IAccept {
         this.children.add(new IdentificationNode(this, id));
     }
 
-    public AssignmentNode(ASTNode parent, String id, String valIndex, ASTNode child){
+    public AssignmentNode(ASTNode parent, String id, String valIndex){
         this(parent);
         this.children.add(new IdentificationNode(this, id));
         this.children.add(new SubscriptingNode(this, valIndex));

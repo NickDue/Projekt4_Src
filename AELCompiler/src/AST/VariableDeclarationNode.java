@@ -2,14 +2,14 @@ package AST;
 
 import AST.visitors.IVisitor;
 
-public class NumberDeclarationNode extends DeclarationNode {
+public class VariableDeclarationNode extends DeclarationNode {
 
-    public NumberDeclarationNode(ASTNode parentNode) {
+    public VariableDeclarationNode(ASTNode parentNode) {
         super(parentNode);
         //type = new NumberTypeDescriptor();
     }
 
-    public NumberDeclarationNode(ASTNode parent, String name, ASTNode expression) {
+    public VariableDeclarationNode(ASTNode parent, String name, ASTNode expression) {
         super(parent, name, expression);
         //type = new NumberTypeDescriptor();
         //children.get(0).type = type;

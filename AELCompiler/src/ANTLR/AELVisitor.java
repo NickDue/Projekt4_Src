@@ -17,12 +17,6 @@ public interface AELVisitor<T> extends ParseTreeVisitor<T> {
 	 */
 	T visitProgram(AELParser.ProgramContext ctx);
 	/**
-	 * Visit a parse tree produced by {@link AELParser#declList}.
-	 * @param ctx the parse tree
-	 * @return the visitor result
-	 */
-	T visitDeclList(AELParser.DeclListContext ctx);
-	/**
 	 * Visit a parse tree produced by {@link AELParser#decl}.
 	 * @param ctx the parse tree
 	 * @return the visitor result
