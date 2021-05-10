@@ -2,12 +2,12 @@ package AST;
 
 import AST.visitors.IVisitor;
 
-public class SubscriptingAssignementNode extends AssignmentNode {
+public class FunctionBodyNode extends ASTNode {
 
-    public SubscriptingAssignementNode(ASTNode parentNode) {
+    public FunctionBodyNode(ASTNode parentNode) {
         super(parentNode);
     }
-    
+
     @Override
     public void accept(IVisitor visitor) {
         visitor.visit(this);

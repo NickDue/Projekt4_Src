@@ -1,9 +1,8 @@
 package AST;
 
-import AST.visitors.IAccept;
 import AST.visitors.IVisitor;
 
-public class ValueIndexNode extends ASTNode implements IAccept {
+public class ValueIndexNode extends ASTNode {
 
     public String id;
     public int indexA = -1;

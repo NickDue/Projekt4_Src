@@ -1,9 +1,8 @@
 package AST;
 
-import AST.visitors.IAccept;
 import AST.visitors.IVisitor;
 
-public class StringNode extends ASTNode implements IAccept {
+public class StringNode extends ASTNode {
 
     public String string;
 

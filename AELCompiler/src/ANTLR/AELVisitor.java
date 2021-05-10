@@ -83,6 +83,66 @@ public interface AELVisitor<T> extends ParseTreeVisitor<T> {
 	 */
 	T visitStmt(AELParser.StmtContext ctx);
 	/**
+	 * Visit a parse tree produced by {@link AELParser#printStmt}.
+	 * @param ctx the parse tree
+	 * @return the visitor result
+	 */
+	T visitPrintStmt(AELParser.PrintStmtContext ctx);
+	/**
+	 * Visit a parse tree produced by {@link AELParser#ifStmt}.
+	 * @param ctx the parse tree
+	 * @return the visitor result
+	 */
+	T visitIfStmt(AELParser.IfStmtContext ctx);
+	/**
+	 * Visit a parse tree produced by {@link AELParser#elseIfStmt}.
+	 * @param ctx the parse tree
+	 * @return the visitor result
+	 */
+	T visitElseIfStmt(AELParser.ElseIfStmtContext ctx);
+	/**
+	 * Visit a parse tree produced by {@link AELParser#elseStmt}.
+	 * @param ctx the parse tree
+	 * @return the visitor result
+	 */
+	T visitElseStmt(AELParser.ElseStmtContext ctx);
+	/**
+	 * Visit a parse tree produced by {@link AELParser#doWhileStmt}.
+	 * @param ctx the parse tree
+	 * @return the visitor result
+	 */
+	T visitDoWhileStmt(AELParser.DoWhileStmtContext ctx);
+	/**
+	 * Visit a parse tree produced by {@link AELParser#whileStmt}.
+	 * @param ctx the parse tree
+	 * @return the visitor result
+	 */
+	T visitWhileStmt(AELParser.WhileStmtContext ctx);
+	/**
+	 * Visit a parse tree produced by {@link AELParser#loopStmt}.
+	 * @param ctx the parse tree
+	 * @return the visitor result
+	 */
+	T visitLoopStmt(AELParser.LoopStmtContext ctx);
+	/**
+	 * Visit a parse tree produced by {@link AELParser#whenStmt}.
+	 * @param ctx the parse tree
+	 * @return the visitor result
+	 */
+	T visitWhenStmt(AELParser.WhenStmtContext ctx);
+	/**
+	 * Visit a parse tree produced by {@link AELParser#waitStmt}.
+	 * @param ctx the parse tree
+	 * @return the visitor result
+	 */
+	T visitWaitStmt(AELParser.WaitStmtContext ctx);
+	/**
+	 * Visit a parse tree produced by {@link AELParser#returnStmt}.
+	 * @param ctx the parse tree
+	 * @return the visitor result
+	 */
+	T visitReturnStmt(AELParser.ReturnStmtContext ctx);
+	/**
 	 * Visit a parse tree produced by {@link AELParser#time}.
 	 * @param ctx the parse tree
 	 * @return the visitor result
@@ -107,17 +167,35 @@ public interface AELVisitor<T> extends ParseTreeVisitor<T> {
 	 */
 	T visitExp(AELParser.ExpContext ctx);
 	/**
+	 * Visit a parse tree produced by {@link AELParser#addexpr}.
+	 * @param ctx the parse tree
+	 * @return the visitor result
+	 */
+	T visitAddexpr(AELParser.AddexprContext ctx);
+	/**
+	 * Visit a parse tree produced by {@link AELParser#multexpr}.
+	 * @param ctx the parse tree
+	 * @return the visitor result
+	 */
+	T visitMultexpr(AELParser.MultexprContext ctx);
+	/**
+	 * Visit a parse tree produced by {@link AELParser#logStmt}.
+	 * @param ctx the parse tree
+	 * @return the visitor result
+	 */
+	T visitLogStmt(AELParser.LogStmtContext ctx);
+	/**
+	 * Visit a parse tree produced by {@link AELParser#logOp}.
+	 * @param ctx the parse tree
+	 * @return the visitor result
+	 */
+	T visitLogOp(AELParser.LogOpContext ctx);
+	/**
 	 * Visit a parse tree produced by {@link AELParser#assignExp}.
 	 * @param ctx the parse tree
 	 * @return the visitor result
 	 */
 	T visitAssignExp(AELParser.AssignExpContext ctx);
-	/**
-	 * Visit a parse tree produced by {@link AELParser#operand}.
-	 * @param ctx the parse tree
-	 * @return the visitor result
-	 */
-	T visitOperand(AELParser.OperandContext ctx);
 	/**
 	 * Visit a parse tree produced by {@link AELParser#term}.
 	 * @param ctx the parse tree

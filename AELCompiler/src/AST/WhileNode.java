@@ -1,9 +1,8 @@
 package AST;
 
-import AST.visitors.IAccept;
 import AST.visitors.IVisitor;
 
-public class WhileNode extends StatementNode implements IAccept {
+public class WhileNode extends StatementNode {
 
     public WhileNode(ASTNode parentNode) {
         super(parentNode);
@@ -15,10 +14,8 @@ public class WhileNode extends StatementNode implements IAccept {
         children.add(statements);
     }
 
-    @Override
     public void accept(IVisitor visitor) {
         visitor.visit(this);
-        
     }
     
 }

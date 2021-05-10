@@ -2,10 +2,9 @@ package AST;
 
 import java.util.ArrayList;
 
-import AST.visitors.IAccept;
 import AST.visitors.IVisitor;
 
-public class SubscriptingNode extends ASTNode implements IAccept {
+public class SubscriptingNode extends ASTNode {
 
     public ArrayList<Integer> index;
 

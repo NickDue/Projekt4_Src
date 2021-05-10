@@ -6,7 +6,7 @@ decl : varDecl
      | funcDecl 
      | objDecl ;
 
-varDecl : type ID (ASSIGN exp)? SEMICOLON 
+varDecl : type ID (<assoc=right>ASSIGN exp)? SEMICOLON 
         | array ;
 
 funcDecl : type ID fParams funcBody ;
@@ -31,55 +31,73 @@ fParamsDecl : type ID ;
 
 funcBody : LCURLY varDecl* stmt* RCURLY ;
 
-stmt : assignExp SEMICOLON 
-     | 'print' LPAREN exp RPAREN SEMICOLON 
-     | 'if' LPAREN exp RPAREN LCURLY stmt* RCURLY ('elif' LPAREN stmt* RPAREN LCURLY stmt* RCURLY)* ('else' LCURLY stmt* RCURLY)?
-     | 'do' LCURLY stmt* RCURLY 'while' LPAREN exp RPAREN 
-     | 'while' LPAREN exp RPAREN LCURLY stmt* RCURLY 
-     | 'loop' intLiteral 'TIMES' LCURLY stmt* RCURLY
-     | 'when' LPAREN exp RPAREN LCURLY case_stmt* default_stmt? RCURLY 
-     | 'wait' LPAREN time RPAREN SEMICOLON
-     | 'return' exp? SEMICOLON 
+stmt : assignExp SEMICOLON
+     | printStmt
+     | ifStmt
+     | doWhileStmt
+     | whileStmt
+     | loopStmt
+     | whenStmt
+     | waitStmt
+     | returnStmt 
      | funccall SEMICOLON  
      | objFunccall SEMICOLON 
      | exp ;
+
+printStmt : PRINT LPAREN exp RPAREN SEMICOLON ;
+
+ifStmt: IF LPAREN logStmt RPAREN LCURLY stmt* RCURLY elseIfStmt* elseStmt?;
+
+elseIfStmt: ELIF LPAREN logStmt RPAREN LCURLY stmt* RCURLY;
+
+elseStmt: ELSE LCURLY stmt* RCURLY;
+
+doWhileStmt: DO LCURLY stmt* RCURLY WHILE LPAREN logStmt RPAREN ;
+
+whileStmt: WHILE LPAREN logStmt RPAREN LCURLY stmt* RCURLY ;
+
+loopStmt: LOOP intLiteral TIMES LCURLY stmt* RCURLY;
+
+whenStmt: WHEN LPAREN exp RPAREN LCURLY case_stmt* default_stmt? RCURLY ;
+
+waitStmt: WAIT LPAREN time RPAREN SEMICOLON;
+
+returnStmt: RETURN exp? SEMICOLON ;
 
 time : (intLiteral 'h')? (intLiteral 'm' )? (intLiteral 's' )? (intLiteral 'ms' )?;
 
 case_stmt : term COLON stmt* ';';
 
 default_stmt : 'else' COLON stmt* ';';
-
+     
 exp : assignExp
-    | exp operand exp
-    | 'NOT' exp 
-    | '-' exp 
+    | addexpr
+    | <assoc=right>'NOT' exp 
+    | <assoc=right>'-' exp 
     | term ;
 
-assignExp : ID '=' exp;    
+addexpr : multexpr 
+        | multexpr op=(PLUSOP | SUBOP) addexpr
+        ;
 
-operand : PLUSOP
-        | SUBOP
-        | MULTOP
-        | DIVOP
-        | ANDOP   
-        | OROP
-        | EQUALOP   
-        | NOTEQUALOP
-        | LESSOP
-        | GREATEROP
-        | LESSSEQUALSOP
-        | GREATEREQUALSOP
-        ;    
+multexpr : term
+         | term op=(MULTOP | DIVOP) multexpr
+         ;
+
+logStmt : addexpr logOp addexpr;
+
+logOp : op=(EQUALOP | GREATEROP | LESSOP | GREATEREQUALSOP | LESSSEQUALSOP | NOTEQUALOP | ANDOP | OROP);
+
+assignExp : ID ASSIGN exp;        
 
 term : ID 
      | number 
-     | '"' .*? '"'
+     | STRINGLITERTAL
      | TRUETERM | FALSETERM
      | LPAREN exp RPAREN 
      | funccall ;    
 
-funccall : ID? LPAREN aParams RPAREN ;
+funccall : ID LPAREN aParams RPAREN ;
 
 aParams : exp 
           | exp ',' aParams ;
@@ -88,7 +106,7 @@ array : type ID LSQ intLiteral RSQ ('=' LCURLY arrayval (',' arrayval)* RCURLY)?
 
 arrayval : ID 
          | intLiteral 
-         | '"' .*? '"'
+         | STRINGLITERTAL
          | TRUETERM 
          | FALSETERM;
 
@@ -103,6 +121,8 @@ ID : [A-Za-z] [A-Za-z0-9]* ;
 intLiteral : NORMALDIGIT+;
 
 floatLiteral : NORMALDIGIT+ '.' NORMALDIGIT+ ;   
+
+STRINGLITERTAL : '"' .*? '"' ;
 
 NORMALDIGIT : [0-9] ;
 
@@ -157,3 +177,15 @@ RSQ: ']';
 
 BUTTON: 'BUTTON';
 LED: 'LED';
+
+PRINT: 'print';
+IF: 'if';
+ELIF: 'elif';
+ELSE: 'else';
+DO: 'do';
+WHILE: 'while';
+LOOP: 'loop';
+TIMES: 'times';
+WHEN: 'when';
+WAIT: 'wait';
+RETURN: 'return';

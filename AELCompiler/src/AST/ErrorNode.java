@@ -1,13 +1,13 @@
 package AST;
 
-import AST.visitors.IAccept;
 import AST.visitors.IVisitor;
+import SymbolTable.typeDescriptors.ErrorTypeDescriptor;
 
-public class ErrorNode extends ASTNode implements IAccept {
+public class ErrorNode extends ASTNode{
 
     public ErrorNode(ASTNode parentNode, String str) {
         super(parentNode);
-       // type = new ErrorTypeDescriptor(str); TODO: denne mangler vi
+        type = new ErrorTypeDescriptor(str);
     }
 
     @Override

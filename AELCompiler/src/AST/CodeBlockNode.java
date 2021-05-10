@@ -1,9 +1,8 @@
 package AST;
 
-import AST.visitors.IAccept;
 import AST.visitors.IVisitor;
 
-public class CodeBlockNode extends ASTNode implements IAccept {
+public class CodeBlockNode extends ASTNode {
 
     public CodeBlockNode(ASTNode parentNode) {
         super(parentNode);

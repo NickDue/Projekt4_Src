@@ -3,6 +3,7 @@ package AST;
 import java.util.ArrayList;
 import java.util.List;
 
+import AST.visitors.IVisitor;
 import SymbolTable.typeDescriptors.TypeDescriptor;
 
 public abstract class ASTNode {
@@ -18,4 +19,6 @@ public abstract class ASTNode {
         parent = parentNode;
         children = new ArrayList<ASTNode>();
     }
+
+    public abstract void accept(IVisitor visitor);
 }

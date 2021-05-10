@@ -1,12 +1,11 @@
 package AST;
 
-import AST.visitors.IAccept;
 import AST.visitors.IVisitor;
-//import SymbolTable.attributes.Attributes;
+import SymbolTable.attributes.*;
 
-public class IdentificationNode extends ASTNode implements IAccept {
+public class IdentificationNode extends ASTNode {
     public String name;
-    //public Attributes attributesRef;
+    public Attributes attributesRef;
 
     public IdentificationNode(ASTNode parentNode) {
         super(parentNode);
