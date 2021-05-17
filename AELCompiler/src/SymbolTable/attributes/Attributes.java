@@ -8,6 +8,9 @@ public abstract class Attributes {
     public ArrayList<Attributes> level;
     public Attributes var; // TODO: Redo
     public int depth;
+    public int pinNumber;
+    public ObjectKind objectKind;
+    public int formalParamsCount;
 
     public Attributes() { }
 

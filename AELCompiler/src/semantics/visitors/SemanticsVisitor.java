@@ -3,6 +3,7 @@ package semantics.visitors;
 import AST.*;
 import semantics.NodeVisitor;
 import SymbolTable.SymbolTable;
+import SymbolTable.attributes.AttributeKind;
 import SymbolTable.attributes.VariableAttributes;
 import SymbolTable.typeDescriptors.*;
 
@@ -13,36 +14,10 @@ public class SemanticsVisitor extends NodeVisitor  {
         symTable = symT;
     }
     
-    public void checkBoolean(ASTNode node) {
-        if(node.type.kind == TypeDescriptorKind.error){
-            /* Do nothing - no need to check if an error is found */
-        }
-        
-        else if(node.children.get(0).type.kind != node.children.get(1).type.kind){
+    public void checkBoolean(ASTNode node, int node0, int node1) {
+        if(node.children.get(node0).type.kind != node.children.get(node1).type.kind){
             node.type = new ErrorTypeDescriptor("at line " + node.lineNumber + ":" + node.charPosition + "," + 
                         "conditions are not of the same type", node);
-        }
-    }
-
-    /* Er sku ikke hel sikker på denne her, da vi både har object declarations og variable declarations */
-    @Override
-    public void visit(AssignmentNode node) {
-        IdentificationNode id = (IdentificationNode)node.children.get(0);
-        ASTNode expression = node.children.get(1);
-
-        // Do Semantic-analysis on children
-        visitChildren(node);
-
-        // Check if the expression can be assigned to th variable
-        if(id.type.kind == TypeDescriptorKind.error || expression.type.kind == TypeDescriptorKind.error) {
-            // If the children already contain errors don't add another one. They are more specific.
-        } else if(id.type.isAssignable(expression.type)) {
-            ((VariableAttributes)id.attributesRef).variableType = expression.type;
-            node.type = expression.type;
-        } else {
-            node.type = new ErrorTypeDescriptor("at line " + node.lineNumber + ":" + node.charPosition + "," +  "'" +
-                    id.name + "'" + " cannot be assigned value of type " + "'" +
-                    expression.type.kind.toString() + "'", node);
         }
     }
 
@@ -83,34 +58,40 @@ public class SemanticsVisitor extends NodeVisitor  {
         visitChildren(node);
     }
 
-    @Override
-    public void visit(SubscriptingNode node) {
-        visitChildren(node);
-    }
-
-    @Override
-    public void visit(ValueIndexNode node) {
-        visitChildren(node);
-    }
 
 
     @Override
     public void visit(ObjectDeclarationNode node) {
-        visitChildren(node);
-        
+        node.accept(new TopDeclVisitor(symTable));
     }
 
 
     @Override
     public void visit(FunctionDeclarationNode node) {
-        visitChildren(node);
-        
+        node.accept(new TopDeclVisitor(symTable));
     }
 
     @Override
     public void visit(FunctionParamsNode node) {
         visitChildren(node);
-        
+    }
+    
+
+    /* number a, string e, bool kl */
+    @Override
+    public void visit(FunctionParamsDeclNode node) {
+        ASTNode exp = node.children.get(0);
+        IdentificationNode id = (IdentificationNode)node.children.get(1);
+        if(node.children.size() != 2){
+            node.type = new ErrorTypeDescriptor("at line " + node.lineNumber + ":" + node.charPosition + ","
+                 + "is either missing a type or an id!", node);
+        } else {
+            VariableAttributes attr = new VariableAttributes();
+            attr.kind = AttributeKind.variableAttributes;         
+            attr.variableType = exp.type;                         
+            id.attributesRef = attr;                              
+            symTable.enterSymbol(id.name, attr);
+        }
     }
 
     @Override
@@ -125,13 +106,28 @@ public class SemanticsVisitor extends NodeVisitor  {
 
     @Override
     public void visit(VariableDeclarationNode node) {
-        visitChildren(node);
-        
+        visit((DeclarationNode) node);
     }
 
     @Override
     public void visit(AssignExpressionNode node) {
+        IdentificationNode id = (IdentificationNode)node.children.get(0);
+        ASTNode expression = node.children.get(1);
+
+        // Do Semantic-analysis on children
         visitChildren(node);
+
+        // Check if the expression can be assigned to th variable
+        if(id.type.kind == TypeDescriptorKind.error || expression.type.kind == TypeDescriptorKind.error) {
+            // If the children already contain errors don't add another one. They are more specific.
+        } else if(id.type.isAssignable(expression.type)) {
+            ((VariableAttributes)id.attributesRef).variableType = expression.type;
+            node.type = expression.type;
+        } else {
+            node.type = new ErrorTypeDescriptor("at line " + node.lineNumber + ":" + node.charPosition + "," +  "'" +
+                    id.name + "'" + " cannot be assigned value of type " + "'" +
+                    expression.type.kind.toString() + "'", node);
+        }
     }
 
     @Override
@@ -141,6 +137,8 @@ public class SemanticsVisitor extends NodeVisitor  {
 
     @Override
     public void visit(ArrayNode node) {
+        node.accept(new TopDeclVisitor(symTable));
+
         visitChildren(node);
     }
 
@@ -176,7 +174,19 @@ public class SemanticsVisitor extends NodeVisitor  {
 
     @Override
     public void visit(FunctionCallNode node) {
+        if(node.children.get(0) != null){
+            String name = node.children.getClass().getSimpleName();
+            if(node.children.get(2).children.size() != symTable.retrieveSymbol(name).formalParamsCount){
+                node.type = new ErrorTypeDescriptor("at line" + node.lineNumber + ":" + node.charPosition + "," + "number of actual parameters does not match the formal parameters");
+            }
+        }
+        
         visitChildren(node);
+
+        //check om id ligger i symbol table
+        //check om størrelsen af dens børn er ens
+        //check hvert børns type
+
     }
 
     @Override
@@ -231,7 +241,7 @@ public class SemanticsVisitor extends NodeVisitor  {
     @Override
     public void visit(LogicalExpressionNode node) {
         visitChildren(node);
-        checkBoolean(node);
+        checkBoolean(node, 0, 1);
     }
 
     public void visit(AdditionExpressionNode node) {
@@ -244,7 +254,7 @@ public class SemanticsVisitor extends NodeVisitor  {
        visitChildren(node);
 
        // Confirm that the specified condition is indeed a boolean-expression
-       checkBoolean(node.children.get(0));
+       checkBoolean(node.children.get(0), 0 ,1);
     }
 
     @Override
@@ -261,7 +271,7 @@ public class SemanticsVisitor extends NodeVisitor  {
 
     @Override
     public void visit(DivisionExpressionNode node) {
-        node.accept(new TopDeclVisitor(symTable));
+        visit((BinaryExpressionNode)node);
     }
 
     @Override
@@ -274,6 +284,78 @@ public class SemanticsVisitor extends NodeVisitor  {
         // Do semantic-analysis of children
         visitChildren(node);
     }
+
+    @Override
+    public void visit(DeclarationNode node) {
+        node.accept(new TopDeclVisitor(symTable));
+    }
+
+    @Override
+    public void visit(IntLiteralNode node) {
+        visitChildren(node);
+    }
+
+    @Override
+    public void visit(ElseStmtNode node) {
+        visitChildren(node);
+    }
+
+    @Override
+    public void visit(MultiplicationExpressionNode node) {
+        visitChildren(node);
+    }
+
+    @Override
+    public void visit(FloatLiteralNode node) {
+        visitChildren(node);
+    }
+
+    @Override
+    public void visit(DoWhileNode node) {
+        visitChildren(node);
+    }
+
+    @Override
+    public void visit(LoopStmtNode node) {
+        visitChildren(node);
+    }
+
+    @Override
+    public void visit(WhenNode node) {
+        visitChildren(node);
+    }
+
+    @Override
+    public void visit(WaitNode node) {
+        visitChildren(node);
+    }
+
+    @Override
+    public void visit(ReturnNode node) {
+        visitChildren(node);
+    }
+
+    @Override
+    public void visit(ObjFuncallStmtNode node) {
+        visitChildren(node);
+    }
+
+    @Override
+    public void visit(TimeNode node) {
+        visitChildren(node);
+    }
+
+    @Override
+    public void visit(CaseNode node) {
+        visitChildren(node);
+    }
+
+    @Override
+    public void visit(DefaultNode node) {
+        visitChildren(node);
+    }
+
+
 
     
 

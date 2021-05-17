@@ -1,4 +1,4 @@
-// Generated from c:\Users\meerq\OneDrive\Skrivebord\Projekt4_Src\AELCompiler\Grammar\AEL.g4 by ANTLR 4.8
+// Generated from AEL.g4 by ANTLR 4.9.2
 import org.antlr.v4.runtime.atn.*;
 import org.antlr.v4.runtime.dfa.DFA;
 import org.antlr.v4.runtime.*;
@@ -10,7 +10,7 @@ import java.util.ArrayList;
 
 @SuppressWarnings({"all", "warnings", "unchecked", "unused", "cast"})
 public class AELParser extends Parser {
-	static { RuntimeMetaData.checkVersion("4.8", RuntimeMetaData.VERSION); }
+	static { RuntimeMetaData.checkVersion("4.9.2", RuntimeMetaData.VERSION); }
 
 	protected static final DFA[] _decisionToDFA;
 	protected static final PredictionContextCache _sharedContextCache =
@@ -138,6 +138,14 @@ public class AELParser extends Parser {
 			super(parent, invokingState);
 		}
 		@Override public int getRuleIndex() { return RULE_program; }
+		@Override
+		public void enterRule(ParseTreeListener listener) {
+			if ( listener instanceof AELListener ) ((AELListener)listener).enterProgram(this);
+		}
+		@Override
+		public void exitRule(ParseTreeListener listener) {
+			if ( listener instanceof AELListener ) ((AELListener)listener).exitProgram(this);
+		}
 	}
 
 	public final ProgramContext program() throws RecognitionException {
@@ -190,6 +198,14 @@ public class AELParser extends Parser {
 			super(parent, invokingState);
 		}
 		@Override public int getRuleIndex() { return RULE_decl; }
+		@Override
+		public void enterRule(ParseTreeListener listener) {
+			if ( listener instanceof AELListener ) ((AELListener)listener).enterDecl(this);
+		}
+		@Override
+		public void exitRule(ParseTreeListener listener) {
+			if ( listener instanceof AELListener ) ((AELListener)listener).exitDecl(this);
+		}
 	}
 
 	public final DeclContext decl() throws RecognitionException {
@@ -248,6 +264,14 @@ public class AELParser extends Parser {
 			super(parent, invokingState);
 		}
 		@Override public int getRuleIndex() { return RULE_varDecl; }
+		@Override
+		public void enterRule(ParseTreeListener listener) {
+			if ( listener instanceof AELListener ) ((AELListener)listener).enterVarDecl(this);
+		}
+		@Override
+		public void exitRule(ParseTreeListener listener) {
+			if ( listener instanceof AELListener ) ((AELListener)listener).exitVarDecl(this);
+		}
 	}
 
 	public final VarDeclContext varDecl() throws RecognitionException {
@@ -314,6 +338,14 @@ public class AELParser extends Parser {
 			super(parent, invokingState);
 		}
 		@Override public int getRuleIndex() { return RULE_funcDecl; }
+		@Override
+		public void enterRule(ParseTreeListener listener) {
+			if ( listener instanceof AELListener ) ((AELListener)listener).enterFuncDecl(this);
+		}
+		@Override
+		public void exitRule(ParseTreeListener listener) {
+			if ( listener instanceof AELListener ) ((AELListener)listener).exitFuncDecl(this);
+		}
 	}
 
 	public final FuncDeclContext funcDecl() throws RecognitionException {
@@ -359,6 +391,14 @@ public class AELParser extends Parser {
 			super(parent, invokingState);
 		}
 		@Override public int getRuleIndex() { return RULE_objDecl; }
+		@Override
+		public void enterRule(ParseTreeListener listener) {
+			if ( listener instanceof AELListener ) ((AELListener)listener).enterObjDecl(this);
+		}
+		@Override
+		public void exitRule(ParseTreeListener listener) {
+			if ( listener instanceof AELListener ) ((AELListener)listener).exitObjDecl(this);
+		}
 	}
 
 	public final ObjDeclContext objDecl() throws RecognitionException {
@@ -403,6 +443,14 @@ public class AELParser extends Parser {
 			super(parent, invokingState);
 		}
 		@Override public int getRuleIndex() { return RULE_objFunccall; }
+		@Override
+		public void enterRule(ParseTreeListener listener) {
+			if ( listener instanceof AELListener ) ((AELListener)listener).enterObjFunccall(this);
+		}
+		@Override
+		public void exitRule(ParseTreeListener listener) {
+			if ( listener instanceof AELListener ) ((AELListener)listener).exitObjFunccall(this);
+		}
 	}
 
 	public final ObjFunccallContext objFunccall() throws RecognitionException {
@@ -441,6 +489,14 @@ public class AELParser extends Parser {
 			super(parent, invokingState);
 		}
 		@Override public int getRuleIndex() { return RULE_objFunccallId; }
+		@Override
+		public void enterRule(ParseTreeListener listener) {
+			if ( listener instanceof AELListener ) ((AELListener)listener).enterObjFunccallId(this);
+		}
+		@Override
+		public void exitRule(ParseTreeListener listener) {
+			if ( listener instanceof AELListener ) ((AELListener)listener).exitObjFunccallId(this);
+		}
 	}
 
 	public final ObjFunccallIdContext objFunccallId() throws RecognitionException {
@@ -480,6 +536,14 @@ public class AELParser extends Parser {
 			super(parent, invokingState);
 		}
 		@Override public int getRuleIndex() { return RULE_objFuncId; }
+		@Override
+		public void enterRule(ParseTreeListener listener) {
+			if ( listener instanceof AELListener ) ((AELListener)listener).enterObjFuncId(this);
+		}
+		@Override
+		public void exitRule(ParseTreeListener listener) {
+			if ( listener instanceof AELListener ) ((AELListener)listener).exitObjFuncId(this);
+		}
 	}
 
 	public final ObjFuncIdContext objFuncId() throws RecognitionException {
@@ -525,6 +589,14 @@ public class AELParser extends Parser {
 			super(parent, invokingState);
 		}
 		@Override public int getRuleIndex() { return RULE_fParams; }
+		@Override
+		public void enterRule(ParseTreeListener listener) {
+			if ( listener instanceof AELListener ) ((AELListener)listener).enterFParams(this);
+		}
+		@Override
+		public void exitRule(ParseTreeListener listener) {
+			if ( listener instanceof AELListener ) ((AELListener)listener).exitFParams(this);
+		}
 	}
 
 	public final FParamsContext fParams() throws RecognitionException {
@@ -584,6 +656,14 @@ public class AELParser extends Parser {
 			super(parent, invokingState);
 		}
 		@Override public int getRuleIndex() { return RULE_fParamsDecl; }
+		@Override
+		public void enterRule(ParseTreeListener listener) {
+			if ( listener instanceof AELListener ) ((AELListener)listener).enterFParamsDecl(this);
+		}
+		@Override
+		public void exitRule(ParseTreeListener listener) {
+			if ( listener instanceof AELListener ) ((AELListener)listener).exitFParamsDecl(this);
+		}
 	}
 
 	public final FParamsDeclContext fParamsDecl() throws RecognitionException {
@@ -628,6 +708,14 @@ public class AELParser extends Parser {
 			super(parent, invokingState);
 		}
 		@Override public int getRuleIndex() { return RULE_funcBody; }
+		@Override
+		public void enterRule(ParseTreeListener listener) {
+			if ( listener instanceof AELListener ) ((AELListener)listener).enterFuncBody(this);
+		}
+		@Override
+		public void exitRule(ParseTreeListener listener) {
+			if ( listener instanceof AELListener ) ((AELListener)listener).exitFuncBody(this);
+		}
 	}
 
 	public final FuncBodyContext funcBody() throws RecognitionException {
@@ -724,6 +812,14 @@ public class AELParser extends Parser {
 			super(parent, invokingState);
 		}
 		@Override public int getRuleIndex() { return RULE_stmt; }
+		@Override
+		public void enterRule(ParseTreeListener listener) {
+			if ( listener instanceof AELListener ) ((AELListener)listener).enterStmt(this);
+		}
+		@Override
+		public void exitRule(ParseTreeListener listener) {
+			if ( listener instanceof AELListener ) ((AELListener)listener).exitStmt(this);
+		}
 	}
 
 	public final StmtContext stmt() throws RecognitionException {
@@ -848,6 +944,14 @@ public class AELParser extends Parser {
 			super(parent, invokingState);
 		}
 		@Override public int getRuleIndex() { return RULE_printStmt; }
+		@Override
+		public void enterRule(ParseTreeListener listener) {
+			if ( listener instanceof AELListener ) ((AELListener)listener).enterPrintStmt(this);
+		}
+		@Override
+		public void exitRule(ParseTreeListener listener) {
+			if ( listener instanceof AELListener ) ((AELListener)listener).exitPrintStmt(this);
+		}
 	}
 
 	public final PrintStmtContext printStmt() throws RecognitionException {
@@ -907,6 +1011,14 @@ public class AELParser extends Parser {
 			super(parent, invokingState);
 		}
 		@Override public int getRuleIndex() { return RULE_ifStmt; }
+		@Override
+		public void enterRule(ParseTreeListener listener) {
+			if ( listener instanceof AELListener ) ((AELListener)listener).enterIfStmt(this);
+		}
+		@Override
+		public void exitRule(ParseTreeListener listener) {
+			if ( listener instanceof AELListener ) ((AELListener)listener).exitIfStmt(this);
+		}
 	}
 
 	public final IfStmtContext ifStmt() throws RecognitionException {
@@ -998,6 +1110,14 @@ public class AELParser extends Parser {
 			super(parent, invokingState);
 		}
 		@Override public int getRuleIndex() { return RULE_elseIfStmt; }
+		@Override
+		public void enterRule(ParseTreeListener listener) {
+			if ( listener instanceof AELListener ) ((AELListener)listener).enterElseIfStmt(this);
+		}
+		@Override
+		public void exitRule(ParseTreeListener listener) {
+			if ( listener instanceof AELListener ) ((AELListener)listener).exitElseIfStmt(this);
+		}
 	}
 
 	public final ElseIfStmtContext elseIfStmt() throws RecognitionException {
@@ -1060,6 +1180,14 @@ public class AELParser extends Parser {
 			super(parent, invokingState);
 		}
 		@Override public int getRuleIndex() { return RULE_elseStmt; }
+		@Override
+		public void enterRule(ParseTreeListener listener) {
+			if ( listener instanceof AELListener ) ((AELListener)listener).enterElseStmt(this);
+		}
+		@Override
+		public void exitRule(ParseTreeListener listener) {
+			if ( listener instanceof AELListener ) ((AELListener)listener).exitElseStmt(this);
+		}
 	}
 
 	public final ElseStmtContext elseStmt() throws RecognitionException {
@@ -1122,6 +1250,14 @@ public class AELParser extends Parser {
 			super(parent, invokingState);
 		}
 		@Override public int getRuleIndex() { return RULE_doWhileStmt; }
+		@Override
+		public void enterRule(ParseTreeListener listener) {
+			if ( listener instanceof AELListener ) ((AELListener)listener).enterDoWhileStmt(this);
+		}
+		@Override
+		public void exitRule(ParseTreeListener listener) {
+			if ( listener instanceof AELListener ) ((AELListener)listener).exitDoWhileStmt(this);
+		}
 	}
 
 	public final DoWhileStmtContext doWhileStmt() throws RecognitionException {
@@ -1191,6 +1327,14 @@ public class AELParser extends Parser {
 			super(parent, invokingState);
 		}
 		@Override public int getRuleIndex() { return RULE_whileStmt; }
+		@Override
+		public void enterRule(ParseTreeListener listener) {
+			if ( listener instanceof AELListener ) ((AELListener)listener).enterWhileStmt(this);
+		}
+		@Override
+		public void exitRule(ParseTreeListener listener) {
+			if ( listener instanceof AELListener ) ((AELListener)listener).exitWhileStmt(this);
+		}
 	}
 
 	public final WhileStmtContext whileStmt() throws RecognitionException {
@@ -1257,6 +1401,14 @@ public class AELParser extends Parser {
 			super(parent, invokingState);
 		}
 		@Override public int getRuleIndex() { return RULE_loopStmt; }
+		@Override
+		public void enterRule(ParseTreeListener listener) {
+			if ( listener instanceof AELListener ) ((AELListener)listener).enterLoopStmt(this);
+		}
+		@Override
+		public void exitRule(ParseTreeListener listener) {
+			if ( listener instanceof AELListener ) ((AELListener)listener).exitLoopStmt(this);
+		}
 	}
 
 	public final LoopStmtContext loopStmt() throws RecognitionException {
@@ -1325,6 +1477,14 @@ public class AELParser extends Parser {
 			super(parent, invokingState);
 		}
 		@Override public int getRuleIndex() { return RULE_whenStmt; }
+		@Override
+		public void enterRule(ParseTreeListener listener) {
+			if ( listener instanceof AELListener ) ((AELListener)listener).enterWhenStmt(this);
+		}
+		@Override
+		public void exitRule(ParseTreeListener listener) {
+			if ( listener instanceof AELListener ) ((AELListener)listener).exitWhenStmt(this);
+		}
 	}
 
 	public final WhenStmtContext whenStmt() throws RecognitionException {
@@ -1395,6 +1555,14 @@ public class AELParser extends Parser {
 			super(parent, invokingState);
 		}
 		@Override public int getRuleIndex() { return RULE_waitStmt; }
+		@Override
+		public void enterRule(ParseTreeListener listener) {
+			if ( listener instanceof AELListener ) ((AELListener)listener).enterWaitStmt(this);
+		}
+		@Override
+		public void exitRule(ParseTreeListener listener) {
+			if ( listener instanceof AELListener ) ((AELListener)listener).exitWaitStmt(this);
+		}
 	}
 
 	public final WaitStmtContext waitStmt() throws RecognitionException {
@@ -1436,6 +1604,14 @@ public class AELParser extends Parser {
 			super(parent, invokingState);
 		}
 		@Override public int getRuleIndex() { return RULE_returnStmt; }
+		@Override
+		public void enterRule(ParseTreeListener listener) {
+			if ( listener instanceof AELListener ) ((AELListener)listener).enterReturnStmt(this);
+		}
+		@Override
+		public void exitRule(ParseTreeListener listener) {
+			if ( listener instanceof AELListener ) ((AELListener)listener).exitReturnStmt(this);
+		}
 	}
 
 	public final ReturnStmtContext returnStmt() throws RecognitionException {
@@ -1483,6 +1659,14 @@ public class AELParser extends Parser {
 			super(parent, invokingState);
 		}
 		@Override public int getRuleIndex() { return RULE_time; }
+		@Override
+		public void enterRule(ParseTreeListener listener) {
+			if ( listener instanceof AELListener ) ((AELListener)listener).enterTime(this);
+		}
+		@Override
+		public void exitRule(ParseTreeListener listener) {
+			if ( listener instanceof AELListener ) ((AELListener)listener).exitTime(this);
+		}
 	}
 
 	public final TimeContext time() throws RecognitionException {
@@ -1569,6 +1753,14 @@ public class AELParser extends Parser {
 			super(parent, invokingState);
 		}
 		@Override public int getRuleIndex() { return RULE_case_stmt; }
+		@Override
+		public void enterRule(ParseTreeListener listener) {
+			if ( listener instanceof AELListener ) ((AELListener)listener).enterCase_stmt(this);
+		}
+		@Override
+		public void exitRule(ParseTreeListener listener) {
+			if ( listener instanceof AELListener ) ((AELListener)listener).exitCase_stmt(this);
+		}
 	}
 
 	public final Case_stmtContext case_stmt() throws RecognitionException {
@@ -1625,6 +1817,14 @@ public class AELParser extends Parser {
 			super(parent, invokingState);
 		}
 		@Override public int getRuleIndex() { return RULE_default_stmt; }
+		@Override
+		public void enterRule(ParseTreeListener listener) {
+			if ( listener instanceof AELListener ) ((AELListener)listener).enterDefault_stmt(this);
+		}
+		@Override
+		public void exitRule(ParseTreeListener listener) {
+			if ( listener instanceof AELListener ) ((AELListener)listener).exitDefault_stmt(this);
+		}
 	}
 
 	public final Default_stmtContext default_stmt() throws RecognitionException {
@@ -1681,6 +1881,14 @@ public class AELParser extends Parser {
 			super(parent, invokingState);
 		}
 		@Override public int getRuleIndex() { return RULE_exp; }
+		@Override
+		public void enterRule(ParseTreeListener listener) {
+			if ( listener instanceof AELListener ) ((AELListener)listener).enterExp(this);
+		}
+		@Override
+		public void exitRule(ParseTreeListener listener) {
+			if ( listener instanceof AELListener ) ((AELListener)listener).exitExp(this);
+		}
 	}
 
 	public final ExpContext exp() throws RecognitionException {
@@ -1738,6 +1946,14 @@ public class AELParser extends Parser {
 			super(parent, invokingState);
 		}
 		@Override public int getRuleIndex() { return RULE_addexpr; }
+		@Override
+		public void enterRule(ParseTreeListener listener) {
+			if ( listener instanceof AELListener ) ((AELListener)listener).enterAddexpr(this);
+		}
+		@Override
+		public void exitRule(ParseTreeListener listener) {
+			if ( listener instanceof AELListener ) ((AELListener)listener).exitAddexpr(this);
+		}
 	}
 
 	public final AddexprContext addexpr() throws RecognitionException {
@@ -1802,6 +2018,14 @@ public class AELParser extends Parser {
 			super(parent, invokingState);
 		}
 		@Override public int getRuleIndex() { return RULE_multexpr; }
+		@Override
+		public void enterRule(ParseTreeListener listener) {
+			if ( listener instanceof AELListener ) ((AELListener)listener).enterMultexpr(this);
+		}
+		@Override
+		public void exitRule(ParseTreeListener listener) {
+			if ( listener instanceof AELListener ) ((AELListener)listener).exitMultexpr(this);
+		}
 	}
 
 	public final MultexprContext multexpr() throws RecognitionException {
@@ -1866,6 +2090,14 @@ public class AELParser extends Parser {
 			super(parent, invokingState);
 		}
 		@Override public int getRuleIndex() { return RULE_logStmt; }
+		@Override
+		public void enterRule(ParseTreeListener listener) {
+			if ( listener instanceof AELListener ) ((AELListener)listener).enterLogStmt(this);
+		}
+		@Override
+		public void exitRule(ParseTreeListener listener) {
+			if ( listener instanceof AELListener ) ((AELListener)listener).exitLogStmt(this);
+		}
 	}
 
 	public final LogStmtContext logStmt() throws RecognitionException {
@@ -1907,6 +2139,14 @@ public class AELParser extends Parser {
 			super(parent, invokingState);
 		}
 		@Override public int getRuleIndex() { return RULE_logOp; }
+		@Override
+		public void enterRule(ParseTreeListener listener) {
+			if ( listener instanceof AELListener ) ((AELListener)listener).enterLogOp(this);
+		}
+		@Override
+		public void exitRule(ParseTreeListener listener) {
+			if ( listener instanceof AELListener ) ((AELListener)listener).exitLogOp(this);
+		}
 	}
 
 	public final LogOpContext logOp() throws RecognitionException {
@@ -1950,6 +2190,14 @@ public class AELParser extends Parser {
 			super(parent, invokingState);
 		}
 		@Override public int getRuleIndex() { return RULE_assignExp; }
+		@Override
+		public void enterRule(ParseTreeListener listener) {
+			if ( listener instanceof AELListener ) ((AELListener)listener).enterAssignExp(this);
+		}
+		@Override
+		public void exitRule(ParseTreeListener listener) {
+			if ( listener instanceof AELListener ) ((AELListener)listener).exitAssignExp(this);
+		}
 	}
 
 	public final AssignExpContext assignExp() throws RecognitionException {
@@ -1997,6 +2245,14 @@ public class AELParser extends Parser {
 			super(parent, invokingState);
 		}
 		@Override public int getRuleIndex() { return RULE_term; }
+		@Override
+		public void enterRule(ParseTreeListener listener) {
+			if ( listener instanceof AELListener ) ((AELListener)listener).enterTerm(this);
+		}
+		@Override
+		public void exitRule(ParseTreeListener listener) {
+			if ( listener instanceof AELListener ) ((AELListener)listener).exitTerm(this);
+		}
 	}
 
 	public final TermContext term() throws RecognitionException {
@@ -2083,6 +2339,14 @@ public class AELParser extends Parser {
 			super(parent, invokingState);
 		}
 		@Override public int getRuleIndex() { return RULE_funccall; }
+		@Override
+		public void enterRule(ParseTreeListener listener) {
+			if ( listener instanceof AELListener ) ((AELListener)listener).enterFunccall(this);
+		}
+		@Override
+		public void exitRule(ParseTreeListener listener) {
+			if ( listener instanceof AELListener ) ((AELListener)listener).exitFunccall(this);
+		}
 	}
 
 	public final FunccallContext funccall() throws RecognitionException {
@@ -2123,6 +2387,14 @@ public class AELParser extends Parser {
 			super(parent, invokingState);
 		}
 		@Override public int getRuleIndex() { return RULE_aParams; }
+		@Override
+		public void enterRule(ParseTreeListener listener) {
+			if ( listener instanceof AELListener ) ((AELListener)listener).enterAParams(this);
+		}
+		@Override
+		public void exitRule(ParseTreeListener listener) {
+			if ( listener instanceof AELListener ) ((AELListener)listener).exitAParams(this);
+		}
 	}
 
 	public final AParamsContext aParams() throws RecognitionException {
@@ -2185,6 +2457,14 @@ public class AELParser extends Parser {
 			super(parent, invokingState);
 		}
 		@Override public int getRuleIndex() { return RULE_array; }
+		@Override
+		public void enterRule(ParseTreeListener listener) {
+			if ( listener instanceof AELListener ) ((AELListener)listener).enterArray(this);
+		}
+		@Override
+		public void exitRule(ParseTreeListener listener) {
+			if ( listener instanceof AELListener ) ((AELListener)listener).exitArray(this);
+		}
 	}
 
 	public final ArrayContext array() throws RecognitionException {
@@ -2263,6 +2543,14 @@ public class AELParser extends Parser {
 			super(parent, invokingState);
 		}
 		@Override public int getRuleIndex() { return RULE_arrayval; }
+		@Override
+		public void enterRule(ParseTreeListener listener) {
+			if ( listener instanceof AELListener ) ((AELListener)listener).enterArrayval(this);
+		}
+		@Override
+		public void exitRule(ParseTreeListener listener) {
+			if ( listener instanceof AELListener ) ((AELListener)listener).exitArrayval(this);
+		}
 	}
 
 	public final ArrayvalContext arrayval() throws RecognitionException {
@@ -2331,6 +2619,14 @@ public class AELParser extends Parser {
 			super(parent, invokingState);
 		}
 		@Override public int getRuleIndex() { return RULE_intLiteral; }
+		@Override
+		public void enterRule(ParseTreeListener listener) {
+			if ( listener instanceof AELListener ) ((AELListener)listener).enterIntLiteral(this);
+		}
+		@Override
+		public void exitRule(ParseTreeListener listener) {
+			if ( listener instanceof AELListener ) ((AELListener)listener).exitIntLiteral(this);
+		}
 	}
 
 	public final IntLiteralContext intLiteral() throws RecognitionException {
@@ -2382,6 +2678,14 @@ public class AELParser extends Parser {
 			super(parent, invokingState);
 		}
 		@Override public int getRuleIndex() { return RULE_floatLiteral; }
+		@Override
+		public void enterRule(ParseTreeListener listener) {
+			if ( listener instanceof AELListener ) ((AELListener)listener).enterFloatLiteral(this);
+		}
+		@Override
+		public void exitRule(ParseTreeListener listener) {
+			if ( listener instanceof AELListener ) ((AELListener)listener).exitFloatLiteral(this);
+		}
 	}
 
 	public final FloatLiteralContext floatLiteral() throws RecognitionException {
@@ -2452,6 +2756,14 @@ public class AELParser extends Parser {
 			super(parent, invokingState);
 		}
 		@Override public int getRuleIndex() { return RULE_numb; }
+		@Override
+		public void enterRule(ParseTreeListener listener) {
+			if ( listener instanceof AELListener ) ((AELListener)listener).enterNumb(this);
+		}
+		@Override
+		public void exitRule(ParseTreeListener listener) {
+			if ( listener instanceof AELListener ) ((AELListener)listener).exitNumb(this);
+		}
 	}
 
 	public final NumbContext numb() throws RecognitionException {

@@ -1,15 +1,15 @@
 grammar AEL;
 
-program : decl*; 
+program : decl* EOF; 
 
 decl : varDecl 
      | funcDecl 
      | objDecl ;
 
-varDecl : type ID (<assoc=right>ASSIGN exp)? SEMICOLON 
+varDecl : TYPE ID (<assoc=right>ASSIGN exp)? SEMICOLON 
         | array ;
 
-funcDecl : type ID fParams funcBody ;
+funcDecl : TYPE ID fParams funcBody ;
 
 objDecl : ID ASSIGN objFuncId LPAREN intLiteral RPAREN SEMICOLON ;
 
@@ -27,9 +27,9 @@ objFuncId : BUTTON
 
 fParams : LPAREN (fParamsDecl (',' fParamsDecl)*)? RPAREN;
 
-fParamsDecl : type ID ;
+fParamsDecl : TYPE ID ;
 
-funcBody : LCURLY varDecl* stmt* RCURLY ;
+funcBody : LCURLY (varDecl? stmt?)* RCURLY ;
 
 stmt : assignExp SEMICOLON
      | printStmt
@@ -72,8 +72,6 @@ default_stmt : 'else' COLON stmt* ';';
      
 exp : assignExp
     | addexpr
-    | <assoc=right>'NOT' exp 
-    | <assoc=right>'-' exp 
     | term ;
 
 addexpr : multexpr 
@@ -91,7 +89,7 @@ logOp : op=(EQUALOP | GREATEROP | LESSOP | GREATEREQUALSOP | LESSSEQUALSOP | NOT
 assignExp : ID ASSIGN exp;        
 
 term : ID 
-     | number 
+     | numb
      | STRINGLITERTAL
      | TRUETERM | FALSETERM
      | LPAREN exp RPAREN 
@@ -99,10 +97,9 @@ term : ID
 
 funccall : ID LPAREN aParams RPAREN ;
 
-aParams : exp 
-          | exp ',' aParams ;
+aParams : exp (',' exp)*;
 
-array : type ID LSQ intLiteral RSQ ('=' LCURLY arrayval (',' arrayval)* RCURLY)? SEMICOLON;
+array : TYPE ID LSQ intLiteral RSQ ('=' LCURLY arrayval (',' arrayval)* RCURLY)? SEMICOLON;
 
 arrayval : ID 
          | intLiteral 
@@ -110,7 +107,7 @@ arrayval : ID
          | TRUETERM 
          | FALSETERM;
 
-type : NUMBERTYPE
+TYPE : NUMBERTYPE
      | BOOLEANTYPE
      | VOIDTYPE
      | STRINGTYPE
@@ -128,7 +125,7 @@ NORMALDIGIT : [0-9] ;
 
 STARTDIGIT : [1-9] ;
 
-number : intLiteral 
+numb : intLiteral 
        | floatLiteral ;
 
 SEMICOLON : ';' ;       
@@ -143,7 +140,7 @@ ANDOP : 'and';
 OROP :'or';
 EQUALOP: 'equals';
 NOTEQUALOP: 'not equals';
-LESSOP :'<'; 
+LESSOP:'<'; 
 GREATEROP: '>'; 
 LESSSEQUALSOP:'<='; 
 GREATEREQUALSOP: '>=';

@@ -6,6 +6,7 @@ public enum TypeDescriptorKind {
     character,
     error,
     number,
+    object,
     voidd,
     string,
     other

@@ -17,6 +17,7 @@ public class SymbolTable {
         attr.name = name;
         attr.level = scopes.get(depth);
         attr.depth = depth;
+        attr.formalParamsCount = attr.formalParamsCount;
         scopes.get(depth).add(attr);
 
         // Add to hashtable

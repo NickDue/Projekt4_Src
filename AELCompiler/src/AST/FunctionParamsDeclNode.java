@@ -2,13 +2,10 @@ package AST;
 
 import AST.visitors.IVisitor;
 
-public class StringNode extends ASTNode {
+public class FunctionParamsDeclNode extends ASTNode {
 
-    public String string;
-
-    public StringNode(ASTNode parentNode, String str) {
+    public FunctionParamsDeclNode(ASTNode parentNode) {
         super(parentNode);
-        string = str;
     }
 
     @Override

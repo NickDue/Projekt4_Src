@@ -1,3 +1,4 @@
+
 import ANTLR.AELBaseVisitor;
 import ANTLR.AELParser;
 import ANTLR.AELParser.*;
@@ -26,6 +27,7 @@ public class ASLBuilderVisitor extends AELBaseVisitor<ASTNode>{
                     case "VarDeclContext":
                         node = visitVarDecl((VarDeclContext) ctx.children.get(0), parent);
                         break;
+            
                     case "FuncDeclContext":
                         node = visitFuncDecl((FuncDeclContext) ctx.children.get(0), parent);
                         break;
@@ -39,8 +41,7 @@ public class ASLBuilderVisitor extends AELBaseVisitor<ASTNode>{
             node.charPosition = ctx.getStart().getCharPositionInLine();
             return node;
         } catch (NullPointerException e) {
-            e.printStackTrace();
-            return null;
+            return new ErrorNode(parent, "Invalid statement at line " + ctx.exception.getOffendingToken().getLine() + ":" + ctx.exception.getOffendingToken().getCharPositionInLine());
         }
     }
     
@@ -50,12 +51,14 @@ public class ASLBuilderVisitor extends AELBaseVisitor<ASTNode>{
         ASTNode type = visitType((TypeContext) ctx.children.get(0), node, false);
         String id = ctx.ID().getText();
         ASTNode params = visitFParams((FParamsContext) ctx.children.get(2), node);
-        ASTNode body = visitFuncBody((FuncBodyContext) ctx.children.get(3), node);
+        CodeBlockNode stmtNode = new CodeBlockNode(node);
+        ASTNode body = visitFuncBody((FuncBodyContext) ctx.children.get(3), stmtNode);
 
         node.children.add(type);
         node.children.add(new IdentificationNode(node, id));
         node.children.add(params);
-        node.children.add(body);
+        node.children.add(stmtNode);
+        stmtNode.children.add(body);
 
         node.lineNumber = ctx.getStart().getLine();
         node.charPosition = ctx.getStart().getCharPositionInLine();
@@ -64,7 +67,7 @@ public class ASLBuilderVisitor extends AELBaseVisitor<ASTNode>{
     
     public ASTNode visitType(TypeContext ctx, ASTNode parent, boolean variable) {
         String type = ctx.getText();
-        ASTNode node;
+        TypeNodesNode node;
         switch (type) {
             case "number":
                 node = new NumberTypeNode(parent);
@@ -103,8 +106,9 @@ public class ASLBuilderVisitor extends AELBaseVisitor<ASTNode>{
         return node;
     }
     
+    /* THIS IS THE ACTUAL PARAMS LIKE number a, string b, bool c */
     public ASTNode visitFParamsDecl(FParamsDeclContext ctx, ASTNode parent) {
-        FunctionParamsNode node = new FunctionParamsNode(parent);
+        FunctionParamsDeclNode node = new FunctionParamsDeclNode(parent);
         ASTNode type =  visitType((TypeContext) ctx.children.get(0), node, true);
         String id = ctx.ID().getText();
 
@@ -242,14 +246,16 @@ public class ASLBuilderVisitor extends AELBaseVisitor<ASTNode>{
 
     public ASTNode visitWhenStmt(WhenStmtContext ctx, ASTNode parent) {
         WhenNode node = new WhenNode(parent);
+        CodeBlockNode stmtNode = new CodeBlockNode(node);
         ASTNode exp = visitExp(ctx.exp(), node, null);
         node.children.add(exp);
         ctx.case_stmt().forEach(child -> {
-            node.children.add(visitCase_stmt((Case_stmtContext) child, node));
+            stmtNode.children.add(visitCase_stmt((Case_stmtContext) child, node));
         });
         if(ctx.default_stmt() != null){
-            node.children.add(visitDefault_stmt((Default_stmtContext) ctx.default_stmt(), node));
+            stmtNode.children.add(visitDefault_stmt((Default_stmtContext) ctx.default_stmt(), node));
         }
+        node.children.add(stmtNode);
         node.lineNumber = ctx.getStart().getLine();
         node.charPosition = ctx.getStart().getCharPositionInLine();
         return node;
@@ -279,11 +285,13 @@ public class ASLBuilderVisitor extends AELBaseVisitor<ASTNode>{
 
     public ASTNode visitLoopStmt(LoopStmtContext ctx, ASTNode parent){
         LoopStmtNode node = new LoopStmtNode(parent);
+        CodeBlockNode stmtNode = new CodeBlockNode(node);
         int literal = Integer.parseInt(ctx.intLiteral().getText());
         node.children.add(new IntLiteralNode(node, literal));
         ctx.stmt().forEach(child -> {
-            node.children.add(visitStmt((StmtContext) child, node));
+            stmtNode.children.add(visitStmt((StmtContext) child, node));
         });
+        node.children.add(stmtNode);
         node.lineNumber = ctx.getStart().getLine();
         node.charPosition = ctx.getStart().getCharPositionInLine();
         return node;
@@ -291,10 +299,12 @@ public class ASLBuilderVisitor extends AELBaseVisitor<ASTNode>{
 
     public ASTNode visitDoWhileStmt(DoWhileStmtContext ctx, ASTNode parent) {
         DoWhileNode node = new DoWhileNode(parent);
+        CodeBlockNode stmtNode = new CodeBlockNode(node);
         node.children.add(visitLogStmt(ctx.logStmt(), node));
         ctx.stmt().forEach(child -> {
-            node.children.add(visitStmt((StmtContext) child, node));
+            stmtNode.children.add(visitStmt((StmtContext) child, node));
         });
+        node.children.add(stmtNode);
         node.lineNumber = ctx.getStart().getLine();
         node.charPosition = ctx.getStart().getCharPositionInLine();
         return node;
@@ -302,10 +312,12 @@ public class ASLBuilderVisitor extends AELBaseVisitor<ASTNode>{
 
     public ASTNode visitWhileStmt(WhileStmtContext ctx, ASTNode parent) {
         WhileNode node = new WhileNode(parent);
+        CodeBlockNode stmtNode = new CodeBlockNode(node);
         node.children.add(visitLogStmt(ctx.logStmt(), node));
         ctx.stmt().forEach(child -> {
-            node.children.add(visitStmt((StmtContext) child, node));
+            stmtNode.children.add(visitStmt((StmtContext) child, node));
         });
+        node.children.add(stmtNode);
         node.lineNumber = ctx.getStart().getLine();
         node.charPosition = ctx.getStart().getCharPositionInLine();
         return node;
@@ -344,10 +356,12 @@ public class ASLBuilderVisitor extends AELBaseVisitor<ASTNode>{
 
     public ASTNode visitElseIfStmt(ElseIfStmtContext ctx, ASTNode parent) {
         ElseIfStmtNode node = new ElseIfStmtNode(parent);
+        CodeBlockNode stmtNode = new CodeBlockNode(node);
         node.children.add(visitLogStmt(ctx.logStmt(), node));
         ctx.stmt().forEach(child -> {
-            node.children.add(visitStmt((StmtContext) child, node));
+            stmtNode.children.add(visitStmt((StmtContext) child, node));
         });
+        node.children.add(stmtNode);
         node.lineNumber = ctx.getStart().getLine();
         node.charPosition = ctx.getStart().getCharPositionInLine();
         return node;
@@ -355,9 +369,11 @@ public class ASLBuilderVisitor extends AELBaseVisitor<ASTNode>{
 
     public ASTNode visitElseStmt(ElseStmtContext ctx, ASTNode parent) {
         ElseStmtNode node = new ElseStmtNode(parent);
+        CodeBlockNode stmtNode = new CodeBlockNode(node);
         ctx.stmt().forEach(child -> {
-            node.children.add(visitStmt((StmtContext) child, node));
+            stmtNode.children.add(visitStmt((StmtContext) child, node));
         });
+        node.children.add(stmtNode);
         node.lineNumber = ctx.getStart().getLine();
         node.charPosition = ctx.getStart().getCharPositionInLine();
         return node;
@@ -378,9 +394,9 @@ public class ASLBuilderVisitor extends AELBaseVisitor<ASTNode>{
         String name = ctx.children.get(0).getClass().getSimpleName();
         VariableDeclarationNode node = new VariableDeclarationNode(parent);
         if(name.equalsIgnoreCase("ArrayContext")){
-            node.children.add(visitArray((ArrayContext) ctx.children.get(0), parent));
+            node.children.add(visitArray((ArrayContext) ctx.children.get(0), node));
         }else{
-            ASTNode type = visitType((TypeContext) ctx.children.get(0), parent, true);
+            ASTNode type = visitType((TypeContext) ctx.children.get(0), node, true);
             String id = ctx.ID().getText();
             boolean assign = ctx.ASSIGN().getText() != null;
             node.children.add(type);
@@ -455,13 +471,13 @@ public class ASLBuilderVisitor extends AELBaseVisitor<ASTNode>{
         } else if(ctx.addexpr() != null){
             ASTNode addexpr = visitAddexpr((AddexprContext) ctx.children.get(0), parent);
             node.children.add(addexpr);
-        } else if(ctx.getText().startsWith("NOT")){
+        } /*else if(ctx.getText().startsWith("NOT")){
             ASTNode exp = visitExp((ExpContext)ctx.children.get(1), node, null);
             node.children.add(exp);
         } else if(ctx.getText().startsWith("-")){
             ASTNode exp = visitExp((ExpContext)ctx.children.get(1), node, null);
             node.children.add(exp);
-        } else if(ctx.term() != null){
+        }*/ else if(ctx.term() != null){
             ASTNode term = visitTerm((TermContext) ctx.children.get(0), node);
             node.children.add(term);
         } else {
@@ -555,17 +571,9 @@ public class ASLBuilderVisitor extends AELBaseVisitor<ASTNode>{
     public ASTNode visitAParams(AParamsContext ctx, ASTNode parent) {
         ActualParamsNode node = new ActualParamsNode(parent);
 
-        if(ctx.aParams() != null){
-            ASTNode exp = visitExp((ExpContext) ctx.children.get(0), parent, null);
-            ASTNode params = visitAParams((AParamsContext) ctx.children.get(2), node);
-            node.children.add(exp);
-            node.children.add(params);
-        } else if(ctx.aParams() == null){
-            ASTNode exp = visitExp((ExpContext) ctx.children.get(0), parent, null);
-            node.children.add(exp);
-        } else {
-            return new ErrorNode(parent, "Invalid statement at line " + ctx.exception.getOffendingToken().getLine() + ":" + ctx.exception.getOffendingToken().getCharPositionInLine());
-        }
+        ctx.exp().forEach(child -> {
+            node.children.add(visitExp((ExpContext)ctx.exp(), node, null));
+        });
 
         node.lineNumber = ctx.getStart().getLine();
         node.charPosition = ctx.getStart().getCharPositionInLine();
@@ -661,6 +669,7 @@ public class ASLBuilderVisitor extends AELBaseVisitor<ASTNode>{
         node.children.add(new IdentificationNode(node, id));
         node.children.add(objId);
         node.children.add(new IntLiteralNode(node, literal));
+        node.pinNumber = literal;
 
         node.lineNumber = ctx.getStart().getLine();
         node.charPosition = ctx.getStart().getCharPositionInLine();
@@ -671,8 +680,10 @@ public class ASLBuilderVisitor extends AELBaseVisitor<ASTNode>{
         ObjFuncIdNode node = new ObjFuncIdNode(parent);
         if(!ctx.BUTTON().equals(null)){
             node.children.add(new ButtonNode(node));
+            node.pinType = "button";
         } else if(!ctx.LED().equals(null)) {
             node.children.add(new LedNote(node));
+            node.pinType = "led";
         } else {
             return new ErrorNode(parent, "Invalid statement at line " + ctx.exception.getOffendingToken().getLine() + ":" + ctx.exception.getOffendingToken().getCharPositionInLine());
         }

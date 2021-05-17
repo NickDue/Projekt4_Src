@@ -4,6 +4,8 @@ import AST.visitors.IVisitor;
 
 public class ObjectDeclarationNode extends DeclarationNode {
 
+    public int pinNumber;
+
     public ObjectDeclarationNode(ASTNode parentNode) {
         super(parentNode);
     }

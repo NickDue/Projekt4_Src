@@ -4,4 +4,5 @@ import SymbolTable.typeDescriptors.TypeDescriptor;
 
 public class VariableAttributes extends Attributes {
     public TypeDescriptor variableType;
+    public int formalParamsCount;
 }

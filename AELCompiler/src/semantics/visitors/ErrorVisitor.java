@@ -11,11 +11,6 @@ public class ErrorVisitor extends NodeVisitor {
 
     public ArrayList<String> errors = new ArrayList<>();
 
-    @Override
-    public void visit(AssignmentNode node) {
-        GenericPrint(node);
-    }
-
 
     @Override
     public void visit(CodeBlockNode node) {
@@ -36,17 +31,6 @@ public class ErrorVisitor extends NodeVisitor {
 
     @Override
     public void visit(ProgramNode node) {
-        GenericPrint(node);
-    }
-
-
-    @Override
-    public void visit(SubscriptingNode node) {
-        GenericPrint(node);
-    }
-
-    @Override
-    public void visit(ValueIndexNode node) {
         GenericPrint(node);
     }
 
@@ -157,8 +141,6 @@ public class ErrorVisitor extends NodeVisitor {
     }
 
 
-
-
     @Override
     public void visit(AdditionExpressionNode node) {
         GenericPrint(node);
@@ -190,7 +172,7 @@ public class ErrorVisitor extends NodeVisitor {
     }
 
     private void GenericPrint(ASTNode node) {
-        if(node.type != null && node.type.kind == TypeDescriptorKind.error) {
+        if(hasError(node)) {
             saveError((ErrorTypeDescriptor) node.type);
         } else {
             visitChildren(node);
@@ -213,5 +195,83 @@ public class ErrorVisitor extends NodeVisitor {
 
     private void saveError(ErrorTypeDescriptor error) {
         errors.add(error.errorMsg);
+    }
+
+
+    @Override
+    public void visit(DeclarationNode node) {
+        GenericPrint(node);
+    }
+
+
+    @Override
+    public void visit(FunctionParamsDeclNode node) {
+        GenericPrint(node);
+    }
+
+
+    @Override
+    public void visit(IntLiteralNode node) {
+        GenericPrint(node);
+    }
+
+    @Override
+    public void visit(ElseStmtNode node) {
+        GenericPrint(node);
+    }
+
+    @Override
+    public void visit(MultiplicationExpressionNode node) {
+        GenericPrint(node);
+    }
+
+    @Override
+    public void visit(FloatLiteralNode node) {
+        GenericPrint(node);
+    }
+
+    @Override
+    public void visit(DoWhileNode node) {
+        GenericPrint(node);
+    }
+
+    @Override
+    public void visit(LoopStmtNode node) {
+        GenericPrint(node);
+    }
+
+    @Override
+    public void visit(WhenNode node) {
+        GenericPrint(node);
+    }
+
+    @Override
+    public void visit(WaitNode node) {
+        GenericPrint(node);
+    }
+
+    @Override
+    public void visit(ReturnNode node) {
+        GenericPrint(node);
+    }
+
+    @Override
+    public void visit(ObjFuncallStmtNode node) {
+        GenericPrint(node);
+    }
+
+    @Override
+    public void visit(TimeNode node) {
+        GenericPrint(node);
+    }
+
+    @Override
+    public void visit(CaseNode node) {
+        GenericPrint(node);
+    }
+
+    @Override
+    public void visit(DefaultNode node) {
+        GenericPrint(node);
     }
 }
