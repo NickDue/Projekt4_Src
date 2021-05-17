@@ -11,13 +11,16 @@ public class CodeGenVisitor implements IVisitor {
     private CodeGenStringBuilder builder;
     private String currentString;
     private ArrayList<String> declaredObjects = new ArrayList<String>();
+    private ArrayList<String> declaredFunctions = new ArrayList<String>();
 
     public String GenerateCode(ASTNode node){
         builder = new CodeGenStringBuilder();
 
 
-        node.accept(this);
-        Setup();
+        node.accept(this); //Creates global variables
+        AppendOtherFunctions();
+        Setup(); //creates Setup() with all the objects
+        AppendLoop(); //creates all functions as well as loop()
 
         return builder.ReturnString();
     }
@@ -30,13 +33,28 @@ public class CodeGenVisitor implements IVisitor {
         builder.AppendCloseObjectDeclarations();
     }
 
+    private void AppendLoop(){
+        for (String string : declaredFunctions) {
+            if(string.contains("program")){
+                builder.AppendText(string);
+            }
+        }
+    }
+
+    private void AppendOtherFunctions(){
+        for (String string : declaredFunctions) {
+            if(!string.contains("program")){
+                builder.AppendText(string);
+            }
+        }
+    }
+
     private void AssignNumber(AssignExpressionNode node){
         currentString = "";
         node.children.get(0).accept(this);
         currentString += " = ";
         node.children.get(1).accept(this);
         currentString += ";";
-        builder.AppendText(currentString);
     }
 
     @Override
@@ -53,7 +71,12 @@ public class CodeGenVisitor implements IVisitor {
 
     @Override
     public void visit(IdentificationNode node) {
-        currentString += node.name;
+        if(node.name.equalsIgnoreCase("program")){
+            currentString += "loop";
+        } else {
+            currentString += node.name;
+        }
+        
     }
 
     @Override
@@ -67,8 +90,8 @@ public class CodeGenVisitor implements IVisitor {
     public void visit(ObjectDeclarationNode node) {
         currentString = "";
 
-        currentString += "pinMode("+node.pinNumber+", ";
-        node.children.get(1).accept(this);
+        currentString += "pinMode("+node.pinNumber+", " + node.objId;
+        currentString += ");";
         
         declaredObjects.add(currentString);
     }
@@ -85,15 +108,18 @@ public class CodeGenVisitor implements IVisitor {
     @Override
     public void visit(FunctionDeclarationNode node) {
         currentString = "";
-        node.children.get(0).accept(this);//type
-        currentString += " ";
+        IdentificationNode idnode = (IdentificationNode) node.children.get(1);
+        if(!idnode.name.equalsIgnoreCase("program")){
+            node.children.get(0).accept(this);//type
+            currentString += " ";
+        }
         node.children.get(1).accept(this);//id
         currentString += "(";
         node.children.get(2).accept(this);//params
         currentString += ") {";
         node.children.get(3).accept(this); //body
         currentString += "}";
-        builder.AppendText(currentString);   
+        declaredFunctions.add(currentString); //need to differentiate  
     }
 
     @Override
@@ -223,8 +249,6 @@ public class CodeGenVisitor implements IVisitor {
         currentString += "(";
         node.children.get(1).accept(this);
         currentString += ");";
-
-        builder.AppendText(currentString);
     }
 
     @Override
@@ -292,7 +316,6 @@ public class CodeGenVisitor implements IVisitor {
         currentString += "while(";
         node.children.get(0).accept(this);
         currentString += "){";
-        builder.AppendText(currentString);
         builder.increaseIndent();
     }
 
@@ -308,13 +331,12 @@ public class CodeGenVisitor implements IVisitor {
         currentString += "else if(";
         node.children.get(0).accept(this);
         currentString += "){";
-        builder.AppendText(currentString);
         builder.increaseIndent();
 
         node.children.get(1).accept(this);
 
         builder.decreaseIndent();
-        builder.AppendText("}");
+        currentString += "}";
     }
 
     @Override
@@ -333,14 +355,13 @@ public class CodeGenVisitor implements IVisitor {
         currentString += "if(";
         node.children.get(0).accept(this);
         currentString += "){";
-        builder.AppendText(currentString);
 
         builder.increaseIndent();
 
         node.children.get(1).accept(this);
 
         builder.decreaseIndent();
-        builder.AppendText("}");
+        currentString += "}";
 
         for(int i = 2; i < node.children.size(); i++){
             node.children.get(i).accept(this);

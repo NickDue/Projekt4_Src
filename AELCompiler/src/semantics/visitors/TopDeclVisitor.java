@@ -18,7 +18,7 @@ public class TopDeclVisitor extends SemanticsVisitor{
     }
     
     public void visit(VariableDeclarationNode node) {
-        IdentificationNode id = (IdentificationNode)node.children.get(0);
+        IdentificationNode id = (IdentificationNode)node.children.get(1);
         ASTNode literal = node.children.get(2);
 
         if(node.children.size() == 1){ //array
@@ -63,7 +63,11 @@ public class TopDeclVisitor extends SemanticsVisitor{
     public void visit(FunctionDeclarationNode node){
         IdentificationNode id = (IdentificationNode)node.children.get(1);
         ASTNode expression = node.children.get(0);
-        int formalParamsCount = node.children.get(2).children.size();
+        int formalParamsCount = 0;
+        if(node.children.size() > 2){
+            formalParamsCount = node.children.get(2).children.size();
+        }
+        
 
         expression.accept(new SemanticsVisitor(symTable));
 
@@ -74,8 +78,9 @@ public class TopDeclVisitor extends SemanticsVisitor{
         } else {
             VariableAttributes attr = new VariableAttributes();
             attr.kind = AttributeKind.variableAttributes;                // What type
-            attr.variableType = expression.type;                        // Set type in attributes
-            attr.formalParamsCount = formalParamsCount;                 // Add number of formal params to attributes
+            attr.variableType = expression.type;    
+            if(node.children.size() > 2)                    // Set type in attributes
+                attr.formalParamsCount = formalParamsCount;                 // Add number of formal params to attributes
             id.attributesRef = attr;                                     // Link attributes to node
             symTable.enterSymbol(id.name, attr);                         // Define in symbol table
 
@@ -97,7 +102,7 @@ public class TopDeclVisitor extends SemanticsVisitor{
                 id.attributesRef =  null;
             } else {
                 VariableAttributes attr = new VariableAttributes();
-                attr.pinNumber = Integer.parseInt(node.children.get(2).toString());
+                attr.pinNumber = node.pinNumber;
                 if(name.equalsIgnoreCase("LedNote")){
                     attr.objectKind = ObjectKind.led;
                 } else if(name.equalsIgnoreCase("ButtonNode")){

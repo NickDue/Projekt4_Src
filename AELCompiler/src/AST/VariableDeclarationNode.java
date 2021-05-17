@@ -4,6 +4,7 @@ import AST.visitors.IVisitor;
 
 public class VariableDeclarationNode extends DeclarationNode {
 
+
     public VariableDeclarationNode(ASTNode parentNode) {
         super(parentNode);
     }

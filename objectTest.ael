@@ -1,0 +1,7 @@
+string a = "hello";
+number b = 2;
+number c = 2;
+
+void program(){
+    
+}

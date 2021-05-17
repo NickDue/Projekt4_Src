@@ -3,7 +3,7 @@ package AST;
 import AST.visitors.IVisitor;
 
 public class ObjectDeclarationNode extends DeclarationNode {
-
+    public String objId;
     public int pinNumber;
 
     public ObjectDeclarationNode(ASTNode parentNode) {

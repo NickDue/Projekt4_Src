@@ -1,0 +1,29 @@
+{
+    // Use IntelliSense to learn about possible attributes.
+    // Hover to view descriptions of existing attributes.
+    // For more information, visit: https://go.microsoft.com/fwlink/?linkid=830387
+    "version": "0.2.0",
+    "configurations": [
+        {
+            "type": "java",
+            "name": "Launch Current File",
+            "request": "launch",
+            "mainClass": "${file}",
+            "args": "objectTest.ael tester"
+        },
+        {
+            "type": "java",
+            "name": "Launch AELCompiler",
+            "request": "launch",
+            "mainClass": "AELCompiler",
+            "projectName": "Projekt4_Src_83bf2851"
+        }, 
+        {
+            "type": "java",
+            "name": "Compiler",
+            "request": "launch",
+            "mainClass": "AELCompiler.java",
+            "args": "objectTest -tester"
+        }
+    ]
+}

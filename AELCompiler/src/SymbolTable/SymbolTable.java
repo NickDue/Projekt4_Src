@@ -21,14 +21,7 @@ public class SymbolTable {
         scopes.get(depth).add(attr);
 
         // Add to hashtable
-        Attributes oldSym = retrieveSymbol(name);
-        if(oldSym == null) {
-            symbols.put(attr.name, attr);;
-        } else {
-            symbols.remove(oldSym.name);
-            symbols.put(attr.name, attr);
-            attr.var = oldSym;
-        }
+      
     }
 
     public Attributes retrieveSymbol(String name) {
@@ -47,6 +40,7 @@ public class SymbolTable {
         }
     }
 
+    // fjerne var, tilføje level
     public void closeScope() {
         Attributes prevSym;
         ArrayList<Attributes> currentScope = scopes.get(depth);

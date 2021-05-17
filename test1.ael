@@ -1,0 +1,34 @@
+
+
+Led = LED(13); 	 				
+Button1 = BUTTON(5);			
+Button2 = BUTTON(6);	
+
+void program() {
+	bool loopLock = true;
+			
+
+	if (Button1.read == HIGH){
+    
+  		while(loopLock == true){ 		
+     			blink();               	
+
+     			if(Button2.read == HIGH){ 
+      			loopLock = false;  		
+     			}
+    		}
+	}else{
+
+    		if(Button2.read == HIGH){ 
+      			loopLock = true; 		
+    		}                    
+  	}
+}
+
+void blink(){
+  
+  	led.on();   
+  	wait(1s);            
+  	led.off();    
+  	wait(1s);            
+}

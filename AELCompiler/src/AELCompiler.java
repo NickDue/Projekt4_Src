@@ -25,8 +25,8 @@ public class AELCompiler {
 
     public static void main(String[] args) {
         Hashtable<CompilerArgs, String> compilationParameters;
-
-        if(args.length == 0){
+        System.out.println("running");
+        if(args.length != 2){
             System.out.println("Missing arguments, no files created!");
         } else {
             try {
@@ -49,15 +49,29 @@ public class AELCompiler {
 
     private static Hashtable<CompilerArgs, String> parseArgs(String[] args) {
         Hashtable<CompilerArgs, String> compilationParameters = new Hashtable<>();
-        
-        for(int i = 0; i < args.length; i++){
-            String in = parsePath(args[i]);
+        System.out.println("Entered ParseArgs()");
+
+        String in = parsePath(args[0]);
+        System.out.println(in);
+        if(!(new File(in).exists())) {
+            System.out.println("ERROR: FILE DOES NOT EXIST: " + in);
+            return null;
+        } else if(!in.endsWith(".ael")) {
+            System.out.println("ERROR: WRONG EXTENSION in: " + in);
+            return null;
+        } else {
+            compilationParameters.put(CompilerArgs.inputFile, in);
         }
 
+        String name = args[1];
+        compilationParameters.put(CompilerArgs.outputFile, name);
+        
+        System.out.println("Exiting ParseArgs()");
         return compilationParameters;
     }
 
-    private static String parsePath(String path) {  // TODO: Only works for windows. I think.
+    private static String parsePath(String path) {  // TODO: This should only work for windows I think
+        System.out.println("Entered parsePath()");
         if(path.contains(":")) {
             return path.replace('/', '\\');
         } else {
@@ -68,11 +82,11 @@ public class AELCompiler {
 
     private static ASTNode analyzeCode(String path){
         CharStream in;
-
+        System.out.println("Entered analyzeCode()");
         try {
             in = CharStreams.fromFileName(path);
         } catch (IOException e) {
-            e.printStackTrace();
+            System.out.println("Error in creation of CharStream in AnalyzeCode");
             return null;
         }
 
@@ -94,25 +108,28 @@ public class AELCompiler {
             errorVisitor.printErrors();
             return null;
         }
-
+        System.out.println("Exiting analyzeCode()");
         return node;
     }
 
     private static void GenerateCode(ASTNode DST, Hashtable<CompilerArgs, String> compilerParams){
+        System.out.println("Entered GenerateCode()");
         if(compilerParams.get(CompilerArgs.outputFile) == null)
             GenerateInoFile(DST, "ael-program");
         else 
             GenerateInoFile(DST, compilerParams.get(CompilerArgs.outputFile));
-        
+        System.out.println("Exiting GenerateCode()");
     }
 
     private static void GenerateInoFile(ASTNode DST, String filename){
+        System.out.println("Entered GenerateInoFile()");
         // TODO: Make a way to create a folder for it to be saved in
         try (PrintWriter out = new PrintWriter(filename + ".ino")) {
             out.println(new CodeGenVisitor().GenerateCode(DST));
         } catch (FileNotFoundException e){
             e.printStackTrace();
         }
+        System.out.println("Exiting GenerateInoFile()");
     }
 
 }

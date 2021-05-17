@@ -1,6 +1,6 @@
 grammar AEL;
 
-program : decl* EOF; 
+program : decl*; 
 
 decl : varDecl 
      | funcDecl 
@@ -11,7 +11,7 @@ varDecl : TYPE ID (<assoc=right>ASSIGN exp)? SEMICOLON
 
 funcDecl : TYPE ID fParams funcBody ;
 
-objDecl : ID ASSIGN objFuncId LPAREN intLiteral RPAREN SEMICOLON ;
+objDecl : ID ASSIGN OBJFUNCID LPAREN intLiteral RPAREN SEMICOLON ;
 
 objFunccall : ID '.' objFunccallId ;
 
@@ -22,14 +22,14 @@ objFunccallId : ONFUNC
               | ISONFUNC
               | ISOFFFUNC ;
 
-objFuncId : BUTTON 
+OBJFUNCID : BUTTON 
           | LED;
 
 fParams : LPAREN (fParamsDecl (',' fParamsDecl)*)? RPAREN;
 
 fParamsDecl : TYPE ID ;
 
-funcBody : LCURLY (varDecl? stmt?)* RCURLY ;
+funcBody : LCURLY varDecl* stmt* RCURLY ;
 
 stmt : assignExp SEMICOLON
      | printStmt
@@ -89,7 +89,7 @@ logOp : op=(EQUALOP | GREATEROP | LESSOP | GREATEREQUALSOP | LESSSEQUALSOP | NOT
 assignExp : ID ASSIGN exp;        
 
 term : ID 
-     | numb
+     | number
      | STRINGLITERTAL
      | TRUETERM | FALSETERM
      | LPAREN exp RPAREN 
@@ -125,7 +125,7 @@ NORMALDIGIT : [0-9] ;
 
 STARTDIGIT : [1-9] ;
 
-numb : intLiteral 
+number : intLiteral 
        | floatLiteral ;
 
 SEMICOLON : ';' ;       
