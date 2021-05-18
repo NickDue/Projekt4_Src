@@ -1,7 +1,6 @@
 package CodeGeneration;
 
 import java.util.ArrayList;
-
 import AST.*;
 import AST.visitors.IVisitor;
 import SymbolTable.typeDescriptors.TypeDescriptorKind;
@@ -11,31 +10,32 @@ public class CodeGenVisitor implements IVisitor {
     private CodeGenStringBuilder builder;
     private String currentString;
     private ArrayList<String> declaredObjects = new ArrayList<String>();
-    private ArrayList<String> declaredFunctions = new ArrayList<String>();
+    //private ArrayList<String> declaredFunctions = new ArrayList<String>();
 
     public String GenerateCode(ASTNode node){
         builder = new CodeGenStringBuilder();
 
 
         node.accept(this); //Creates global variables
-        AppendOtherFunctions();
+        //AppendOtherFunctions();
         Setup(); //creates Setup() with all the objects
-        AppendLoop(); //creates all functions as well as loop()
+        //AppendLoop(); //creates all functions as well as loop()
 
         return builder.ReturnString();
     }
 
     private void Setup(){
         builder.AppendObjectDeclarations();
+        builder.AppendText("Serial.begin(9600);");
         for (String str : declaredObjects) {
             builder.AppendText(str);
         }
         builder.AppendCloseObjectDeclarations();
     }
 
-    private void AppendLoop(){
+   /* private void AppendLoop(){
         for (String string : declaredFunctions) {
-            if(string.contains("program")){
+            if(string.contains("loop")){
                 builder.AppendText(string);
             }
         }
@@ -43,11 +43,11 @@ public class CodeGenVisitor implements IVisitor {
 
     private void AppendOtherFunctions(){
         for (String string : declaredFunctions) {
-            if(!string.contains("program")){
+            if(!string.contains("loop")){
                 builder.AppendText(string);
             }
         }
-    }
+    }*/
 
     private void AssignNumber(AssignExpressionNode node){
         currentString = "";
@@ -55,6 +55,7 @@ public class CodeGenVisitor implements IVisitor {
         currentString += " = ";
         node.children.get(1).accept(this);
         currentString += ";";
+        builder.AppendText(currentString);
     }
 
     @Override
@@ -117,9 +118,11 @@ public class CodeGenVisitor implements IVisitor {
         currentString += "(";
         node.children.get(2).accept(this);//params
         currentString += ") {";
+        builder.AppendText(currentString);
+
         node.children.get(3).accept(this); //body
-        currentString += "}";
-        declaredFunctions.add(currentString); //need to differentiate  
+
+        builder.AppendText("}\n");
     }
 
     @Override
@@ -155,7 +158,7 @@ public class CodeGenVisitor implements IVisitor {
 
 
     @Override
-    public void visit(VariableDeclarationNode node) {
+    public void visit(VariableDeclarationNode node) {    
         currentString = "";
         if(node.children.size() == 1){
             node.children.get(0).accept(this);
@@ -174,6 +177,7 @@ public class CodeGenVisitor implements IVisitor {
 
     @Override
     public void visit(ArrayNode node) {
+        currentString = "";
         node.children.get(0).accept(this);
         currentString += " ";
         node.children.get(1).accept(this);
@@ -197,13 +201,24 @@ public class CodeGenVisitor implements IVisitor {
     @Override
     public void visit(AssignExpressionNode node) {
         try{
-            if(node.children.get(1).type.kind == TypeDescriptorKind.number){
+            if(node.children.get(0).type.kind == TypeDescriptorKind.number){
                 AssignNumber(node);
+            } else if(node.children.get(1).type.kind == TypeDescriptorKind.bool){
+                AssignBool(node);
             }
 
         } catch (NullPointerException e){
             System.out.println("Error in CodeGenVisitor.visit(AssignmentNode node): node.type.kind is null");
         }
+    }
+
+    private void AssignBool(AssignExpressionNode node){
+        currentString = "";
+        node.children.get(0).accept(this);
+        currentString += " = ";
+        node.children.get(1).accept(this);
+        currentString += ";";
+        builder.AppendText(currentString);
     }
 
     @Override
@@ -218,11 +233,40 @@ public class CodeGenVisitor implements IVisitor {
 
     @Override
     public void visit(MultiplicationExpressionNode node){
-        TypeDescriptorKind LeftChildKind = node.children.get(0).type.kind;
-        TypeDescriptorKind RightChildKind = node.children.get(1).type.kind;
+        TypeDescriptorKind LeftChildKind;
+        TypeDescriptorKind RightChildKind;
+        //System.out.println("mult child 0: " + node.children.get(0).children.get(0).getClass().getSimpleName());
+        //System.out.println("mult child 1: " + node.children.get(1).children.get(0).getClass().getSimpleName());
+
+        
+
+        if(node.children.get(0).type != null){
+            LeftChildKind = node.children.get(0).type.kind;
+        } else if(node.children.get(0) instanceof MultiplicationExpressionNode || node.children.get(0) instanceof DivisionExpressionNode || node.children.get(0).children.get(0) instanceof StringLiteralNode){
+            LeftChildKind = node.children.get(0).children.get(0).type.kind;
+        } else if(node.children.get(0).children.get(0).getClass().getSimpleName().equalsIgnoreCase("IdentificationNode")||node.children.get(0).children.get(0).children.get(0).getClass().getSimpleName().equalsIgnoreCase("IdentificationNode")){
+            LeftChildKind = TypeDescriptorKind.string;
+        } else {
+            LeftChildKind = null;
+        }
+
+        if(node.children.get(1).type != null) {
+            RightChildKind = node.children.get(1).type.kind;
+        } else if(node.children.get(1) instanceof MultiplicationExpressionNode || node.children.get(1) instanceof DivisionExpressionNode || node.children.get(1).children.get(0) instanceof StringLiteralNode){
+            RightChildKind = node.children.get(1).children.get(0).type.kind;
+        } else if(node.children.get(1).children.get(0).getClass().getSimpleName().equalsIgnoreCase("IdentificationNode")||node.children.get(1).children.get(0).children.get(0).getClass().getSimpleName().equalsIgnoreCase("IdentificationNode")){
+            RightChildKind = TypeDescriptorKind.string;
+        } else {
+            RightChildKind = null;
+        }
+        
         if(LeftChildKind == TypeDescriptorKind.number && RightChildKind == TypeDescriptorKind.number){
             node.children.get(0).accept(this);
-            currentString += node.operator;
+            currentString += " * ";
+            node.children.get(1).accept(this);
+        } else if(LeftChildKind == TypeDescriptorKind.string && RightChildKind == TypeDescriptorKind.string){
+            node.children.get(0).accept(this);
+            currentString += " * ";
             node.children.get(1).accept(this);
         }
     }
@@ -285,83 +329,100 @@ public class CodeGenVisitor implements IVisitor {
 
     @Override
     public void visit(AdditionExpressionNode node) {
-        TypeDescriptorKind LeftChildKind = node.children.get(0).type.kind;
-        TypeDescriptorKind RightChildKind = node.children.get(1).type.kind;
+        TypeDescriptorKind LeftChildKind;
+        TypeDescriptorKind RightChildKind;
+        //System.out.println("child 0: " + node.children.get(0).getClass().getSimpleName());
+        //System.out.println("child 1: " + node.children.get(1).getClass().getSimpleName());
 
+
+        
+        if(node.children.get(0).type != null){
+            LeftChildKind = node.children.get(0).type.kind;
+        } else if(node.children.get(0) instanceof MultiplicationExpressionNode || node.children.get(0) instanceof DivisionExpressionNode || node.children.get(0).children.get(0) instanceof StringLiteralNode){
+            LeftChildKind = node.children.get(0).children.get(0).type.kind;
+        }else if(node.children.get(0).children.get(0).getClass().getSimpleName().equalsIgnoreCase("IdentificationNode") ||node.children.get(0).children.get(0).children.get(0).getClass().getSimpleName().equalsIgnoreCase("IdentificationNode")){
+            LeftChildKind = TypeDescriptorKind.string;
+        } else {
+            LeftChildKind = null;
+        }
+
+        if(node.children.get(1).type != null) {
+            RightChildKind = node.children.get(1).type.kind;
+        } else if(node.children.get(1) instanceof MultiplicationExpressionNode || node.children.get(1) instanceof DivisionExpressionNode || node.children.get(1).children.get(0) instanceof StringLiteralNode){
+            RightChildKind = node.children.get(1).children.get(0).type.kind;
+        } else if(node.children.get(1).children.get(0).getClass().getSimpleName().equalsIgnoreCase("IdentificationNode") ||node.children.get(1).children.get(0).children.get(0).getClass().getSimpleName().equalsIgnoreCase("IdentificationNode")){
+            RightChildKind = TypeDescriptorKind.string;
+        } else {
+            RightChildKind = null;
+        }
+        
         if(LeftChildKind == TypeDescriptorKind.number && RightChildKind == TypeDescriptorKind.number){
             node.children.get(0).accept(this);
-            currentString = " + ";
+            currentString += " + ";
             node.children.get(1).accept(this);
         } else if(LeftChildKind == TypeDescriptorKind.string && RightChildKind == TypeDescriptorKind.string){
             node.children.get(0).accept(this);
-            currentString = " + ";
+            currentString += " + ";
             node.children.get(1).accept(this);
-        } else if(LeftChildKind == TypeDescriptorKind.string && RightChildKind != TypeDescriptorKind.string && RightChildKind != TypeDescriptorKind.number){
-            node.children.get(0).accept(this);
-            currentString = " + ";
-            currentString += "\"";
-            node.children.get(1).accept(this);
-            currentString += "\"";
-        } else if(LeftChildKind != TypeDescriptorKind.string && RightChildKind == TypeDescriptorKind.string && LeftChildKind != TypeDescriptorKind.number){
-            currentString += "\"";
-            node.children.get(0).accept(this);
-            currentString += "\"";
-            currentString = " + ";
-            node.children.get(1).accept(this);
-        }
+        } 
     }
 
     @Override
     public void visit(WhileNode node) {
-        currentString += "while(";
+        currentString = "while(";
         node.children.get(0).accept(this);
         currentString += "){";
+        builder.AppendText(currentString);
+        node.children.get(1).accept(this);
         builder.increaseIndent();
     }
 
     @Override
     public void visit(DivisionExpressionNode node) {
         node.children.get(0).accept(this);
-        currentString += node.operator;
-        node.children.get(0).accept(this);
+        currentString += " "+ node.operator + " ";
+        node.children.get(1).accept(this);
     }
 
     @Override
     public void visit(ElseIfStmtNode node) {
-        currentString += "else if(";
+        currentString = "else if(";
         node.children.get(0).accept(this);
         currentString += "){";
+        builder.AppendText(currentString);
         builder.increaseIndent();
 
         node.children.get(1).accept(this);
 
         builder.decreaseIndent();
-        currentString += "}";
+        builder.AppendText("}");
     }
 
     @Override
     public void visit(ElseStmtNode node){
         builder.AppendSpace();
-        currentString += "else {";
+        currentString = "else {";
+        builder.AppendText(currentString);
         builder.increaseIndent();
         node.children.get(0).accept(this);
         builder.decreaseIndent();
-        currentString += "}";
+        builder.AppendText("}");
     }
 
     @Override
     public void visit(IfStmtNode node) {
         builder.AppendSpace();
-        currentString += "if(";
+        currentString = "if(";
         node.children.get(0).accept(this);
         currentString += "){";
+        builder.AppendText(currentString);
 
         builder.increaseIndent();
 
         node.children.get(1).accept(this);
 
         builder.decreaseIndent();
-        currentString += "}";
+        builder.AppendText("}");
 
         for(int i = 2; i < node.children.size(); i++){
             node.children.get(i).accept(this);
@@ -387,37 +448,39 @@ public class CodeGenVisitor implements IVisitor {
     @Override
     public void visit(DoWhileNode node) {
         builder.AppendSpace();
-        currentString += "do {";
+        currentString = "do {";
         builder.increaseIndent();
         node.children.get(0).accept(this);
         currentString += "} \n while (";
+        builder.AppendText(currentString);
         for(int i = 1; i < node.children.size(); i++){
-            node.children.get(1).accept(this);
+            node.children.get(i).accept(this);
         }
-        currentString += ");";
+        builder.AppendText("};");
         builder.decreaseIndent();    
     }
 
     @Override
     public void visit(LoopStmtNode node) {
-        builder.AppendSpace();
-        currentString += "for(int index = 0; index < ";
+        currentString = "for(int index = 0; index < ";
         node.children.get(0).accept(this);
         currentString += "; index++) {";
+        builder.AppendText(currentString);
         builder.increaseIndent();
         builder.AppendSpace();
         node.children.get(1).accept(this);
         builder.AppendSpace();
-        currentString += "}";
         builder.decreaseIndent();
+        builder.AppendText("}");
     }
 
     @Override
     public void visit(WhenNode node) {
         builder.AppendSpace();
-        currentString += "switch(";
+        currentString = "switch(";
         node.children.get(0).accept(this);
-        currentString += ") {";           
+        currentString += ") {"; 
+        builder.AppendText(currentString);          
         builder.increaseIndent();
         for(int i = 1; i <= node.children.get(1).children.size() ; i++) {
             if(i == node.children.get(1).children.size()) {
@@ -426,12 +489,12 @@ public class CodeGenVisitor implements IVisitor {
                 node.children.get(i).accept(this);
             }
         }
-        currentString += "}";
+        builder.AppendText("}");
     }
 
     @Override
     public void visit(CaseNode node) {
-        currentString += "\t case ";
+        currentString = "\t case ";
         node.children.get(0).accept(this);
         currentString += ":";
         for (int i = 1; i < node.children.size(); i++){
@@ -440,49 +503,63 @@ public class CodeGenVisitor implements IVisitor {
             currentString += "\n";
         }
         currentString += "\t break;";
+
+        builder.AppendText(currentString);
         
     }
 
     @Override
     public void visit(DefaultNode node) {
-        currentString += "\t default:";
+        currentString = "\t default:";
         for (ASTNode n : node.children) {
             currentString += "\t";
             n.accept(this);
         }
         currentString += "\t break;";
+        builder.AppendText(currentString);
     }
 
     @Override
     public void visit(WaitNode node) {
         builder.AppendSpace();
-        currentString += "delay(";
+        currentString = "delay(";
         node.children.get(0).accept(this);
         currentString += ");";
+        builder.AppendText(currentString);
         builder.AppendSpace();
     }
 
     @Override
     public void visit(ReturnNode node) {
         builder.AppendSpace();
-        currentString += "return";
+        currentString = "return";
         if(node.children.size() == 1){
+            currentString += " ";
             node.children.get(0).accept(this);
         }
         currentString += ";";
+        builder.AppendText(currentString);
     }
 
     @Override
     public void visit(ObjFuncallStmtNode node) {
-        currentString += "!";
-        
+        /* TODO: Make this one */
     }
 
     @Override
     public void visit(TimeNode node) {
        currentString += node.timeValue;
     }
+/*
+    @Override
+    public void visit(ObjFuncIdNode node){
+        builder.AppendSpace();
+        node.children.get(0).accept(this);
+        
+        
+    }
 
+*/
    
     
 }

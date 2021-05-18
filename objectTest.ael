@@ -1,7 +1,22 @@
-string a = "hello";
-number b = 2;
-number c = 2;
+led  = LED(1);
+Led = LED(4); 								
+Button1 = BUTTON(6);						
+Button2 = BUTTON(7);
+
+number NumberOfTimes = 0;
 
 void program(){
-    
+
+    while(a == 2){
+        
+    }
+	
+						
+	loop 10 times{ 						
+								
+		wait(1s);									
+		wait(1s);								
+	}
+
+	NumberOfTimes = 0;							
 }

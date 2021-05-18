@@ -52,7 +52,6 @@ public class AELCompiler {
         System.out.println("Entered ParseArgs()");
 
         String in = parsePath(args[0]);
-        System.out.println(in);
         if(!(new File(in).exists())) {
             System.out.println("ERROR: FILE DOES NOT EXIST: " + in);
             return null;

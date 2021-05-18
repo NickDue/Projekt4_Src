@@ -46,7 +46,6 @@ public class CodeGenStringBuilder {
     }
 
     public void AppendCloseObjectDeclarations(){
-        AppendSpace();
         scopeIndentation--;
         AppendText("}");
     }

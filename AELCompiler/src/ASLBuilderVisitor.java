@@ -74,7 +74,6 @@ public class ASLBuilderVisitor extends AELBaseVisitor<ASTNode>{
     public ASTNode visitType(String type, ASTNode parent, boolean variable) {
         try {
             TypeNodesNode node;
-            System.out.println(type);
             switch (type) {
                 case "number":
                     node = new NumberTypeNode(parent);
@@ -644,8 +643,8 @@ public class ASLBuilderVisitor extends AELBaseVisitor<ASTNode>{
             if(ctx.ID() != null) {
                 node.children.add(new IdentificationNode(node, ctx.ID().getText()));
             } else if(ctx.number() != null){
-                ASTNode number = visitNumber((NumberContext) ctx.children.get(0), node);
-                node.children.add(number);
+                return visitNumber((NumberContext) ctx.children.get(0), node);
+                //node.children.add(number);
             } else if(ctx.STRINGLITERTAL() != null){
                 node.children.add(new StringLiteralNode(node, ctx.getText()));
             } else if(ctx.TRUETERM() != null){
@@ -676,20 +675,19 @@ public class ASLBuilderVisitor extends AELBaseVisitor<ASTNode>{
     public ASTNode visitNumber(NumberContext ctx, ASTNode parent) {
         try {
             NumberNode node = new NumberNode(parent);
-            System.out.println(ctx.getText());
             if(ctx.intLiteral() != null){
-                ASTNode intLit = visitIntLiteral((IntLiteralContext) ctx.children.get(0), node);
-                node.children.add(intLit);
+                return visitIntLiteral((IntLiteralContext) ctx.children.get(0), node);
+                //node.children.add(intLit);
             } else if (ctx.floatLiteral() != null){
-                ASTNode fLit = visitFloatLiteral((FloatLiteralContext) ctx.children.get(0), node);
-                node.children.add(fLit);
+                return visitFloatLiteral((FloatLiteralContext) ctx.children.get(0), node);
+                //node.children.add(fLit);
             } else {
                 return new ErrorNode(parent, "Invalid statement at line " + ctx.exception.getOffendingToken().getLine() + ":" + ctx.exception.getOffendingToken().getCharPositionInLine());
             }
 
-            node.lineNumber = ctx.getStart().getLine();
-            node.charPosition = ctx.getStart().getCharPositionInLine();
-            return node;
+            //node.lineNumber = ctx.getStart().getLine();
+            //node.charPosition = ctx.getStart().getCharPositionInLine();
+            //return node;
         } catch (NullPointerException e) {
             return new ErrorNode(parent, "Invalid statement at line " + ctx.exception.getOffendingToken().getLine() + ":" + ctx.exception.getOffendingToken().getCharPositionInLine());
 
@@ -701,7 +699,6 @@ public class ASLBuilderVisitor extends AELBaseVisitor<ASTNode>{
         try {
             int value = Integer.parseInt(ctx.getText());
             IntLiteralNode node = new IntLiteralNode(parent, value);
-
             node.lineNumber = ctx.getStart().getLine();
             node.charPosition = ctx.getStart().getCharPositionInLine();
             return node;

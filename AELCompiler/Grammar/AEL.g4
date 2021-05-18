@@ -1,4 +1,4 @@
-grammar AEL;
+     grammar AEL;
 
 program : decl*; 
 
@@ -6,7 +6,7 @@ decl : varDecl
      | funcDecl 
      | objDecl ;
 
-varDecl : TYPE ID (<assoc=right>ASSIGN exp)? SEMICOLON 
+varDecl : TYPE ID ASSIGN exp SEMICOLON 
         | array ;
 
 funcDecl : TYPE ID fParams funcBody ;
@@ -99,13 +99,14 @@ funccall : ID LPAREN aParams RPAREN ;
 
 aParams : exp (',' exp)*;
 
-array : TYPE ID LSQ intLiteral RSQ ('=' LCURLY arrayval (',' arrayval)* RCURLY)? SEMICOLON;
+array : TYPE ID LSQ intLiteral RSQ '=' LCURLY arrayval (',' arrayval)* RCURLY SEMICOLON;
 
 arrayval : ID 
          | intLiteral 
          | STRINGLITERTAL
          | TRUETERM 
-         | FALSETERM;
+         | FALSETERM
+      /* | ObjIdNode */ ;
 
 TYPE : NUMBERTYPE
      | BOOLEANTYPE
@@ -113,13 +114,11 @@ TYPE : NUMBERTYPE
      | STRINGTYPE
      | CHARACTERTYPE ;
 
-ID : [A-Za-z] [A-Za-z0-9]* ;
-
 intLiteral : NORMALDIGIT+;
 
 floatLiteral : NORMALDIGIT+ '.' NORMALDIGIT+ ;   
 
-STRINGLITERTAL : '"' .*? '"' ;
+STRINGLITERTAL : '"'([a-zA-Z0-9_:\-<>%#$&+/=?!.(),\\[\]* ]|'\\"')*'"' ;
 
 NORMALDIGIT : [0-9] ;
 
@@ -130,7 +129,7 @@ number : intLiteral
 
 SEMICOLON : ';' ;       
 
-WS : [ \t\r\n]+ -> skip ;
+
 
 PLUSOP: '+';
 SUBOP: '-' ;
@@ -186,3 +185,8 @@ TIMES: 'times';
 WHEN: 'when';
 WAIT: 'wait';
 RETURN: 'return';
+
+ID : [a-zA-Z_-] [a-zA-Z0-9_-]* ;
+WS : [ \t\r\n]+ -> skip ;
+COMMENT1 : '/*' .*? '*/' -> skip;
+COMMENT2 : '//' ~[\r\n]* -> skip;
