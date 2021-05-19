@@ -1,4 +1,4 @@
-// Generated from c:\Users\meerq\OneDrive\Skrivebord\Projekt4_Src\AELCompiler\Grammar\AEL.g4 by ANTLR 4.8
+// Generated from AEL.g4 by ANTLR 4.9.2
 import org.antlr.v4.runtime.atn.*;
 import org.antlr.v4.runtime.dfa.DFA;
 import org.antlr.v4.runtime.*;
@@ -10,7 +10,7 @@ import java.util.ArrayList;
 
 @SuppressWarnings({"all", "warnings", "unchecked", "unused", "cast"})
 public class AELParser extends Parser {
-	static { RuntimeMetaData.checkVersion("4.8", RuntimeMetaData.VERSION); }
+	static { RuntimeMetaData.checkVersion("4.9.2", RuntimeMetaData.VERSION); }
 
 	protected static final DFA[] _decisionToDFA;
 	protected static final PredictionContextCache _sharedContextCache =
@@ -135,6 +135,11 @@ public class AELParser extends Parser {
 			super(parent, invokingState);
 		}
 		@Override public int getRuleIndex() { return RULE_program; }
+		@Override
+		public <T> T accept(ParseTreeVisitor<? extends T> visitor) {
+			if ( visitor instanceof AELVisitor ) return ((AELVisitor<? extends T>)visitor).visitProgram(this);
+			else return visitor.visitChildren(this);
+		}
 	}
 
 	public final ProgramContext program() throws RecognitionException {
@@ -185,6 +190,11 @@ public class AELParser extends Parser {
 			super(parent, invokingState);
 		}
 		@Override public int getRuleIndex() { return RULE_decl; }
+		@Override
+		public <T> T accept(ParseTreeVisitor<? extends T> visitor) {
+			if ( visitor instanceof AELVisitor ) return ((AELVisitor<? extends T>)visitor).visitDecl(this);
+			else return visitor.visitChildren(this);
+		}
 	}
 
 	public final DeclContext decl() throws RecognitionException {
@@ -243,6 +253,11 @@ public class AELParser extends Parser {
 			super(parent, invokingState);
 		}
 		@Override public int getRuleIndex() { return RULE_varDecl; }
+		@Override
+		public <T> T accept(ParseTreeVisitor<? extends T> visitor) {
+			if ( visitor instanceof AELVisitor ) return ((AELVisitor<? extends T>)visitor).visitVarDecl(this);
+			else return visitor.visitChildren(this);
+		}
 	}
 
 	public final VarDeclContext varDecl() throws RecognitionException {
@@ -300,6 +315,11 @@ public class AELParser extends Parser {
 			super(parent, invokingState);
 		}
 		@Override public int getRuleIndex() { return RULE_funcDecl; }
+		@Override
+		public <T> T accept(ParseTreeVisitor<? extends T> visitor) {
+			if ( visitor instanceof AELVisitor ) return ((AELVisitor<? extends T>)visitor).visitFuncDecl(this);
+			else return visitor.visitChildren(this);
+		}
 	}
 
 	public final FuncDeclContext funcDecl() throws RecognitionException {
@@ -343,6 +363,11 @@ public class AELParser extends Parser {
 			super(parent, invokingState);
 		}
 		@Override public int getRuleIndex() { return RULE_objDecl; }
+		@Override
+		public <T> T accept(ParseTreeVisitor<? extends T> visitor) {
+			if ( visitor instanceof AELVisitor ) return ((AELVisitor<? extends T>)visitor).visitObjDecl(this);
+			else return visitor.visitChildren(this);
+		}
 	}
 
 	public final ObjDeclContext objDecl() throws RecognitionException {
@@ -387,6 +412,11 @@ public class AELParser extends Parser {
 			super(parent, invokingState);
 		}
 		@Override public int getRuleIndex() { return RULE_objFunccall; }
+		@Override
+		public <T> T accept(ParseTreeVisitor<? extends T> visitor) {
+			if ( visitor instanceof AELVisitor ) return ((AELVisitor<? extends T>)visitor).visitObjFunccall(this);
+			else return visitor.visitChildren(this);
+		}
 	}
 
 	public final ObjFunccallContext objFunccall() throws RecognitionException {
@@ -423,6 +453,11 @@ public class AELParser extends Parser {
 			super(parent, invokingState);
 		}
 		@Override public int getRuleIndex() { return RULE_objFunccallId; }
+		@Override
+		public <T> T accept(ParseTreeVisitor<? extends T> visitor) {
+			if ( visitor instanceof AELVisitor ) return ((AELVisitor<? extends T>)visitor).visitObjFunccallId(this);
+			else return visitor.visitChildren(this);
+		}
 	}
 
 	public final ObjFunccallIdContext objFunccallId() throws RecognitionException {
@@ -468,6 +503,11 @@ public class AELParser extends Parser {
 			super(parent, invokingState);
 		}
 		@Override public int getRuleIndex() { return RULE_fParams; }
+		@Override
+		public <T> T accept(ParseTreeVisitor<? extends T> visitor) {
+			if ( visitor instanceof AELVisitor ) return ((AELVisitor<? extends T>)visitor).visitFParams(this);
+			else return visitor.visitChildren(this);
+		}
 	}
 
 	public final FParamsContext fParams() throws RecognitionException {
@@ -527,6 +567,11 @@ public class AELParser extends Parser {
 			super(parent, invokingState);
 		}
 		@Override public int getRuleIndex() { return RULE_fParamsDecl; }
+		@Override
+		public <T> T accept(ParseTreeVisitor<? extends T> visitor) {
+			if ( visitor instanceof AELVisitor ) return ((AELVisitor<? extends T>)visitor).visitFParamsDecl(this);
+			else return visitor.visitChildren(this);
+		}
 	}
 
 	public final FParamsDeclContext fParamsDecl() throws RecognitionException {
@@ -571,6 +616,11 @@ public class AELParser extends Parser {
 			super(parent, invokingState);
 		}
 		@Override public int getRuleIndex() { return RULE_funcBody; }
+		@Override
+		public <T> T accept(ParseTreeVisitor<? extends T> visitor) {
+			if ( visitor instanceof AELVisitor ) return ((AELVisitor<? extends T>)visitor).visitFuncBody(this);
+			else return visitor.visitChildren(this);
+		}
 	}
 
 	public final FuncBodyContext funcBody() throws RecognitionException {
@@ -667,6 +717,11 @@ public class AELParser extends Parser {
 			super(parent, invokingState);
 		}
 		@Override public int getRuleIndex() { return RULE_stmt; }
+		@Override
+		public <T> T accept(ParseTreeVisitor<? extends T> visitor) {
+			if ( visitor instanceof AELVisitor ) return ((AELVisitor<? extends T>)visitor).visitStmt(this);
+			else return visitor.visitChildren(this);
+		}
 	}
 
 	public final StmtContext stmt() throws RecognitionException {
@@ -791,6 +846,11 @@ public class AELParser extends Parser {
 			super(parent, invokingState);
 		}
 		@Override public int getRuleIndex() { return RULE_printStmt; }
+		@Override
+		public <T> T accept(ParseTreeVisitor<? extends T> visitor) {
+			if ( visitor instanceof AELVisitor ) return ((AELVisitor<? extends T>)visitor).visitPrintStmt(this);
+			else return visitor.visitChildren(this);
+		}
 	}
 
 	public final PrintStmtContext printStmt() throws RecognitionException {
@@ -850,6 +910,11 @@ public class AELParser extends Parser {
 			super(parent, invokingState);
 		}
 		@Override public int getRuleIndex() { return RULE_ifStmt; }
+		@Override
+		public <T> T accept(ParseTreeVisitor<? extends T> visitor) {
+			if ( visitor instanceof AELVisitor ) return ((AELVisitor<? extends T>)visitor).visitIfStmt(this);
+			else return visitor.visitChildren(this);
+		}
 	}
 
 	public final IfStmtContext ifStmt() throws RecognitionException {
@@ -941,6 +1006,11 @@ public class AELParser extends Parser {
 			super(parent, invokingState);
 		}
 		@Override public int getRuleIndex() { return RULE_elseIfStmt; }
+		@Override
+		public <T> T accept(ParseTreeVisitor<? extends T> visitor) {
+			if ( visitor instanceof AELVisitor ) return ((AELVisitor<? extends T>)visitor).visitElseIfStmt(this);
+			else return visitor.visitChildren(this);
+		}
 	}
 
 	public final ElseIfStmtContext elseIfStmt() throws RecognitionException {
@@ -1003,6 +1073,11 @@ public class AELParser extends Parser {
 			super(parent, invokingState);
 		}
 		@Override public int getRuleIndex() { return RULE_elseStmt; }
+		@Override
+		public <T> T accept(ParseTreeVisitor<? extends T> visitor) {
+			if ( visitor instanceof AELVisitor ) return ((AELVisitor<? extends T>)visitor).visitElseStmt(this);
+			else return visitor.visitChildren(this);
+		}
 	}
 
 	public final ElseStmtContext elseStmt() throws RecognitionException {
@@ -1065,6 +1140,11 @@ public class AELParser extends Parser {
 			super(parent, invokingState);
 		}
 		@Override public int getRuleIndex() { return RULE_doWhileStmt; }
+		@Override
+		public <T> T accept(ParseTreeVisitor<? extends T> visitor) {
+			if ( visitor instanceof AELVisitor ) return ((AELVisitor<? extends T>)visitor).visitDoWhileStmt(this);
+			else return visitor.visitChildren(this);
+		}
 	}
 
 	public final DoWhileStmtContext doWhileStmt() throws RecognitionException {
@@ -1134,6 +1214,11 @@ public class AELParser extends Parser {
 			super(parent, invokingState);
 		}
 		@Override public int getRuleIndex() { return RULE_whileStmt; }
+		@Override
+		public <T> T accept(ParseTreeVisitor<? extends T> visitor) {
+			if ( visitor instanceof AELVisitor ) return ((AELVisitor<? extends T>)visitor).visitWhileStmt(this);
+			else return visitor.visitChildren(this);
+		}
 	}
 
 	public final WhileStmtContext whileStmt() throws RecognitionException {
@@ -1201,6 +1286,11 @@ public class AELParser extends Parser {
 			super(parent, invokingState);
 		}
 		@Override public int getRuleIndex() { return RULE_loopStmt; }
+		@Override
+		public <T> T accept(ParseTreeVisitor<? extends T> visitor) {
+			if ( visitor instanceof AELVisitor ) return ((AELVisitor<? extends T>)visitor).visitLoopStmt(this);
+			else return visitor.visitChildren(this);
+		}
 	}
 
 	public final LoopStmtContext loopStmt() throws RecognitionException {
@@ -1285,6 +1375,11 @@ public class AELParser extends Parser {
 			super(parent, invokingState);
 		}
 		@Override public int getRuleIndex() { return RULE_whenStmt; }
+		@Override
+		public <T> T accept(ParseTreeVisitor<? extends T> visitor) {
+			if ( visitor instanceof AELVisitor ) return ((AELVisitor<? extends T>)visitor).visitWhenStmt(this);
+			else return visitor.visitChildren(this);
+		}
 	}
 
 	public final WhenStmtContext whenStmt() throws RecognitionException {
@@ -1355,6 +1450,11 @@ public class AELParser extends Parser {
 			super(parent, invokingState);
 		}
 		@Override public int getRuleIndex() { return RULE_waitStmt; }
+		@Override
+		public <T> T accept(ParseTreeVisitor<? extends T> visitor) {
+			if ( visitor instanceof AELVisitor ) return ((AELVisitor<? extends T>)visitor).visitWaitStmt(this);
+			else return visitor.visitChildren(this);
+		}
 	}
 
 	public final WaitStmtContext waitStmt() throws RecognitionException {
@@ -1396,6 +1496,11 @@ public class AELParser extends Parser {
 			super(parent, invokingState);
 		}
 		@Override public int getRuleIndex() { return RULE_returnStmt; }
+		@Override
+		public <T> T accept(ParseTreeVisitor<? extends T> visitor) {
+			if ( visitor instanceof AELVisitor ) return ((AELVisitor<? extends T>)visitor).visitReturnStmt(this);
+			else return visitor.visitChildren(this);
+		}
 	}
 
 	public final ReturnStmtContext returnStmt() throws RecognitionException {
@@ -1443,6 +1548,11 @@ public class AELParser extends Parser {
 			super(parent, invokingState);
 		}
 		@Override public int getRuleIndex() { return RULE_time; }
+		@Override
+		public <T> T accept(ParseTreeVisitor<? extends T> visitor) {
+			if ( visitor instanceof AELVisitor ) return ((AELVisitor<? extends T>)visitor).visitTime(this);
+			else return visitor.visitChildren(this);
+		}
 	}
 
 	public final TimeContext time() throws RecognitionException {
@@ -1529,6 +1639,11 @@ public class AELParser extends Parser {
 			super(parent, invokingState);
 		}
 		@Override public int getRuleIndex() { return RULE_case_stmt; }
+		@Override
+		public <T> T accept(ParseTreeVisitor<? extends T> visitor) {
+			if ( visitor instanceof AELVisitor ) return ((AELVisitor<? extends T>)visitor).visitCase_stmt(this);
+			else return visitor.visitChildren(this);
+		}
 	}
 
 	public final Case_stmtContext case_stmt() throws RecognitionException {
@@ -1585,6 +1700,11 @@ public class AELParser extends Parser {
 			super(parent, invokingState);
 		}
 		@Override public int getRuleIndex() { return RULE_default_stmt; }
+		@Override
+		public <T> T accept(ParseTreeVisitor<? extends T> visitor) {
+			if ( visitor instanceof AELVisitor ) return ((AELVisitor<? extends T>)visitor).visitDefault_stmt(this);
+			else return visitor.visitChildren(this);
+		}
 	}
 
 	public final Default_stmtContext default_stmt() throws RecognitionException {
@@ -1641,6 +1761,11 @@ public class AELParser extends Parser {
 			super(parent, invokingState);
 		}
 		@Override public int getRuleIndex() { return RULE_exp; }
+		@Override
+		public <T> T accept(ParseTreeVisitor<? extends T> visitor) {
+			if ( visitor instanceof AELVisitor ) return ((AELVisitor<? extends T>)visitor).visitExp(this);
+			else return visitor.visitChildren(this);
+		}
 	}
 
 	public final ExpContext exp() throws RecognitionException {
@@ -1698,6 +1823,11 @@ public class AELParser extends Parser {
 			super(parent, invokingState);
 		}
 		@Override public int getRuleIndex() { return RULE_addexpr; }
+		@Override
+		public <T> T accept(ParseTreeVisitor<? extends T> visitor) {
+			if ( visitor instanceof AELVisitor ) return ((AELVisitor<? extends T>)visitor).visitAddexpr(this);
+			else return visitor.visitChildren(this);
+		}
 	}
 
 	public final AddexprContext addexpr() throws RecognitionException {
@@ -1762,6 +1892,11 @@ public class AELParser extends Parser {
 			super(parent, invokingState);
 		}
 		@Override public int getRuleIndex() { return RULE_multexpr; }
+		@Override
+		public <T> T accept(ParseTreeVisitor<? extends T> visitor) {
+			if ( visitor instanceof AELVisitor ) return ((AELVisitor<? extends T>)visitor).visitMultexpr(this);
+			else return visitor.visitChildren(this);
+		}
 	}
 
 	public final MultexprContext multexpr() throws RecognitionException {
@@ -1829,6 +1964,11 @@ public class AELParser extends Parser {
 			super(parent, invokingState);
 		}
 		@Override public int getRuleIndex() { return RULE_logStmt; }
+		@Override
+		public <T> T accept(ParseTreeVisitor<? extends T> visitor) {
+			if ( visitor instanceof AELVisitor ) return ((AELVisitor<? extends T>)visitor).visitLogStmt(this);
+			else return visitor.visitChildren(this);
+		}
 	}
 
 	public final LogStmtContext logStmt() throws RecognitionException {
@@ -1883,6 +2023,11 @@ public class AELParser extends Parser {
 			super(parent, invokingState);
 		}
 		@Override public int getRuleIndex() { return RULE_logOp; }
+		@Override
+		public <T> T accept(ParseTreeVisitor<? extends T> visitor) {
+			if ( visitor instanceof AELVisitor ) return ((AELVisitor<? extends T>)visitor).visitLogOp(this);
+			else return visitor.visitChildren(this);
+		}
 	}
 
 	public final LogOpContext logOp() throws RecognitionException {
@@ -1926,6 +2071,11 @@ public class AELParser extends Parser {
 			super(parent, invokingState);
 		}
 		@Override public int getRuleIndex() { return RULE_assignExp; }
+		@Override
+		public <T> T accept(ParseTreeVisitor<? extends T> visitor) {
+			if ( visitor instanceof AELVisitor ) return ((AELVisitor<? extends T>)visitor).visitAssignExp(this);
+			else return visitor.visitChildren(this);
+		}
 	}
 
 	public final AssignExpContext assignExp() throws RecognitionException {
@@ -1973,6 +2123,11 @@ public class AELParser extends Parser {
 			super(parent, invokingState);
 		}
 		@Override public int getRuleIndex() { return RULE_term; }
+		@Override
+		public <T> T accept(ParseTreeVisitor<? extends T> visitor) {
+			if ( visitor instanceof AELVisitor ) return ((AELVisitor<? extends T>)visitor).visitTerm(this);
+			else return visitor.visitChildren(this);
+		}
 	}
 
 	public final TermContext term() throws RecognitionException {
@@ -2059,6 +2214,11 @@ public class AELParser extends Parser {
 			super(parent, invokingState);
 		}
 		@Override public int getRuleIndex() { return RULE_funccall; }
+		@Override
+		public <T> T accept(ParseTreeVisitor<? extends T> visitor) {
+			if ( visitor instanceof AELVisitor ) return ((AELVisitor<? extends T>)visitor).visitFunccall(this);
+			else return visitor.visitChildren(this);
+		}
 	}
 
 	public final FunccallContext funccall() throws RecognitionException {
@@ -2108,6 +2268,11 @@ public class AELParser extends Parser {
 			super(parent, invokingState);
 		}
 		@Override public int getRuleIndex() { return RULE_aParams; }
+		@Override
+		public <T> T accept(ParseTreeVisitor<? extends T> visitor) {
+			if ( visitor instanceof AELVisitor ) return ((AELVisitor<? extends T>)visitor).visitAParams(this);
+			else return visitor.visitChildren(this);
+		}
 	}
 
 	public final AParamsContext aParams() throws RecognitionException {
@@ -2170,6 +2335,11 @@ public class AELParser extends Parser {
 			super(parent, invokingState);
 		}
 		@Override public int getRuleIndex() { return RULE_array; }
+		@Override
+		public <T> T accept(ParseTreeVisitor<? extends T> visitor) {
+			if ( visitor instanceof AELVisitor ) return ((AELVisitor<? extends T>)visitor).visitArray(this);
+			else return visitor.visitChildren(this);
+		}
 	}
 
 	public final ArrayContext array() throws RecognitionException {
@@ -2240,6 +2410,11 @@ public class AELParser extends Parser {
 			super(parent, invokingState);
 		}
 		@Override public int getRuleIndex() { return RULE_arrayval; }
+		@Override
+		public <T> T accept(ParseTreeVisitor<? extends T> visitor) {
+			if ( visitor instanceof AELVisitor ) return ((AELVisitor<? extends T>)visitor).visitArrayval(this);
+			else return visitor.visitChildren(this);
+		}
 	}
 
 	public final ArrayvalContext arrayval() throws RecognitionException {
@@ -2308,6 +2483,11 @@ public class AELParser extends Parser {
 			super(parent, invokingState);
 		}
 		@Override public int getRuleIndex() { return RULE_intLiteral; }
+		@Override
+		public <T> T accept(ParseTreeVisitor<? extends T> visitor) {
+			if ( visitor instanceof AELVisitor ) return ((AELVisitor<? extends T>)visitor).visitIntLiteral(this);
+			else return visitor.visitChildren(this);
+		}
 	}
 
 	public final IntLiteralContext intLiteral() throws RecognitionException {
@@ -2359,6 +2539,11 @@ public class AELParser extends Parser {
 			super(parent, invokingState);
 		}
 		@Override public int getRuleIndex() { return RULE_floatLiteral; }
+		@Override
+		public <T> T accept(ParseTreeVisitor<? extends T> visitor) {
+			if ( visitor instanceof AELVisitor ) return ((AELVisitor<? extends T>)visitor).visitFloatLiteral(this);
+			else return visitor.visitChildren(this);
+		}
 	}
 
 	public final FloatLiteralContext floatLiteral() throws RecognitionException {
@@ -2429,6 +2614,11 @@ public class AELParser extends Parser {
 			super(parent, invokingState);
 		}
 		@Override public int getRuleIndex() { return RULE_number; }
+		@Override
+		public <T> T accept(ParseTreeVisitor<? extends T> visitor) {
+			if ( visitor instanceof AELVisitor ) return ((AELVisitor<? extends T>)visitor).visitNumber(this);
+			else return visitor.visitChildren(this);
+		}
 	}
 
 	public final NumberContext number() throws RecognitionException {

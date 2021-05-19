@@ -1,7 +1,8 @@
 {
     "java.project.referencedLibraries": [
         "lib/**/*.jar",
-        "AELCompiler/lib/antlr-4.9.2-complete.jar"
+        "AELCompiler/lib/antlr-4.9.2-complete.jar",
+        "AELCompiler/lib/junit-platform-console-standalone-1.8.0-M1.jar"
     ],
     "java.project.sourcePaths": [
         "AELCompiler/src"

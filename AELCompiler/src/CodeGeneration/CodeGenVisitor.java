@@ -1,6 +1,8 @@
 package CodeGeneration;
 
 import java.util.ArrayList;
+import java.util.HashMap;
+
 import AST.*;
 import AST.visitors.IVisitor;
 import SymbolTable.typeDescriptors.TypeDescriptorKind;
@@ -11,8 +13,14 @@ public class CodeGenVisitor implements IVisitor {
     private String currentString;
     private ArrayList<String> declaredObjects = new ArrayList<String>();
     //private ArrayList<String> declaredFunctions = new ArrayList<String>();
+    private HashMap<String, Integer> objects = new HashMap<String, Integer>();
 
-    public String GenerateCode(ASTNode node){
+
+    public CodeGenVisitor(HashMap<String, Integer> declaredObjects2) {
+        objects = declaredObjects2;
+	}
+
+	public String GenerateCode(ASTNode node){
         builder = new CodeGenStringBuilder();
 
 
@@ -201,7 +209,9 @@ public class CodeGenVisitor implements IVisitor {
     @Override
     public void visit(AssignExpressionNode node) {
         try{
-            if(node.children.get(0).type.kind == TypeDescriptorKind.number){
+            if(node.children.get(0).type == null){
+                AssignVariable(node);
+            } else if(node.children.get(0).type.kind == TypeDescriptorKind.number){
                 AssignNumber(node);
             } else if(node.children.get(1).type.kind == TypeDescriptorKind.bool){
                 AssignBool(node);
@@ -213,6 +223,15 @@ public class CodeGenVisitor implements IVisitor {
     }
 
     private void AssignBool(AssignExpressionNode node){
+        currentString = "";
+        node.children.get(0).accept(this);
+        currentString += " = ";
+        node.children.get(1).accept(this);
+        currentString += ";";
+        builder.AppendText(currentString);
+    }
+
+    private void AssignVariable(AssignExpressionNode node){
         currentString = "";
         node.children.get(0).accept(this);
         currentString += " = ";
@@ -268,6 +287,14 @@ public class CodeGenVisitor implements IVisitor {
             node.children.get(0).accept(this);
             currentString += " * ";
             node.children.get(1).accept(this);
+        } else if(LeftChildKind == TypeDescriptorKind.string && RightChildKind == TypeDescriptorKind.number){
+            node.children.get(0).accept(this);
+            currentString += " + ";
+            node.children.get(1).accept(this);
+        }else if(LeftChildKind == TypeDescriptorKind.number && RightChildKind == TypeDescriptorKind.string){
+            node.children.get(0).accept(this);
+            currentString += " + ";
+            node.children.get(1).accept(this);
         }
     }
 
@@ -291,8 +318,11 @@ public class CodeGenVisitor implements IVisitor {
         currentString = "";
         node.children.get(0).accept(this);
         currentString += "(";
-        node.children.get(1).accept(this);
+        if(node.children.size() > 1) {
+            node.children.get(1).accept(this);
+        }
         currentString += ");";
+        builder.AppendText(currentString);
     }
 
     @Override
@@ -312,19 +342,28 @@ public class CodeGenVisitor implements IVisitor {
 
     @Override
     public void visit(StatementNode node) {
-        // Abstract, so no need to configure
+        // abstract
     }
 
     @Override
     public void visit(PrintNode node) {
-        //TODO ER I TVIVL OM HVORDAN MAN PRINTER NOGET I ARDUINO KONSOLLEN
+        currentString = "Serial.println(";
+        node.children.get(0).accept(this);
+        currentString += ");";
+        builder.AppendText(currentString); 
     }
 
     @Override
     public void visit(LogicalExpressionNode node) {
-        node.children.get(0).accept(this);
-        currentString += node.operator;
-        node.children.get(1).accept(this);
+        if(node.children.size() == 1){
+            node.children.get(0).accept(this);
+        } else {
+            node.children.get(0).accept(this);
+            currentString += node.operator;
+            node.children.get(1).accept(this);
+        }
+            
+        
     }
 
     @Override
@@ -364,7 +403,15 @@ public class CodeGenVisitor implements IVisitor {
             node.children.get(0).accept(this);
             currentString += " + ";
             node.children.get(1).accept(this);
-        } 
+        } else if(LeftChildKind == TypeDescriptorKind.string && RightChildKind == TypeDescriptorKind.number){
+            node.children.get(0).accept(this);
+            currentString += " + ";
+            node.children.get(1).accept(this);
+        } else if(LeftChildKind == TypeDescriptorKind.number && RightChildKind == TypeDescriptorKind.string){
+            node.children.get(0).accept(this);
+            currentString += " + ";
+            node.children.get(1).accept(this);
+        }
     }
 
     @Override
@@ -373,8 +420,10 @@ public class CodeGenVisitor implements IVisitor {
         node.children.get(0).accept(this);
         currentString += "){";
         builder.AppendText(currentString);
-        node.children.get(1).accept(this);
         builder.increaseIndent();
+        node.children.get(1).accept(this);
+        builder.decreaseIndent();
+        builder.AppendText("}");
     }
 
     @Override
@@ -526,7 +575,6 @@ public class CodeGenVisitor implements IVisitor {
         node.children.get(0).accept(this);
         currentString += ");";
         builder.AppendText(currentString);
-        builder.AppendSpace();
     }
 
     @Override
@@ -543,23 +591,29 @@ public class CodeGenVisitor implements IVisitor {
 
     @Override
     public void visit(ObjFuncallStmtNode node) {
-        /* TODO: Make this one */
+        IdentificationNode id = (IdentificationNode)node.children.get(0);
+        ObjFunccallIdNode objCall = (ObjFunccallIdNode)node.children.get(1);
+        try {
+            int literal = objects.get(id.name);
+            if(objCall.function.equalsIgnoreCase("on()")){
+                currentString = "digitalWrite(" + literal + ", HIGH);";
+                builder.AppendText(currentString);
+            } else if(objCall.function.equalsIgnoreCase("off()")){
+                currentString = "digitalWrite(" + literal + ", LOW);";
+                builder.AppendText(currentString);
+            } else if(objCall.function.equalsIgnoreCase("ison()")){
+                currentString += "digitalRead("+literal+") == HIGH";
+            } else if(objCall.function.equalsIgnoreCase("isoff()")){
+                currentString += "digitalRead("+literal+") == LOW";
+            }
+        } catch (Exception e) {
+            System.out.println("Something went wrong in the declared objects");
+        }
     }
+
 
     @Override
     public void visit(TimeNode node) {
        currentString += node.timeValue;
     }
-/*
-    @Override
-    public void visit(ObjFuncIdNode node){
-        builder.AppendSpace();
-        node.children.get(0).accept(this);
-        
-        
-    }
-
-*/
-   
-    
 }

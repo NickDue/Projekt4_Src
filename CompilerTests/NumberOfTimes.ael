@@ -1,0 +1,26 @@
+number NumberOfTimes = 0;
+Led = LED(4); 								
+Button1 = BUTTON(6);						
+Button2 = BUTTON(7);	
+
+void program(){
+						
+	while (Button2.isOff()){					
+
+
+		if (Button1.isOn()){					
+
+			NumberOfTimes = NumberOfTimes + 1;  
+    	}
+	} 
+	
+	loop NumberOfTimes times{ 						
+
+		Led.On(); 								
+		wait(1s);								
+		Led.Off();								
+		wait(1s);								
+	}
+
+	NumberOfTimes = 0;							
+}

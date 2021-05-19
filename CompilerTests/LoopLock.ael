@@ -1,0 +1,33 @@
+bool loopLock = true;
+
+Led = LED(13); 	 				    
+Button1 = BUTTON(5);				
+Button2 = BUTTON(6);
+
+void program(){
+
+	if (Button1.isOn()){
+    
+  		while(loopLock equals true){
+   			blink();
+
+   			if(Button2.isOn()){ 	  
+    			loopLock = false;  	
+   			}
+    	}
+
+	}else{
+
+    	if(Button2.isOn()){ 	
+      	loopLock = true; 		  
+    	}                    
+  	}
+}
+
+void blink(){
+  
+  	Led.On();   					    
+  	wait(1s);               			
+  	Led.Off();    					    
+  	wait(1s);              				
+}

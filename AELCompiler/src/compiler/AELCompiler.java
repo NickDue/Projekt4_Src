@@ -1,13 +1,17 @@
+package compiler;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.util.HashMap;
 import java.util.Hashtable;
 
 import org.antlr.v4.runtime.CharStream;
 import org.antlr.v4.runtime.CharStreams;
 import org.antlr.v4.runtime.CommonTokenStream;
 import org.antlr.v4.runtime.tree.ParseTree;
+import org.junit.jupiter.api.function.Executable;
+
 import ANTLR.AELLexer;
 import ANTLR.AELParser;
 import AST.ASTNode;
@@ -23,11 +27,13 @@ public class AELCompiler {
         outputFile
     }
 
-    public static void main(String[] args) {
+    public static HashMap<String, Integer> declaredObjects = new HashMap<String, Integer>();
+
+    public static void main(String[] args) throws Exception {
         Hashtable<CompilerArgs, String> compilationParameters;
-        System.out.println("running");
+        System.out.println("Started AEL Compiler");
         if(args.length != 2){
-            System.out.println("Missing arguments, no files created!");
+            throw new RuntimeException("Missing arguments, no files created!");
         } else {
             try {
                 compilationParameters = parseArgs(args);
@@ -46,6 +52,7 @@ public class AELCompiler {
         
 
     }
+
 
     private static Hashtable<CompilerArgs, String> parseArgs(String[] args) {
         Hashtable<CompilerArgs, String> compilationParameters = new Hashtable<>();
@@ -124,11 +131,12 @@ public class AELCompiler {
         System.out.println("Entered GenerateInoFile()");
         // TODO: Make a way to create a folder for it to be saved in
         try (PrintWriter out = new PrintWriter(filename + ".ino")) {
-            out.println(new CodeGenVisitor().GenerateCode(DST));
+            out.println(new CodeGenVisitor(declaredObjects).GenerateCode(DST));
         } catch (FileNotFoundException e){
             e.printStackTrace();
         }
         System.out.println("Exiting GenerateInoFile()");
     }
+
 
 }

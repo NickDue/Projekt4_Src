@@ -1,3 +1,4 @@
+package compiler;
 
 import ANTLR.AELBaseVisitor;
 import ANTLR.AELParser;
@@ -216,7 +217,6 @@ public class ASLBuilderVisitor extends AELBaseVisitor<ASTNode>{
             node.children.add(new IdentificationNode(node, id));
             ASTNode objId = visitObjFunccallId(ctx.objFunccallId(), node);
             node.children.add(objId);
-
             node.lineNumber = ctx.getStart().getLine();
             node.charPosition = ctx.getStart().getCharPositionInLine();
             return node;
@@ -226,7 +226,7 @@ public class ASLBuilderVisitor extends AELBaseVisitor<ASTNode>{
         }
         
     }
-
+    
     public ASTNode visitObjFunccallId(ObjFunccallIdContext ctx, ASTNode parent){
         try {
             ObjFunccallIdNode node = new ObjFunccallIdNode(parent);
@@ -234,11 +234,11 @@ public class ASLBuilderVisitor extends AELBaseVisitor<ASTNode>{
                 node.function = ctx.ONFUNC().getText();
             } else if(ctx.OFFFUNC() != null){
                 node.function = ctx.OFFFUNC().getText();
-            } else if(ctx.READFUNC() != null){
+            }/* else if(ctx.READFUNC() != null){
                 node.function = ctx.READFUNC().getText();
             } else if(ctx.WRITEFUNC() != null){
                 node.function = ctx.WRITEFUNC().getText();
-            } else if(ctx.ISONFUNC() != null){
+            }*/ else if(ctx.ISONFUNC() != null){
                 node.function = ctx.ISONFUNC().getText();
             } else if(ctx.ISOFFFUNC() != null){
                 node.function = ctx.ISOFFFUNC().getText();
@@ -361,8 +361,13 @@ public class ASLBuilderVisitor extends AELBaseVisitor<ASTNode>{
         try {
             LoopStmtNode node = new LoopStmtNode(parent);
             CodeBlockNode stmtNode = new CodeBlockNode(node);
-            int literal = Integer.parseInt(ctx.intLiteral().getText());
-            node.children.add(new IntLiteralNode(node, literal));
+            if(ctx.intLiteral() != null) {
+                int literal = Integer.parseInt(ctx.intLiteral().getText());
+                node.children.add(new IntLiteralNode(node, literal));
+            } else if(ctx.ID() != null){
+                node.children.add(new IdentificationNode(node, ctx.ID().getText()));
+            }
+            
             ctx.stmt().forEach(child -> {
                 stmtNode.children.add(visitStmt((StmtContext) child, node));
             });
@@ -497,10 +502,14 @@ public class ASLBuilderVisitor extends AELBaseVisitor<ASTNode>{
     public ASTNode visitLogStmt(LogStmtContext ctx, ASTNode parent) {
         try {
             LogicalExpressionNode node = new LogicalExpressionNode(parent);
-            node.operator = ctx.logOp().getText();
-            ctx.addexpr().forEach(child -> {
-                node.children.add(visitAddexpr((AddexprContext) child, node));
-            });
+            if(ctx.objFunccall() != null){
+                node.children.add(visitObjFunccall(ctx.objFunccall(), node));
+            } else {
+                node.operator = getConvertedLogOp(ctx.logOp().getText());
+                ctx.addexpr().forEach(child -> {
+                    node.children.add(visitAddexpr((AddexprContext) child, node));
+                });
+            }
             node.lineNumber = ctx.getStart().getLine();
             node.charPosition = ctx.getStart().getCharPositionInLine();
             return node;
@@ -509,6 +518,20 @@ public class ASLBuilderVisitor extends AELBaseVisitor<ASTNode>{
 
         }
         
+    }
+
+    public String getConvertedLogOp(String original){
+        if(original.equalsIgnoreCase("and")){
+            return " && ";
+        } else if(original.equalsIgnoreCase("or")){
+            return " || ";
+        } else if(original.equalsIgnoreCase("equals")){
+            return " == ";
+        } else if(original.equalsIgnoreCase("not equals")){
+            return " != ";
+        } else {
+            return " " + original + " ";
+        }
     }
 
     public ASTNode visitVarDecl(VarDeclContext ctx, ASTNode parent) {
@@ -727,13 +750,13 @@ public class ASLBuilderVisitor extends AELBaseVisitor<ASTNode>{
     public ASTNode visitFunccall(FunccallContext ctx, ASTNode parent) {
         try {
             FunctionCallNode node = new FunctionCallNode(parent);
-
             String id = ctx.ID().getText();
-            ASTNode params = visitAParams((AParamsContext)ctx.children.get(2), node);
-            
             node.children.add(new IdentificationNode(node, id));
-            node.children.add(params);
 
+            if(ctx.aParams() != null){
+                ASTNode params = visitAParams((AParamsContext)ctx.children.get(2), node);
+                node.children.add(params);
+            }
             node.lineNumber = ctx.getStart().getLine();
             node.charPosition = ctx.getStart().getCharPositionInLine();
             return node;
@@ -871,7 +894,7 @@ public class ASLBuilderVisitor extends AELBaseVisitor<ASTNode>{
             node.objId = getObjFuncId(ctx.OBJFUNCID().getText());
             node.children.add(new IntLiteralNode(node, literal));
             node.pinNumber = literal;
-
+            AELCompiler.declaredObjects.put(id, literal); // we need this for code generation
             node.lineNumber = ctx.getStart().getLine();
             node.charPosition = ctx.getStart().getCharPositionInLine();
             return node;

@@ -4,12 +4,13 @@
     // For more information, visit: https://go.microsoft.com/fwlink/?linkid=830387
     "version": "0.2.0",
     "configurations": [
+
         {
             "type": "java",
             "name": "Launch Current File",
             "request": "launch",
             "mainClass": "${file}",
-            "args": "objectTest.ael tester"
+            "args": "testprog.ael tester"
         },
         {
             "type": "java",
@@ -24,6 +25,22 @@
             "request": "launch",
             "mainClass": "AELCompiler.java",
             "args": "objectTest -tester"
-        }
+        },
+        {
+            "type": "java",
+            "name": "Compile LoopLock",
+            "request": "launch",
+            "mainClass": "compiler.AELCompiler",
+            "projectName": "Projekt4_Src_83bf2851",
+            "args": "CompilerTests/LoopLock.ael LoopLockArduino"
+        }, 
+        {
+            "type": "java",
+            "name": "Compile NumberOfTimes",
+            "request": "launch",
+            "mainClass": "compiler.AELCompiler",
+            "projectName": "Projekt4_Src_83bf2851",
+            "args": "CompilerTests/NumberOfTimes.ael NumberOfTimesArduino"
+        } 
     ]
 }

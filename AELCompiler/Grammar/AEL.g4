@@ -1,4 +1,4 @@
-     grammar AEL;
+grammar AEL;
 
 program : decl*; 
 
@@ -17,8 +17,8 @@ objFunccall : ID '.' objFunccallId ;
 
 objFunccallId : ONFUNC
               | OFFFUNC 
-              | READFUNC 
-              | WRITEFUNC 
+              //| READFUNC 
+              //| WRITEFUNC 
               | ISONFUNC
               | ISOFFFUNC ;
 
@@ -42,7 +42,7 @@ stmt : assignExp SEMICOLON
      | returnStmt 
      | funccall SEMICOLON  
      | objFunccall SEMICOLON 
-     | exp ;
+     | exp;
 
 printStmt : PRINT LPAREN exp RPAREN SEMICOLON ;
 
@@ -56,7 +56,7 @@ doWhileStmt: DO LCURLY stmt* RCURLY WHILE LPAREN logStmt RPAREN ;
 
 whileStmt: WHILE LPAREN logStmt RPAREN LCURLY stmt* RCURLY ;
 
-loopStmt: LOOP intLiteral TIMES LCURLY stmt* RCURLY;
+loopStmt: LOOP (intLiteral | ID) TIMES LCURLY stmt* RCURLY;
 
 whenStmt: WHEN LPAREN exp RPAREN LCURLY case_stmt* default_stmt? RCURLY ;
 
@@ -82,20 +82,21 @@ multexpr : term
          | term op=(MULTOP | DIVOP) multexpr
          ;
 
-logStmt : addexpr logOp addexpr;
+logStmt : addexpr logOp addexpr
+          | objFunccall;
 
 logOp : op=(EQUALOP | GREATEROP | LESSOP | GREATEREQUALSOP | LESSSEQUALSOP | NOTEQUALOP | ANDOP | OROP);
 
 assignExp : ID ASSIGN exp;        
 
-term : ID 
+term : funccall
      | number
      | STRINGLITERTAL
      | TRUETERM | FALSETERM
      | LPAREN exp RPAREN 
-     | funccall ;    
+     | ID;    
 
-funccall : ID LPAREN aParams RPAREN ;
+funccall : ID LPAREN aParams? RPAREN ;
 
 aParams : exp (',' exp)*;
 
@@ -135,6 +136,7 @@ PLUSOP: '+';
 SUBOP: '-' ;
 MULTOP: '*';
 DIVOP: '/';
+
 ANDOP : 'and';
 OROP :'or';
 EQUALOP: 'equals';
@@ -155,8 +157,8 @@ CHARACTERTYPE :'char' ;
 
 ONFUNC: 'On()'; 
 OFFFUNC:'Off()'; 
-READFUNC:'Read()';
-WRITEFUNC:'Write()'; 
+//READFUNC:'Read()';
+//WRITEFUNC:'Write()'; 
 ISONFUNC:'isOn()'; 
 ISOFFFUNC:'isOff()'; 
 

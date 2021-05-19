@@ -141,4 +141,5 @@ public interface IVisitor {
     void visit(CaseNode node);
 
     void visit(DefaultNode node);
+
 }
