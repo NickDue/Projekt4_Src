@@ -18,11 +18,10 @@ public class ASLBuilderVisitorUnitTest {
     @BeforeEach
     public void setup(){
         builder = new ASLBuilderVisitor();
-
     }
 
     @Test
-    @DisplayName("Generates NodeType Number")
+    @DisplayName("VisitType: Generates NodeType Number")
    public void VisitType_NodeTypeNumber(){ 
 
        FunctionDeclarationNode parentNode = new FunctionDeclarationNode(null);
@@ -31,7 +30,7 @@ public class ASLBuilderVisitorUnitTest {
        Assertions.assertEquals("float", Node.typeName);
    }
     @Test
-    @DisplayName("Generates NodeType String")
+    @DisplayName("VisitType: Generates NodeType String")
    public void VisitType_NodeTypeString(){ 
        
        FunctionDeclarationNode parentNode = new FunctionDeclarationNode(null);
@@ -40,7 +39,7 @@ public class ASLBuilderVisitorUnitTest {
        Assertions.assertEquals("char[]", Node.typeName);
    }
    @Test
-    @DisplayName("Generates NodeType Bool")
+    @DisplayName("VisitType: Generates NodeType Bool")
    public void VisitType_NodeTypeBool(){ 
       
        FunctionDeclarationNode parentNode = new FunctionDeclarationNode(null);
@@ -49,7 +48,7 @@ public class ASLBuilderVisitorUnitTest {
        Assertions.assertEquals("bool", Node.typeName);
    }
    @Test
-    @DisplayName("Generates NodeType Char")
+    @DisplayName("VisitType: Generates NodeType Char")
    public void VisitType_NodeTypeChar(){ 
        
        FunctionDeclarationNode parentNode = new FunctionDeclarationNode(null);
@@ -59,7 +58,7 @@ public class ASLBuilderVisitorUnitTest {
    }
 
    @Test
-    @DisplayName("Generates ErrorNode when void used a paramters")
+    @DisplayName("VisitType: Generates ErrorNode when void used a paramters")
    public void VisitType_NodeTypeVoidAsParameter(){ 
        
        FunctionDeclarationNode parentNode = new FunctionDeclarationNode(null);
@@ -71,7 +70,7 @@ public class ASLBuilderVisitorUnitTest {
    }
 
    @Test
-    @DisplayName("Generates Void Node, when not used as parameter")
+    @DisplayName("VisitType: Generates VoidNode")
    public void VisitType_NodeTypeVoid(){ 
        
        FunctionDeclarationNode parentNode = new FunctionDeclarationNode(null);
@@ -80,7 +79,7 @@ public class ASLBuilderVisitorUnitTest {
    }
 
     @Test
-    @DisplayName("Generates ErrorNode for unknown type")
+    @DisplayName("VisitType: Generates ErrorNode for unknown type")
    public void VisitType_NodeTypeUnknown(){ 
        
        FunctionDeclarationNode parentNode = new FunctionDeclarationNode(null);
@@ -91,7 +90,7 @@ public class ASLBuilderVisitorUnitTest {
    }
 
    @Test
-    @DisplayName("Catches Type null reference ")
+    @DisplayName("VisitType: Catches Type null reference ")
    public void VisitType_TypeNullException(){ 
 
        FunctionDeclarationNode parentNode = new FunctionDeclarationNode(null);
@@ -101,5 +100,5 @@ public class ASLBuilderVisitorUnitTest {
        });
    }
 
- 
+
 }

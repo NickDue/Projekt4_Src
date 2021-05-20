@@ -1,0 +1,61 @@
+btn = BUTTON(1);
+led = LED(2);
+led2 = LED(3);
+
+number num = 0;
+number iteration = 0;
+number equality = 0;
+number d = 0;
+
+
+void program(){
+    bool bools[2] = {true, false};
+    while(btn.isOff()){
+        print("Press the button to continue");
+
+        if(btn.isOn()){
+            if(num equals 0){
+                num = num + 1;
+                iteration = iteration + 1;
+            } else {
+                iteration = iteration * 2 + 1;
+                num = num + iteration;
+            }
+        } 
+    }
+    EqualOrNot(num);
+
+    loop 15 times {
+        print(value);
+    }
+    wait(30s);
+
+    do {
+        print("Num was equals to iteration, added 2 to num");
+        num = num + 2;
+    } while (num equals iteration)
+
+    d = DoubleMyInt(num);
+}
+
+void EqualOrNot(number a){
+    while (equality < a){
+        equality = equality + 2;
+    }
+    if (equality equals a){
+        led.On();
+        led2.Off();
+    } elif (equality > a){
+        led2.On();
+        led.Off();
+    } else {
+        led.On();
+        led2.On();
+        print("Something went wrong..");
+    }
+    return;
+}
+
+number DoubleMyInt(number numb){
+    return numb * 2;
+}

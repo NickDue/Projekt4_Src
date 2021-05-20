@@ -176,9 +176,12 @@ public class SemanticsVisitor extends NodeVisitor  {
     public void visit(FunctionCallNode node) {
         if(node.children.get(0) != null){
             String name = node.children.getClass().getSimpleName();
-            if(node.children.get(2).children.size() != symTable.retrieveSymbol(name).formalParamsCount){
-                node.type = new ErrorTypeDescriptor("at line" + node.lineNumber + ":" + node.charPosition + "," + "number of actual parameters does not match the formal parameters");
+            if(symTable.retrieveSymbol(name) != null){
+                if(node.children.get(2).children.size() != symTable.retrieveSymbol(name).formalParamsCount){
+                    node.type = new ErrorTypeDescriptor("at line" + node.lineNumber + ":" + node.charPosition + "," + "number of actual parameters does not match the formal parameters");
+                }
             }
+            
         }
         
         visitChildren(node);

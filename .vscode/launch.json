@@ -10,7 +10,7 @@
             "name": "Launch Current File",
             "request": "launch",
             "mainClass": "${file}",
-            "args": "testprog.ael tester"
+            "args": "CompilerTests/ThirdSoftware.ael ThirdArduino"
         },
         {
             "type": "java",
@@ -41,6 +41,14 @@
             "mainClass": "compiler.AELCompiler",
             "projectName": "Projekt4_Src_83bf2851",
             "args": "CompilerTests/NumberOfTimes.ael NumberOfTimesArduino"
+        },
+        {
+            "type": "java",
+            "name": "Compile Third Software",
+            "request": "launch",
+            "mainClass": "compiler.AELCompiler",
+            "projectName": "Projekt4_Src_83bf2851",
+            "args": "CompilerTests/ThirdSoftware.ael ThirdArduino"
         } 
     ]
 }

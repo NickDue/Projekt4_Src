@@ -41,8 +41,7 @@ public class ASLBuilderVisitor extends AELBaseVisitor<ASTNode>{
             return node;
         } catch (NullPointerException e) {
             
-            return new ErrorNode(parent, "Invalid statement at line " + ctx.exception.getOffendingToken().getLine() + ":" + ctx.exception.getOffendingToken().getCharPositionInLine());
-            
+            return new ErrorNode(parent, "Invalid statement at line " + ctx.exception.getOffendingToken().getLine() + ":" + ctx.exception.getOffendingToken().getCharPositionInLine()); 
         }
     }
     
@@ -101,8 +100,6 @@ public class ASLBuilderVisitor extends AELBaseVisitor<ASTNode>{
         } catch (NullPointerException e) {
             return new ErrorNode(parent, "Error(DEFAULT) in type called at " + parent.getClass().getSimpleName());
         }
-        
-
     }
     
     public ASTNode visitFParams(FParamsContext ctx, ASTNode parent) {
@@ -423,6 +420,10 @@ public class ASLBuilderVisitor extends AELBaseVisitor<ASTNode>{
     public ASTNode visitPrintStmt(PrintStmtContext ctx, ASTNode parent) {
         try {
             PrintNode node = new PrintNode(parent);
+            if(ctx.exp().getText().contains("value")){
+                System.out.println("here");
+                ctx.exp().getText().replace("index", "value");
+            }
             ASTNode exp = visitExp(ctx.exp(), node, null);
             node.children.add(exp);
 
@@ -772,7 +773,7 @@ public class ASLBuilderVisitor extends AELBaseVisitor<ASTNode>{
             ActualParamsNode node = new ActualParamsNode(parent);
 
             ctx.exp().forEach(child -> {
-                node.children.add(visitExp((ExpContext)ctx.exp(), node, null));
+                node.children.add(visitExp((ExpContext)child, node, null));
             });
 
             node.lineNumber = ctx.getStart().getLine();
