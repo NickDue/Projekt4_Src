@@ -6,7 +6,7 @@ public class StringTypeNode extends TypeNodesNode {
 
     public StringTypeNode(ASTNode parentNode) {
         super(parentNode);
-        this.typeName = "char[]";
+        this.typeName = "String";
         type = new StringTypeDescriptor();
     }
     

@@ -10,7 +10,7 @@
             "name": "Launch Current File",
             "request": "launch",
             "mainClass": "${file}",
-            "args": "CompilerTests/ThirdSoftware.ael ThirdArduino"
+            "args": "test1.ael tester"
         },
         {
             "type": "java",

@@ -89,7 +89,7 @@ public class ASLBuilderVisitor extends AELBaseVisitor<ASTNode>{
                     break;
                 case "void":
                     if(variable){
-                        return new ErrorNode(parent, "Error(VOID) in type called at " + parent.getClass().getSimpleName());
+                        return new ErrorNode(parent, "Error: a variable declaration cannot be of type (VOID)");
                     }
                     node = new VoidTypeNode(parent);
                     break;

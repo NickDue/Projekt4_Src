@@ -23,7 +23,6 @@ public class CodeGenVisitor implements IVisitor {
 	public String GenerateCode(ASTNode node){
         builder = new CodeGenStringBuilder();
 
-
         node.accept(this); //Creates global variables
         //AppendOtherFunctions();
         Setup(); //creates Setup() with all the objects

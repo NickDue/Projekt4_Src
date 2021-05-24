@@ -2,6 +2,7 @@ float num = 0;
 float iteration = 0;
 float equality = 0;
 float d = 0;
+String str = "hello";
 void loop() {
 		bool bools[2] = {true, false};
 		while(digitalRead(1) == LOW){

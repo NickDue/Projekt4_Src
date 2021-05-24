@@ -1,1 +1,1 @@
-(program (decl (funcDecl void f (fParams ( )) (funcBody { (stmt (assignExp tehe = (exp (addexpr (multexpr (term tehe)) + (addexpr (multexpr (term (number (intLiteral 1)))))))) ;) }))))
+led = LED(1);

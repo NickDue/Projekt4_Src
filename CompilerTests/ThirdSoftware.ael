@@ -6,6 +6,7 @@ number num = 0;
 number iteration = 0;
 number equality = 0;
 number d = 0;
+string str = "hello";
 
 
 void program(){

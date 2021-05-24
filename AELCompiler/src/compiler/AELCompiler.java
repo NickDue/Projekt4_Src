@@ -10,7 +10,6 @@ import org.antlr.v4.runtime.CharStream;
 import org.antlr.v4.runtime.CharStreams;
 import org.antlr.v4.runtime.CommonTokenStream;
 import org.antlr.v4.runtime.tree.ParseTree;
-import org.junit.jupiter.api.function.Executable;
 
 import ANTLR.AELLexer;
 import ANTLR.AELParser;
@@ -22,7 +21,7 @@ import semantics.visitors.SemanticsVisitor;
 
 public class AELCompiler {
 
-    private enum CompilerArgs {
+    public enum CompilerArgs {
         inputFile,
         outputFile
     }
@@ -73,7 +72,12 @@ public class AELCompiler {
         compilationParameters.put(CompilerArgs.outputFile, name);
         
         System.out.println("Exiting ParseArgs()");
+        System.out.println(compilationParameters);
         return compilationParameters;
+    }
+
+    public Hashtable<CompilerArgs, String> TestParseArgs(String[] args){
+        return parseArgs(args);
     }
 
     private static String parsePath(String path) {  // TODO: This should only work for windows I think
@@ -83,6 +87,10 @@ public class AELCompiler {
         } else {
             return System.getProperty("user.dir") + "\\" + path.replace('/', '\\');
         }
+    }
+
+    public ASTNode TestAnalyseCode(String path){
+        return analyzeCode(path);
     }
 
 
