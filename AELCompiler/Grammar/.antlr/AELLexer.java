@@ -1,4 +1,4 @@
-// Generated from c:\Users\meerq\OneDrive\Skrivebord\Projekt4_Src\AELCompiler\Grammar\AEL.g4 by ANTLR 4.8
+// Generated from /Users/nicholasjorgensen/Desktop/Projekt4_Src/AELCompiler/Grammar/AEL.g4 by ANTLR 4.8
 import org.antlr.v4.runtime.Lexer;
 import org.antlr.v4.runtime.CharStream;
 import org.antlr.v4.runtime.Token;

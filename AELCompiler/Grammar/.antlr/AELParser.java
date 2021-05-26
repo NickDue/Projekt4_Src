@@ -1,4 +1,4 @@
-// Generated from c:\Users\meerq\OneDrive\Skrivebord\Projekt4_Src\AELCompiler\Grammar\AEL.g4 by ANTLR 4.8
+// Generated from /Users/nicholasjorgensen/Desktop/Projekt4_Src/AELCompiler/Grammar/AEL.g4 by ANTLR 4.8
 import org.antlr.v4.runtime.atn.*;
 import org.antlr.v4.runtime.dfa.DFA;
 import org.antlr.v4.runtime.*;
@@ -599,7 +599,7 @@ public class AELParser extends Parser {
 			setState(141);
 			_errHandler.sync(this);
 			_la = _input.LA(1);
-			while ((((_la) & ~0x3f) == 0 && ((1L << _la) & ((1L << STRINGLITERTAL) | (1L << NORMALDIGIT) | (1L << TRUETERM) | (1L << FALSETERM) | (1L << LPAREN) | (1L << PRINT) | (1L << IF) | (1L << DO) | (1L << WHILE) | (1L << LOOP) | (1L << WHEN) | (1L << WAIT) | (1L << RETURN) | (1L << ID))) != 0)) {
+			while ((((_la) & ~0x3f) == 0 && ((1L << _la) & ((1L << STRINGLITERTAL) | (1L << SUBOP) | (1L << TRUETERM) | (1L << FALSETERM) | (1L << LPAREN) | (1L << PRINT) | (1L << IF) | (1L << DO) | (1L << WHILE) | (1L << LOOP) | (1L << WHEN) | (1L << WAIT) | (1L << RETURN) | (1L << ID))) != 0)) {
 				{
 				{
 				setState(138);
@@ -872,7 +872,7 @@ public class AELParser extends Parser {
 			setState(180);
 			_errHandler.sync(this);
 			_la = _input.LA(1);
-			while ((((_la) & ~0x3f) == 0 && ((1L << _la) & ((1L << STRINGLITERTAL) | (1L << NORMALDIGIT) | (1L << TRUETERM) | (1L << FALSETERM) | (1L << LPAREN) | (1L << PRINT) | (1L << IF) | (1L << DO) | (1L << WHILE) | (1L << LOOP) | (1L << WHEN) | (1L << WAIT) | (1L << RETURN) | (1L << ID))) != 0)) {
+			while ((((_la) & ~0x3f) == 0 && ((1L << _la) & ((1L << STRINGLITERTAL) | (1L << SUBOP) | (1L << TRUETERM) | (1L << FALSETERM) | (1L << LPAREN) | (1L << PRINT) | (1L << IF) | (1L << DO) | (1L << WHILE) | (1L << LOOP) | (1L << WHEN) | (1L << WAIT) | (1L << RETURN) | (1L << ID))) != 0)) {
 				{
 				{
 				setState(177);
@@ -963,7 +963,7 @@ public class AELParser extends Parser {
 			setState(201);
 			_errHandler.sync(this);
 			_la = _input.LA(1);
-			while ((((_la) & ~0x3f) == 0 && ((1L << _la) & ((1L << STRINGLITERTAL) | (1L << NORMALDIGIT) | (1L << TRUETERM) | (1L << FALSETERM) | (1L << LPAREN) | (1L << PRINT) | (1L << IF) | (1L << DO) | (1L << WHILE) | (1L << LOOP) | (1L << WHEN) | (1L << WAIT) | (1L << RETURN) | (1L << ID))) != 0)) {
+			while ((((_la) & ~0x3f) == 0 && ((1L << _la) & ((1L << STRINGLITERTAL) | (1L << SUBOP) | (1L << TRUETERM) | (1L << FALSETERM) | (1L << LPAREN) | (1L << PRINT) | (1L << IF) | (1L << DO) | (1L << WHILE) | (1L << LOOP) | (1L << WHEN) | (1L << WAIT) | (1L << RETURN) | (1L << ID))) != 0)) {
 				{
 				{
 				setState(198);
@@ -1019,7 +1019,7 @@ public class AELParser extends Parser {
 			setState(211);
 			_errHandler.sync(this);
 			_la = _input.LA(1);
-			while ((((_la) & ~0x3f) == 0 && ((1L << _la) & ((1L << STRINGLITERTAL) | (1L << NORMALDIGIT) | (1L << TRUETERM) | (1L << FALSETERM) | (1L << LPAREN) | (1L << PRINT) | (1L << IF) | (1L << DO) | (1L << WHILE) | (1L << LOOP) | (1L << WHEN) | (1L << WAIT) | (1L << RETURN) | (1L << ID))) != 0)) {
+			while ((((_la) & ~0x3f) == 0 && ((1L << _la) & ((1L << STRINGLITERTAL) | (1L << SUBOP) | (1L << TRUETERM) | (1L << FALSETERM) | (1L << LPAREN) | (1L << PRINT) | (1L << IF) | (1L << DO) | (1L << WHILE) | (1L << LOOP) | (1L << WHEN) | (1L << WAIT) | (1L << RETURN) | (1L << ID))) != 0)) {
 				{
 				{
 				setState(208);
@@ -1081,7 +1081,7 @@ public class AELParser extends Parser {
 			setState(221);
 			_errHandler.sync(this);
 			_la = _input.LA(1);
-			while ((((_la) & ~0x3f) == 0 && ((1L << _la) & ((1L << STRINGLITERTAL) | (1L << NORMALDIGIT) | (1L << TRUETERM) | (1L << FALSETERM) | (1L << LPAREN) | (1L << PRINT) | (1L << IF) | (1L << DO) | (1L << WHILE) | (1L << LOOP) | (1L << WHEN) | (1L << WAIT) | (1L << RETURN) | (1L << ID))) != 0)) {
+			while ((((_la) & ~0x3f) == 0 && ((1L << _la) & ((1L << STRINGLITERTAL) | (1L << SUBOP) | (1L << TRUETERM) | (1L << FALSETERM) | (1L << LPAREN) | (1L << PRINT) | (1L << IF) | (1L << DO) | (1L << WHILE) | (1L << LOOP) | (1L << WHEN) | (1L << WAIT) | (1L << RETURN) | (1L << ID))) != 0)) {
 				{
 				{
 				setState(218);
@@ -1156,7 +1156,7 @@ public class AELParser extends Parser {
 			setState(238);
 			_errHandler.sync(this);
 			_la = _input.LA(1);
-			while ((((_la) & ~0x3f) == 0 && ((1L << _la) & ((1L << STRINGLITERTAL) | (1L << NORMALDIGIT) | (1L << TRUETERM) | (1L << FALSETERM) | (1L << LPAREN) | (1L << PRINT) | (1L << IF) | (1L << DO) | (1L << WHILE) | (1L << LOOP) | (1L << WHEN) | (1L << WAIT) | (1L << RETURN) | (1L << ID))) != 0)) {
+			while ((((_la) & ~0x3f) == 0 && ((1L << _la) & ((1L << STRINGLITERTAL) | (1L << SUBOP) | (1L << TRUETERM) | (1L << FALSETERM) | (1L << LPAREN) | (1L << PRINT) | (1L << IF) | (1L << DO) | (1L << WHILE) | (1L << LOOP) | (1L << WHEN) | (1L << WAIT) | (1L << RETURN) | (1L << ID))) != 0)) {
 				{
 				{
 				setState(235);
@@ -1237,7 +1237,7 @@ public class AELParser extends Parser {
 			setState(253);
 			_errHandler.sync(this);
 			_la = _input.LA(1);
-			while ((((_la) & ~0x3f) == 0 && ((1L << _la) & ((1L << STRINGLITERTAL) | (1L << NORMALDIGIT) | (1L << TRUETERM) | (1L << FALSETERM) | (1L << LPAREN) | (1L << PRINT) | (1L << IF) | (1L << DO) | (1L << WHILE) | (1L << LOOP) | (1L << WHEN) | (1L << WAIT) | (1L << RETURN) | (1L << ID))) != 0)) {
+			while ((((_la) & ~0x3f) == 0 && ((1L << _la) & ((1L << STRINGLITERTAL) | (1L << SUBOP) | (1L << TRUETERM) | (1L << FALSETERM) | (1L << LPAREN) | (1L << PRINT) | (1L << IF) | (1L << DO) | (1L << WHILE) | (1L << LOOP) | (1L << WHEN) | (1L << WAIT) | (1L << RETURN) | (1L << ID))) != 0)) {
 				{
 				{
 				setState(250);
@@ -1307,7 +1307,7 @@ public class AELParser extends Parser {
 			setState(266);
 			_errHandler.sync(this);
 			_la = _input.LA(1);
-			while ((((_la) & ~0x3f) == 0 && ((1L << _la) & ((1L << STRINGLITERTAL) | (1L << NORMALDIGIT) | (1L << TRUETERM) | (1L << FALSETERM) | (1L << LPAREN) | (1L << ID))) != 0)) {
+			while ((((_la) & ~0x3f) == 0 && ((1L << _la) & ((1L << STRINGLITERTAL) | (1L << SUBOP) | (1L << TRUETERM) | (1L << FALSETERM) | (1L << LPAREN) | (1L << ID))) != 0)) {
 				{
 				{
 				setState(263);
@@ -1410,7 +1410,7 @@ public class AELParser extends Parser {
 			setState(282);
 			_errHandler.sync(this);
 			_la = _input.LA(1);
-			if ((((_la) & ~0x3f) == 0 && ((1L << _la) & ((1L << STRINGLITERTAL) | (1L << NORMALDIGIT) | (1L << TRUETERM) | (1L << FALSETERM) | (1L << LPAREN) | (1L << ID))) != 0)) {
+			if ((((_la) & ~0x3f) == 0 && ((1L << _la) & ((1L << STRINGLITERTAL) | (1L << SUBOP) | (1L << TRUETERM) | (1L << FALSETERM) | (1L << LPAREN) | (1L << ID))) != 0)) {
 				{
 				setState(281);
 				exp();
@@ -1545,7 +1545,7 @@ public class AELParser extends Parser {
 			setState(311);
 			_errHandler.sync(this);
 			_la = _input.LA(1);
-			while ((((_la) & ~0x3f) == 0 && ((1L << _la) & ((1L << STRINGLITERTAL) | (1L << NORMALDIGIT) | (1L << TRUETERM) | (1L << FALSETERM) | (1L << LPAREN) | (1L << PRINT) | (1L << IF) | (1L << DO) | (1L << WHILE) | (1L << LOOP) | (1L << WHEN) | (1L << WAIT) | (1L << RETURN) | (1L << ID))) != 0)) {
+			while ((((_la) & ~0x3f) == 0 && ((1L << _la) & ((1L << STRINGLITERTAL) | (1L << SUBOP) | (1L << TRUETERM) | (1L << FALSETERM) | (1L << LPAREN) | (1L << PRINT) | (1L << IF) | (1L << DO) | (1L << WHILE) | (1L << LOOP) | (1L << WHEN) | (1L << WAIT) | (1L << RETURN) | (1L << ID))) != 0)) {
 				{
 				{
 				setState(308);
@@ -1601,7 +1601,7 @@ public class AELParser extends Parser {
 			setState(321);
 			_errHandler.sync(this);
 			_la = _input.LA(1);
-			while ((((_la) & ~0x3f) == 0 && ((1L << _la) & ((1L << STRINGLITERTAL) | (1L << NORMALDIGIT) | (1L << TRUETERM) | (1L << FALSETERM) | (1L << LPAREN) | (1L << PRINT) | (1L << IF) | (1L << DO) | (1L << WHILE) | (1L << LOOP) | (1L << WHEN) | (1L << WAIT) | (1L << RETURN) | (1L << ID))) != 0)) {
+			while ((((_la) & ~0x3f) == 0 && ((1L << _la) & ((1L << STRINGLITERTAL) | (1L << SUBOP) | (1L << TRUETERM) | (1L << FALSETERM) | (1L << LPAREN) | (1L << PRINT) | (1L << IF) | (1L << DO) | (1L << WHILE) | (1L << LOOP) | (1L << WHEN) | (1L << WAIT) | (1L << RETURN) | (1L << ID))) != 0)) {
 				{
 				{
 				setState(318);
@@ -1957,6 +1957,7 @@ public class AELParser extends Parser {
 		public FunccallContext funccall() {
 			return getRuleContext(FunccallContext.class,0);
 		}
+		public TerminalNode SUBOP() { return getToken(AELParser.SUBOP, 0); }
 		public NumberContext number() {
 			return getRuleContext(NumberContext.class,0);
 		}
@@ -1979,7 +1980,7 @@ public class AELParser extends Parser {
 		TermContext _localctx = new TermContext(_ctx, getState());
 		enterRule(_localctx, 60, RULE_term);
 		try {
-			setState(368);
+			setState(369);
 			_errHandler.sync(this);
 			switch ( getInterpreter().adaptivePredict(_input,30,_ctx) ) {
 			case 1:
@@ -1993,45 +1994,47 @@ public class AELParser extends Parser {
 				enterOuterAlt(_localctx, 2);
 				{
 				setState(359);
+				match(SUBOP);
+				setState(360);
 				number();
 				}
 				break;
 			case 3:
 				enterOuterAlt(_localctx, 3);
 				{
-				setState(360);
+				setState(361);
 				match(STRINGLITERTAL);
 				}
 				break;
 			case 4:
 				enterOuterAlt(_localctx, 4);
 				{
-				setState(361);
+				setState(362);
 				match(TRUETERM);
 				}
 				break;
 			case 5:
 				enterOuterAlt(_localctx, 5);
 				{
-				setState(362);
+				setState(363);
 				match(FALSETERM);
 				}
 				break;
 			case 6:
 				enterOuterAlt(_localctx, 6);
 				{
-				setState(363);
-				match(LPAREN);
 				setState(364);
-				exp();
+				match(LPAREN);
 				setState(365);
+				exp();
+				setState(366);
 				match(RPAREN);
 				}
 				break;
 			case 7:
 				enterOuterAlt(_localctx, 7);
 				{
-				setState(367);
+				setState(368);
 				match(ID);
 				}
 				break;
@@ -2068,21 +2071,21 @@ public class AELParser extends Parser {
 		try {
 			enterOuterAlt(_localctx, 1);
 			{
-			setState(370);
-			match(ID);
 			setState(371);
+			match(ID);
+			setState(372);
 			match(LPAREN);
-			setState(373);
+			setState(374);
 			_errHandler.sync(this);
 			_la = _input.LA(1);
-			if ((((_la) & ~0x3f) == 0 && ((1L << _la) & ((1L << STRINGLITERTAL) | (1L << NORMALDIGIT) | (1L << TRUETERM) | (1L << FALSETERM) | (1L << LPAREN) | (1L << ID))) != 0)) {
+			if ((((_la) & ~0x3f) == 0 && ((1L << _la) & ((1L << STRINGLITERTAL) | (1L << SUBOP) | (1L << TRUETERM) | (1L << FALSETERM) | (1L << LPAREN) | (1L << ID))) != 0)) {
 				{
-				setState(372);
+				setState(373);
 				aParams();
 				}
 			}
 
-			setState(375);
+			setState(376);
 			match(RPAREN);
 			}
 		}
@@ -2117,21 +2120,21 @@ public class AELParser extends Parser {
 		try {
 			enterOuterAlt(_localctx, 1);
 			{
-			setState(377);
+			setState(378);
 			exp();
-			setState(382);
+			setState(383);
 			_errHandler.sync(this);
 			_la = _input.LA(1);
 			while (_la==T__1) {
 				{
 				{
-				setState(378);
-				match(T__1);
 				setState(379);
+				match(T__1);
+				setState(380);
 				exp();
 				}
 				}
-				setState(384);
+				setState(385);
 				_errHandler.sync(this);
 				_la = _input.LA(1);
 			}
@@ -2179,41 +2182,41 @@ public class AELParser extends Parser {
 		try {
 			enterOuterAlt(_localctx, 1);
 			{
-			setState(385);
-			match(TYPE);
 			setState(386);
-			match(ID);
+			match(TYPE);
 			setState(387);
-			match(LSQ);
+			match(ID);
 			setState(388);
-			intLiteral();
+			match(LSQ);
 			setState(389);
-			match(RSQ);
+			intLiteral();
 			setState(390);
-			match(ASSIGN);
+			match(RSQ);
 			setState(391);
-			match(LCURLY);
+			match(ASSIGN);
 			setState(392);
+			match(LCURLY);
+			setState(393);
 			arrayval();
-			setState(397);
+			setState(398);
 			_errHandler.sync(this);
 			_la = _input.LA(1);
 			while (_la==T__1) {
 				{
 				{
-				setState(393);
-				match(T__1);
 				setState(394);
+				match(T__1);
+				setState(395);
 				arrayval();
 				}
 				}
-				setState(399);
+				setState(400);
 				_errHandler.sync(this);
 				_la = _input.LA(1);
 			}
-			setState(400);
-			match(RCURLY);
 			setState(401);
+			match(RCURLY);
+			setState(402);
 			match(SEMICOLON);
 			}
 		}
@@ -2246,41 +2249,41 @@ public class AELParser extends Parser {
 		ArrayvalContext _localctx = new ArrayvalContext(_ctx, getState());
 		enterRule(_localctx, 68, RULE_arrayval);
 		try {
-			setState(408);
+			setState(409);
 			_errHandler.sync(this);
 			switch (_input.LA(1)) {
 			case ID:
 				enterOuterAlt(_localctx, 1);
 				{
-				setState(403);
+				setState(404);
 				match(ID);
 				}
 				break;
 			case NORMALDIGIT:
 				enterOuterAlt(_localctx, 2);
 				{
-				setState(404);
+				setState(405);
 				intLiteral();
 				}
 				break;
 			case STRINGLITERTAL:
 				enterOuterAlt(_localctx, 3);
 				{
-				setState(405);
+				setState(406);
 				match(STRINGLITERTAL);
 				}
 				break;
 			case TRUETERM:
 				enterOuterAlt(_localctx, 4);
 				{
-				setState(406);
+				setState(407);
 				match(TRUETERM);
 				}
 				break;
 			case FALSETERM:
 				enterOuterAlt(_localctx, 5);
 				{
-				setState(407);
+				setState(408);
 				match(FALSETERM);
 				}
 				break;
@@ -2313,30 +2316,24 @@ public class AELParser extends Parser {
 	public final IntLiteralContext intLiteral() throws RecognitionException {
 		IntLiteralContext _localctx = new IntLiteralContext(_ctx, getState());
 		enterRule(_localctx, 70, RULE_intLiteral);
+		int _la;
 		try {
-			int _alt;
 			enterOuterAlt(_localctx, 1);
 			{
-			setState(411); 
+			setState(412); 
 			_errHandler.sync(this);
-			_alt = 1;
+			_la = _input.LA(1);
 			do {
-				switch (_alt) {
-				case 1:
-					{
-					{
-					setState(410);
-					match(NORMALDIGIT);
-					}
-					}
-					break;
-				default:
-					throw new NoViableAltException(this);
+				{
+				{
+				setState(411);
+				match(NORMALDIGIT);
 				}
-				setState(413); 
+				}
+				setState(414); 
 				_errHandler.sync(this);
-				_alt = getInterpreter().adaptivePredict(_input,35,_ctx);
-			} while ( _alt!=2 && _alt!=org.antlr.v4.runtime.atn.ATN.INVALID_ALT_NUMBER );
+				_la = _input.LA(1);
+			} while ( _la==NORMALDIGIT );
 			}
 		}
 		catch (RecognitionException re) {
@@ -2366,45 +2363,38 @@ public class AELParser extends Parser {
 		enterRule(_localctx, 72, RULE_floatLiteral);
 		int _la;
 		try {
-			int _alt;
 			enterOuterAlt(_localctx, 1);
 			{
-			setState(416); 
+			setState(417); 
 			_errHandler.sync(this);
 			_la = _input.LA(1);
 			do {
 				{
 				{
-				setState(415);
+				setState(416);
 				match(NORMALDIGIT);
 				}
 				}
-				setState(418); 
+				setState(419); 
 				_errHandler.sync(this);
 				_la = _input.LA(1);
 			} while ( _la==NORMALDIGIT );
-			setState(420);
+			setState(421);
 			match(T__0);
-			setState(422); 
+			setState(423); 
 			_errHandler.sync(this);
-			_alt = 1;
+			_la = _input.LA(1);
 			do {
-				switch (_alt) {
-				case 1:
-					{
-					{
-					setState(421);
-					match(NORMALDIGIT);
-					}
-					}
-					break;
-				default:
-					throw new NoViableAltException(this);
+				{
+				{
+				setState(422);
+				match(NORMALDIGIT);
 				}
-				setState(424); 
+				}
+				setState(425); 
 				_errHandler.sync(this);
-				_alt = getInterpreter().adaptivePredict(_input,37,_ctx);
-			} while ( _alt!=2 && _alt!=org.antlr.v4.runtime.atn.ATN.INVALID_ALT_NUMBER );
+				_la = _input.LA(1);
+			} while ( _la==NORMALDIGIT );
 			}
 		}
 		catch (RecognitionException re) {
@@ -2435,20 +2425,20 @@ public class AELParser extends Parser {
 		NumberContext _localctx = new NumberContext(_ctx, getState());
 		enterRule(_localctx, 74, RULE_number);
 		try {
-			setState(428);
+			setState(429);
 			_errHandler.sync(this);
 			switch ( getInterpreter().adaptivePredict(_input,38,_ctx) ) {
 			case 1:
 				enterOuterAlt(_localctx, 1);
 				{
-				setState(426);
+				setState(427);
 				intLiteral();
 				}
 				break;
 			case 2:
 				enterOuterAlt(_localctx, 2);
 				{
-				setState(427);
+				setState(428);
 				floatLiteral();
 				}
 				break;
@@ -2466,7 +2456,7 @@ public class AELParser extends Parser {
 	}
 
 	public static final String _serializedATN =
-		"\3\u608b\ua72a\u8133\ub9ed\u417c\u3be7\u7786\u5964\3>\u01b1\4\2\t\2\4"+
+		"\3\u608b\ua72a\u8133\ub9ed\u417c\u3be7\u7786\u5964\3>\u01b2\4\2\t\2\4"+
 		"\3\t\3\4\4\t\4\4\5\t\5\4\6\t\6\4\7\t\7\4\b\t\b\4\t\t\t\4\n\t\n\4\13\t"+
 		"\13\4\f\t\f\4\r\t\r\4\16\t\16\4\17\t\17\4\20\t\20\4\21\t\21\4\22\t\22"+
 		"\4\23\t\23\4\24\t\24\4\25\t\25\4\26\t\26\4\27\t\27\4\30\t\30\4\31\t\31"+
@@ -2494,21 +2484,21 @@ public class AELParser extends Parser {
 		"\3\31\7\31\u0142\n\31\f\31\16\31\u0145\13\31\3\31\3\31\3\32\3\32\3\32"+
 		"\5\32\u014c\n\32\3\33\3\33\3\33\3\33\3\33\5\33\u0153\n\33\3\34\3\34\3"+
 		"\34\3\34\3\34\5\34\u015a\n\34\3\35\3\35\3\35\3\35\3\35\5\35\u0161\n\35"+
-		"\3\36\3\36\3\37\3\37\3\37\3\37\3 \3 \3 \3 \3 \3 \3 \3 \3 \3 \5 \u0173"+
-		"\n \3!\3!\3!\5!\u0178\n!\3!\3!\3\"\3\"\3\"\7\"\u017f\n\"\f\"\16\"\u0182"+
-		"\13\"\3#\3#\3#\3#\3#\3#\3#\3#\3#\3#\7#\u018e\n#\f#\16#\u0191\13#\3#\3"+
-		"#\3#\3$\3$\3$\3$\3$\5$\u019b\n$\3%\6%\u019e\n%\r%\16%\u019f\3&\6&\u01a3"+
-		"\n&\r&\16&\u01a4\3&\3&\6&\u01a9\n&\r&\16&\u01aa\3\'\3\'\5\'\u01af\n\'"+
+		"\3\36\3\36\3\37\3\37\3\37\3\37\3 \3 \3 \3 \3 \3 \3 \3 \3 \3 \3 \5 \u0174"+
+		"\n \3!\3!\3!\5!\u0179\n!\3!\3!\3\"\3\"\3\"\7\"\u0180\n\"\f\"\16\"\u0183"+
+		"\13\"\3#\3#\3#\3#\3#\3#\3#\3#\3#\3#\7#\u018f\n#\f#\16#\u0192\13#\3#\3"+
+		"#\3#\3$\3$\3$\3$\3$\5$\u019c\n$\3%\6%\u019f\n%\r%\16%\u01a0\3&\6&\u01a4"+
+		"\n&\r&\16&\u01a5\3&\3&\6&\u01aa\n&\r&\16&\u01ab\3\'\3\'\5\'\u01b0\n\'"+
 		"\3\'\2\2(\2\4\6\b\n\f\16\20\22\24\26\30\32\34\36 \"$&(*,.\60\62\64\66"+
-		"8:<>@BDFHJL\2\6\3\2\"%\3\2\17\20\3\2\21\22\3\2\23\32\2\u01c5\2Q\3\2\2"+
+		"8:<>@BDFHJL\2\6\3\2\"%\3\2\17\20\3\2\21\22\3\2\23\32\2\u01c6\2Q\3\2\2"+
 		"\2\4W\3\2\2\2\6`\3\2\2\2\bb\3\2\2\2\ng\3\2\2\2\fo\3\2\2\2\16s\3\2\2\2"+
 		"\20u\3\2\2\2\22\u0082\3\2\2\2\24\u0085\3\2\2\2\26\u00a6\3\2\2\2\30\u00a8"+
 		"\3\2\2\2\32\u00ae\3\2\2\2\34\u00c3\3\2\2\2\36\u00d0\3\2\2\2 \u00da\3\2"+
 		"\2\2\"\u00e8\3\2\2\2$\u00f5\3\2\2\2&\u0104\3\2\2\2(\u0114\3\2\2\2*\u011a"+
 		"\3\2\2\2,\u0123\3\2\2\2.\u0134\3\2\2\2\60\u013e\3\2\2\2\62\u014b\3\2\2"+
 		"\2\64\u0152\3\2\2\2\66\u0159\3\2\2\28\u0160\3\2\2\2:\u0162\3\2\2\2<\u0164"+
-		"\3\2\2\2>\u0172\3\2\2\2@\u0174\3\2\2\2B\u017b\3\2\2\2D\u0183\3\2\2\2F"+
-		"\u019a\3\2\2\2H\u019d\3\2\2\2J\u01a2\3\2\2\2L\u01ae\3\2\2\2NP\5\4\3\2"+
+		"\3\2\2\2>\u0173\3\2\2\2@\u0175\3\2\2\2B\u017c\3\2\2\2D\u0184\3\2\2\2F"+
+		"\u019b\3\2\2\2H\u019e\3\2\2\2J\u01a3\3\2\2\2L\u01af\3\2\2\2NP\5\4\3\2"+
 		"ON\3\2\2\2PS\3\2\2\2QO\3\2\2\2QR\3\2\2\2R\3\3\2\2\2SQ\3\2\2\2TX\5\6\4"+
 		"\2UX\5\b\5\2VX\5\n\6\2WT\3\2\2\2WU\3\2\2\2WV\3\2\2\2X\5\3\2\2\2YZ\7\n"+
 		"\2\2Z[\7;\2\2[\\\7&\2\2\\]\5\62\32\2]^\7\16\2\2^a\3\2\2\2_a\5D#\2`Y\3"+
@@ -2591,35 +2581,35 @@ public class AELParser extends Parser {
 		"\u015c\5\64\33\2\u015c\u015d\5:\36\2\u015d\u015e\5\64\33\2\u015e\u0161"+
 		"\3\2\2\2\u015f\u0161\5\f\7\2\u0160\u015b\3\2\2\2\u0160\u015f\3\2\2\2\u0161"+
 		"9\3\2\2\2\u0162\u0163\t\5\2\2\u0163;\3\2\2\2\u0164\u0165\7;\2\2\u0165"+
-		"\u0166\7&\2\2\u0166\u0167\5\62\32\2\u0167=\3\2\2\2\u0168\u0173\5@!\2\u0169"+
-		"\u0173\5L\'\2\u016a\u0173\7\13\2\2\u016b\u0173\7\33\2\2\u016c\u0173\7"+
-		"\34\2\2\u016d\u016e\7(\2\2\u016e\u016f\5\62\32\2\u016f\u0170\7)\2\2\u0170"+
-		"\u0173\3\2\2\2\u0171\u0173\7;\2\2\u0172\u0168\3\2\2\2\u0172\u0169\3\2"+
-		"\2\2\u0172\u016a\3\2\2\2\u0172\u016b\3\2\2\2\u0172\u016c\3\2\2\2\u0172"+
-		"\u016d\3\2\2\2\u0172\u0171\3\2\2\2\u0173?\3\2\2\2\u0174\u0175\7;\2\2\u0175"+
-		"\u0177\7(\2\2\u0176\u0178\5B\"\2\u0177\u0176\3\2\2\2\u0177\u0178\3\2\2"+
-		"\2\u0178\u0179\3\2\2\2\u0179\u017a\7)\2\2\u017aA\3\2\2\2\u017b\u0180\5"+
-		"\62\32\2\u017c\u017d\7\4\2\2\u017d\u017f\5\62\32\2\u017e\u017c\3\2\2\2"+
-		"\u017f\u0182\3\2\2\2\u0180\u017e\3\2\2\2\u0180\u0181\3\2\2\2\u0181C\3"+
-		"\2\2\2\u0182\u0180\3\2\2\2\u0183\u0184\7\n\2\2\u0184\u0185\7;\2\2\u0185"+
-		"\u0186\7,\2\2\u0186\u0187\5H%\2\u0187\u0188\7-\2\2\u0188\u0189\7&\2\2"+
-		"\u0189\u018a\7*\2\2\u018a\u018f\5F$\2\u018b\u018c\7\4\2\2\u018c\u018e"+
-		"\5F$\2\u018d\u018b\3\2\2\2\u018e\u0191\3\2\2\2\u018f\u018d\3\2\2\2\u018f"+
-		"\u0190\3\2\2\2\u0190\u0192\3\2\2\2\u0191\u018f\3\2\2\2\u0192\u0193\7+"+
-		"\2\2\u0193\u0194\7\16\2\2\u0194E\3\2\2\2\u0195\u019b\7;\2\2\u0196\u019b"+
-		"\5H%\2\u0197\u019b\7\13\2\2\u0198\u019b\7\33\2\2\u0199\u019b\7\34\2\2"+
-		"\u019a\u0195\3\2\2\2\u019a\u0196\3\2\2\2\u019a\u0197\3\2\2\2\u019a\u0198"+
-		"\3\2\2\2\u019a\u0199\3\2\2\2\u019bG\3\2\2\2\u019c\u019e\7\f\2\2\u019d"+
-		"\u019c\3\2\2\2\u019e\u019f\3\2\2\2\u019f\u019d\3\2\2\2\u019f\u01a0\3\2"+
-		"\2\2\u01a0I\3\2\2\2\u01a1\u01a3\7\f\2\2\u01a2\u01a1\3\2\2\2\u01a3\u01a4"+
-		"\3\2\2\2\u01a4\u01a2\3\2\2\2\u01a4\u01a5\3\2\2\2\u01a5\u01a6\3\2\2\2\u01a6"+
-		"\u01a8\7\3\2\2\u01a7\u01a9\7\f\2\2\u01a8\u01a7\3\2\2\2\u01a9\u01aa\3\2"+
-		"\2\2\u01aa\u01a8\3\2\2\2\u01aa\u01ab\3\2\2\2\u01abK\3\2\2\2\u01ac\u01af"+
-		"\5H%\2\u01ad\u01af\5J&\2\u01ae\u01ac\3\2\2\2\u01ae\u01ad\3\2\2\2\u01af"+
-		"M\3\2\2\2)QW`{~\u0089\u008f\u00a6\u00b6\u00bd\u00c1\u00cb\u00d5\u00df"+
-		"\u00f0\u00f8\u00ff\u010c\u0110\u011c\u0123\u0128\u012d\u0132\u0139\u0143"+
-		"\u014b\u0152\u0159\u0160\u0172\u0177\u0180\u018f\u019a\u019f\u01a4\u01aa"+
-		"\u01ae";
+		"\u0166\7&\2\2\u0166\u0167\5\62\32\2\u0167=\3\2\2\2\u0168\u0174\5@!\2\u0169"+
+		"\u016a\7\20\2\2\u016a\u0174\5L\'\2\u016b\u0174\7\13\2\2\u016c\u0174\7"+
+		"\33\2\2\u016d\u0174\7\34\2\2\u016e\u016f\7(\2\2\u016f\u0170\5\62\32\2"+
+		"\u0170\u0171\7)\2\2\u0171\u0174\3\2\2\2\u0172\u0174\7;\2\2\u0173\u0168"+
+		"\3\2\2\2\u0173\u0169\3\2\2\2\u0173\u016b\3\2\2\2\u0173\u016c\3\2\2\2\u0173"+
+		"\u016d\3\2\2\2\u0173\u016e\3\2\2\2\u0173\u0172\3\2\2\2\u0174?\3\2\2\2"+
+		"\u0175\u0176\7;\2\2\u0176\u0178\7(\2\2\u0177\u0179\5B\"\2\u0178\u0177"+
+		"\3\2\2\2\u0178\u0179\3\2\2\2\u0179\u017a\3\2\2\2\u017a\u017b\7)\2\2\u017b"+
+		"A\3\2\2\2\u017c\u0181\5\62\32\2\u017d\u017e\7\4\2\2\u017e\u0180\5\62\32"+
+		"\2\u017f\u017d\3\2\2\2\u0180\u0183\3\2\2\2\u0181\u017f\3\2\2\2\u0181\u0182"+
+		"\3\2\2\2\u0182C\3\2\2\2\u0183\u0181\3\2\2\2\u0184\u0185\7\n\2\2\u0185"+
+		"\u0186\7;\2\2\u0186\u0187\7,\2\2\u0187\u0188\5H%\2\u0188\u0189\7-\2\2"+
+		"\u0189\u018a\7&\2\2\u018a\u018b\7*\2\2\u018b\u0190\5F$\2\u018c\u018d\7"+
+		"\4\2\2\u018d\u018f\5F$\2\u018e\u018c\3\2\2\2\u018f\u0192\3\2\2\2\u0190"+
+		"\u018e\3\2\2\2\u0190\u0191\3\2\2\2\u0191\u0193\3\2\2\2\u0192\u0190\3\2"+
+		"\2\2\u0193\u0194\7+\2\2\u0194\u0195\7\16\2\2\u0195E\3\2\2\2\u0196\u019c"+
+		"\7;\2\2\u0197\u019c\5H%\2\u0198\u019c\7\13\2\2\u0199\u019c\7\33\2\2\u019a"+
+		"\u019c\7\34\2\2\u019b\u0196\3\2\2\2\u019b\u0197\3\2\2\2\u019b\u0198\3"+
+		"\2\2\2\u019b\u0199\3\2\2\2\u019b\u019a\3\2\2\2\u019cG\3\2\2\2\u019d\u019f"+
+		"\7\f\2\2\u019e\u019d\3\2\2\2\u019f\u01a0\3\2\2\2\u01a0\u019e\3\2\2\2\u01a0"+
+		"\u01a1\3\2\2\2\u01a1I\3\2\2\2\u01a2\u01a4\7\f\2\2\u01a3\u01a2\3\2\2\2"+
+		"\u01a4\u01a5\3\2\2\2\u01a5\u01a3\3\2\2\2\u01a5\u01a6\3\2\2\2\u01a6\u01a7"+
+		"\3\2\2\2\u01a7\u01a9\7\3\2\2\u01a8\u01aa\7\f\2\2\u01a9\u01a8\3\2\2\2\u01aa"+
+		"\u01ab\3\2\2\2\u01ab\u01a9\3\2\2\2\u01ab\u01ac\3\2\2\2\u01acK\3\2\2\2"+
+		"\u01ad\u01b0\5H%\2\u01ae\u01b0\5J&\2\u01af\u01ad\3\2\2\2\u01af\u01ae\3"+
+		"\2\2\2\u01b0M\3\2\2\2)QW`{~\u0089\u008f\u00a6\u00b6\u00bd\u00c1\u00cb"+
+		"\u00d5\u00df\u00f0\u00f8\u00ff\u010c\u0110\u011c\u0123\u0128\u012d\u0132"+
+		"\u0139\u0143\u014b\u0152\u0159\u0160\u0173\u0178\u0181\u0190\u019b\u01a0"+
+		"\u01a5\u01ab\u01af";
 	public static final ATN _ATN =
 		new ATNDeserializer().deserialize(_serializedATN.toCharArray());
 	static {

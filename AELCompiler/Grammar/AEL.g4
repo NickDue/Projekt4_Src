@@ -90,7 +90,7 @@ logOp : op=(EQUALOP | GREATEROP | LESSOP | GREATEREQUALSOP | LESSSEQUALSOP | NOT
 assignExp : ID ASSIGN exp;        
 
 term : funccall
-     | number
+     | SUBOP number
      | STRINGLITERTAL
      | TRUETERM | FALSETERM
      | LPAREN exp RPAREN 
@@ -115,7 +115,7 @@ TYPE : NUMBERTYPE
      | STRINGTYPE
      | CHARACTERTYPE ;
 
-intLiteral : NORMALDIGIT+;
+intLiteral :  NORMALDIGIT+;
 
 floatLiteral : NORMALDIGIT+ '.' NORMALDIGIT+ ;   
 

@@ -4,11 +4,7 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
-import AST.ASTNode;
-import AST.ErrorNode;
 import AST.ObjectDeclarationNode;
-import AST.TypeNodesNode;
-import compiler.ASLBuilderVisitor;
 import CodeGeneration.CodeGenVisitor;
 
 

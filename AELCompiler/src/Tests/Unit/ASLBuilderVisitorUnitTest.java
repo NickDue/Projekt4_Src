@@ -36,7 +36,7 @@ public class ASLBuilderVisitorUnitTest {
        FunctionDeclarationNode parentNode = new FunctionDeclarationNode(null);
        TypeNodesNode Node = (TypeNodesNode) builder.visitType("string", parentNode, false);
 
-       Assertions.assertEquals("char[]", Node.typeName);
+       Assertions.assertEquals("String", Node.typeName);
    }
    @Test
     @DisplayName("VisitType: Generates NodeType Bool")
