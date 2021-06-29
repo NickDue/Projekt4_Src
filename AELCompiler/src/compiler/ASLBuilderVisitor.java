@@ -6,7 +6,12 @@ import ANTLR.AELParser.*;
 import AST.*;
 
 public class ASLBuilderVisitor extends AELBaseVisitor<ASTNode>{
-    
+    /**
+     * Generates program node. Appends Codeblock node to create the general scope. 
+     * Appends all declarations children to stmtNode, and visiting each child (typecasted).
+     * @param ctx
+     * @return The program node.
+     */
     @Override
     public ASTNode visitProgram(ProgramContext ctx) {
         ASTNode node = new ProgramNode(null);
@@ -19,7 +24,12 @@ public class ASLBuilderVisitor extends AELBaseVisitor<ASTNode>{
         node.charPosition = ctx.getStart().getCharPositionInLine();
         return node;
     }
-
+    /**
+     * Determine which declaration method to apply.
+     * @param ctx
+     * @param parent
+     * @return declaration Node
+     */
     public ASTNode visitDecl(AELParser.DeclContext ctx, ASTNode parent) {
         try {
             ASTNode node;
@@ -44,7 +54,16 @@ public class ASLBuilderVisitor extends AELBaseVisitor<ASTNode>{
             return new ErrorNode(parent, "Invalid statement at line " + ctx.exception.getOffendingToken().getLine() + ":" + ctx.exception.getOffendingToken().getCharPositionInLine()); 
         }
     }
-    
+    /**
+     * Generates FunctionDeclarationNode, appends to the parent.
+     * Gets the FunctionDeclarationNode´s type, id, function parameters.
+     * Generates functionscope.
+     * Gets the function body
+     * Appends type, idNode, parameters, scope and body to the FunctionDeclarationNode.
+     * @param ctx
+     * @param parent
+     * @return FunctionDeclarationNode
+     */
     public ASTNode visitFuncDecl(FuncDeclContext ctx, ASTNode parent) {
         try {
             FunctionDeclarationNode node = new FunctionDeclarationNode(parent);
@@ -156,6 +175,12 @@ public class ASLBuilderVisitor extends AELBaseVisitor<ASTNode>{
         
     }
 
+    /**
+     * Determine which statement type to visit.
+     * @param ctx
+     * @param parent
+     * @return Node with correct statement Type.
+     */
     public ASTNode visitStmt(StmtContext ctx, ASTNode parent) {
         try {
             if(ctx.assignExp() != null){
@@ -667,7 +692,7 @@ public class ASLBuilderVisitor extends AELBaseVisitor<ASTNode>{
             if(ctx.ID() != null) {
                 node.children.add(new IdentificationNode(node, ctx.ID().getText()));
             } else if(ctx.number() != null){
-                return visitNumber((NumberContext) ctx.children.get(0), node);
+                return visitNumber((NumberContext) ctx.children.get(0), parent);
             } else if(ctx.STRINGLITERTAL() != null){
                 node.children.add(new StringLiteralNode(node, ctx.getText()));
             } else if(ctx.TRUETERM() != null){
@@ -695,14 +720,20 @@ public class ASLBuilderVisitor extends AELBaseVisitor<ASTNode>{
         
     }
     
+     /**
+      * Determines if IntNode or FloatNode shall be created.
+      * @param ctx
+      * @param parent
+      * @return Int or FloatNode with correct value.
+      */
     public ASTNode visitNumber(NumberContext ctx, ASTNode parent) {
         try {
             NumberNode node = new NumberNode(parent);
             if(ctx.intLiteral() != null){
-                return visitIntLiteral((IntLiteralContext) ctx.children.get(0), node);
+                return visitIntLiteral((IntLiteralContext) ctx.children.get(0), parent);
                 //node.children.add(intLit);
             } else if (ctx.floatLiteral() != null){
-                return visitFloatLiteral((FloatLiteralContext) ctx.children.get(0), node);
+                return visitFloatLiteral((FloatLiteralContext) ctx.children.get(0), parent);
                 //node.children.add(fLit);
             } else {
                 return new ErrorNode(parent, "Invalid statement at line " + ctx.exception.getOffendingToken().getLine() + ":" + ctx.exception.getOffendingToken().getCharPositionInLine());
@@ -717,7 +748,12 @@ public class ASLBuilderVisitor extends AELBaseVisitor<ASTNode>{
         }
         
     }
-
+    /**
+     * Generates IntNode with the correct value.
+     * @param ctx
+     * @param parent
+     * @return IntNode.
+     */
     public ASTNode visitIntLiteral(IntLiteralContext ctx, ASTNode parent) {
         try {
             int value = Integer.parseInt(ctx.getText());
@@ -731,7 +767,12 @@ public class ASLBuilderVisitor extends AELBaseVisitor<ASTNode>{
         }
         
     }
-
+    /**
+     * Generates FloatNode with correct value.
+     * @param ctx
+     * @param parent
+     * @return FloatNode.
+     */
     public ASTNode visitFloatLiteral(FloatLiteralContext ctx, ASTNode parent) {
         try {
             float value = Float.parseFloat(ctx.getText());

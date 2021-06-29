@@ -52,7 +52,11 @@ public class AELCompiler {
 
     }
 
-
+    /**
+     * Stores the input path and output path in a hashtable.
+     * @param args
+     * @return Hashtable compilationParameters
+     */
     private static Hashtable<CompilerArgs, String> parseArgs(String[] args) {
         Hashtable<CompilerArgs, String> compilationParameters = new Hashtable<>();
         System.out.println("Entered ParseArgs()");
@@ -75,11 +79,21 @@ public class AELCompiler {
         System.out.println(compilationParameters);
         return compilationParameters;
     }
-
+    
+    /**
+     * Testfunction to test parse args
+     * @param args
+     * @return
+     */
     public Hashtable<CompilerArgs, String> TestParseArgs(String[] args){
         return parseArgs(args);
     }
-
+    
+    /**
+     * Converts the string path into a system path.
+     * @param path 
+     * @return system path
+     */
     private static String parsePath(String path) {  // TODO: This should only work for windows I think
         System.out.println("Entered parsePath()");
         if(path.contains(":")) {
@@ -88,12 +102,20 @@ public class AELCompiler {
             return System.getProperty("user.dir") + "\\" + path.replace('/', '\\');
         }
     }
-
+    /**
+     * Testfunction to test AnalyzeCode
+     * @param path
+     * @return
+     */
     public ASTNode TestAnalyseCode(String path){
         return analyzeCode(path);
     }
 
-
+    /**
+     * Analyzes the source code (from input file).
+     * @param path
+     * @return The root node of the AST
+     */
     private static ASTNode analyzeCode(String path){
         CharStream in;
         System.out.println("Entered analyzeCode()");
@@ -125,7 +147,11 @@ public class AELCompiler {
         System.out.println("Exiting analyzeCode()");
         return node;
     }
-
+    /**
+     * Generate .ino file with the correct filename.
+     * @param DST 
+     * @param compilerParams
+     */
     private static void GenerateCode(ASTNode DST, Hashtable<CompilerArgs, String> compilerParams){
         System.out.println("Entered GenerateCode()");
         if(compilerParams.get(CompilerArgs.outputFile) == null)
@@ -134,7 +160,11 @@ public class AELCompiler {
             GenerateInoFile(DST, compilerParams.get(CompilerArgs.outputFile));
         System.out.println("Exiting GenerateCode()");
     }
-
+    /**
+     * Creates .ino file and generates code based on the given DST.
+     * @param DST
+     * @param filename
+     */
     private static void GenerateInoFile(ASTNode DST, String filename){
         System.out.println("Entered GenerateInoFile()");
         // TODO: Make a way to create a folder for it to be saved in
