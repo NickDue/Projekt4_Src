@@ -8,7 +8,6 @@ number equality = 0;
 number d = 0;
 string str = "hello";
 
-
 void program(){
     bool bools[2] = {true, false};
     while(btn.isOff()){
@@ -19,7 +18,7 @@ void program(){
                 num = num + 1;
                 iteration = iteration + 1;
             } else {
-                iteration = iteration * 2 + 1;
+                iteration = iteration * 2;
                 num = num + iteration;
             }
         } 

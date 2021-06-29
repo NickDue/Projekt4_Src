@@ -227,7 +227,8 @@ public class CodeGenVisitor implements IVisitor {
             }
 
         } catch (NullPointerException e){
-            System.out.println("Error in CodeGenVisitor.visit(AssignmentNode node): node.type.kind is null");
+            e.printStackTrace();
+            System.out.println("Error in CodeGenVisitor.visit(AssignmentNode node): node.type.kind is null ");
         }
     }
 
@@ -388,7 +389,6 @@ public class CodeGenVisitor implements IVisitor {
     public void visit(AdditionExpressionNode node) {
         TypeDescriptorKind LeftChildKind;
         TypeDescriptorKind RightChildKind;
-
 
         
         if(node.children.get(0).type != null){

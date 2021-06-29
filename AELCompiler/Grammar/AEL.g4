@@ -70,12 +70,10 @@ case_stmt : term COLON stmt* ';';
 
 default_stmt : 'else' COLON stmt* ';';
      
-exp : assignExp
-    | addexpr
-    | term ;
+
 
 addexpr : multexpr 
-        | multexpr op=(PLUSOP | SUBOP) addexpr
+        | multexpr op=(PLUSOP | SUBOP) addexpr 
         ;
 
 multexpr : term
@@ -90,7 +88,7 @@ logOp : op=(EQUALOP | GREATEROP | LESSOP | GREATEREQUALSOP | LESSSEQUALSOP | NOT
 assignExp : ID ASSIGN exp;        
 
 term : funccall
-     | SUBOP number
+     | number
      | STRINGLITERTAL
      | TRUETERM | FALSETERM
      | LPAREN exp RPAREN 
@@ -101,6 +99,10 @@ funccall : ID LPAREN aParams? RPAREN ;
 aParams : exp (',' exp)*;
 
 array : TYPE ID LSQ intLiteral RSQ '=' LCURLY arrayval (',' arrayval)* RCURLY SEMICOLON;
+
+exp : assignExp
+    | addexpr
+    | term ;
 
 arrayval : ID 
          | intLiteral 

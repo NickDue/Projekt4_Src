@@ -49,6 +49,14 @@
             "mainClass": "compiler.AELCompiler",
             "projectName": "Projekt4_Src_83bf2851",
             "args": "CompilerTests/ThirdSoftware.ael ThirdArduino"
+        },
+        {
+            "type": "java",
+            "name": "Compile Switch Test",
+            "request": "launch",
+            "mainClass": "compiler.AELCompiler",
+            "projectName": "Projekt4_Src_83bf2851",
+            "args": "CompilerTests/SwitchTest.ael TestingSwitch"
         } 
     ]
 }

@@ -155,12 +155,6 @@ public interface AELVisitor<T> extends ParseTreeVisitor<T> {
 	 */
 	T visitDefault_stmt(AELParser.Default_stmtContext ctx);
 	/**
-	 * Visit a parse tree produced by {@link AELParser#exp}.
-	 * @param ctx the parse tree
-	 * @return the visitor result
-	 */
-	T visitExp(AELParser.ExpContext ctx);
-	/**
 	 * Visit a parse tree produced by {@link AELParser#addexpr}.
 	 * @param ctx the parse tree
 	 * @return the visitor result
@@ -214,6 +208,12 @@ public interface AELVisitor<T> extends ParseTreeVisitor<T> {
 	 * @return the visitor result
 	 */
 	T visitArray(AELParser.ArrayContext ctx);
+	/**
+	 * Visit a parse tree produced by {@link AELParser#exp}.
+	 * @param ctx the parse tree
+	 * @return the visitor result
+	 */
+	T visitExp(AELParser.ExpContext ctx);
 	/**
 	 * Visit a parse tree produced by {@link AELParser#arrayval}.
 	 * @param ctx the parse tree

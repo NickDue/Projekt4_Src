@@ -185,13 +185,6 @@ public class AELBaseVisitor<T> extends AbstractParseTreeVisitor<T> implements AE
 	 * <p>The default implementation returns the result of calling
 	 * {@link #visitChildren} on {@code ctx}.</p>
 	 */
-	@Override public T visitExp(AELParser.ExpContext ctx) { return visitChildren(ctx); }
-	/**
-	 * {@inheritDoc}
-	 *
-	 * <p>The default implementation returns the result of calling
-	 * {@link #visitChildren} on {@code ctx}.</p>
-	 */
 	@Override public T visitAddexpr(AELParser.AddexprContext ctx) { return visitChildren(ctx); }
 	/**
 	 * {@inheritDoc}
@@ -249,6 +242,13 @@ public class AELBaseVisitor<T> extends AbstractParseTreeVisitor<T> implements AE
 	 * {@link #visitChildren} on {@code ctx}.</p>
 	 */
 	@Override public T visitArray(AELParser.ArrayContext ctx) { return visitChildren(ctx); }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation returns the result of calling
+	 * {@link #visitChildren} on {@code ctx}.</p>
+	 */
+	@Override public T visitExp(AELParser.ExpContext ctx) { return visitChildren(ctx); }
 	/**
 	 * {@inheritDoc}
 	 *

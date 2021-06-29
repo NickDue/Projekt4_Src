@@ -667,12 +667,7 @@ public class ASLBuilderVisitor extends AELBaseVisitor<ASTNode>{
             if(ctx.ID() != null) {
                 node.children.add(new IdentificationNode(node, ctx.ID().getText()));
             } else if(ctx.number() != null){
-                if(ctx.SUBOP() != null){
-                return visitNumber((NumberContext) ctx.children.get(1), node, false);
-                } else{
-                    return visitNumber((NumberContext) ctx.children.get(0), node, true);
-                }
-                //node.children.add(number);
+                return visitNumber((NumberContext) ctx.children.get(0), node);
             } else if(ctx.STRINGLITERTAL() != null){
                 node.children.add(new StringLiteralNode(node, ctx.getText()));
             } else if(ctx.TRUETERM() != null){
@@ -699,8 +694,8 @@ public class ASLBuilderVisitor extends AELBaseVisitor<ASTNode>{
         }
         
     }
-
-    public ASTNode visitNumber(NumberContext ctx, ASTNode parent, Boolean negative) {
+    
+    public ASTNode visitNumber(NumberContext ctx, ASTNode parent) {
         try {
             NumberNode node = new NumberNode(parent);
             if(ctx.intLiteral() != null){

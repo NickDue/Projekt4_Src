@@ -1,0 +1,8 @@
+led = LED(1);
+
+void program() {
+    when (a){
+        b: led.On();
+        else: led.Off(); 
+    }
+}

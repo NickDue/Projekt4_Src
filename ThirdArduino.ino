@@ -15,6 +15,7 @@ void loop() {
 					iteration = iteration + 1;
 				}
 				else {
+					iteration = iteration + 2;
 					num = num + iteration;
 				}
 			}
